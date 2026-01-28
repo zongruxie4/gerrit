@@ -123,8 +123,8 @@ def declare_nongoogle_deps():
     # Transitive dependency of commons-compress
     maven_jar(
         name = "tukaani-xz",
-        artifact = "org.tukaani:xz:1.10",
-        sha1 = "1be8166f89e035a56c6bfc67dbc423996fe577e2",
+        artifact = "org.tukaani:xz:1.11",
+        sha1 = "bdfd1774efb216f506f4f3c5b08c205b308c50aa",
     )
 
     maven_jar(
@@ -133,18 +133,18 @@ def declare_nongoogle_deps():
         sha1 = "2d7ecb8e2b4d292c7eb87ab28cda586cb9773056",
     )
 
-    SSHD_VERS = "2.16.0"
+    SSHD_VERS = "2.17.1"
 
     maven_jar(
         name = "sshd-osgi",
         artifact = "org.apache.sshd:sshd-osgi:" + SSHD_VERS,
-        sha1 = "87cab2aaa6e06c5d48d746e90f0b3635f8c06419",
+        sha1 = "3d159a03c93fbc6e9022742d7a8616abc50dd0fa",
     )
 
     maven_jar(
         name = "sshd-sftp",
         artifact = "org.apache.sshd:sshd-sftp:" + SSHD_VERS,
-        sha1 = "09d9e7024535fb4a3f74367ba7e0a2f5093af638",
+        sha1 = "91085ab6f205ad68007a8034e58d46a82a0d126e",
     )
 
     maven_jar(
@@ -156,7 +156,7 @@ def declare_nongoogle_deps():
     maven_jar(
         name = "sshd-mina",
         artifact = "org.apache.sshd:sshd-mina:" + SSHD_VERS,
-        sha1 = "9247372c4b7fc88d69d4e1bd7de281b3b74f1b3f",
+        sha1 = "8c4a151822a6741a2b53c36eee9c0e2d4d70e447",
     )
 
     maven_jar(
@@ -225,8 +225,8 @@ def declare_nongoogle_deps():
 
     maven_jar(
         name = "error-prone-annotations",
-        artifact = "com.google.errorprone:error_prone_annotations:2.36.0",
-        sha1 = "227d4d4957ccc3dc5761bd897e3a0ee587e750a7",
+        artifact = "com.google.errorprone:error_prone_annotations:2.46.0",
+        sha1 = "4ecb5d2392c38c46e6cb65e1bf60be708d97005d",
     )
 
     FLOGGER_VERS = "0.8"
@@ -296,8 +296,8 @@ def declare_nongoogle_deps():
 
     maven_jar(
         name = "gson",
-        artifact = "com.google.code.gson:gson:2.12.1",
-        sha1 = "4e773a317740b83b43cfc3d652962856041697cb",
+        artifact = "com.google.code.gson:gson:2.13.2",
+        sha1 = "48b8230771e573b54ce6e867a9001e75977fe78e",
     )
 
     maven_jar(
