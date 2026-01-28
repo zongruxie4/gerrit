@@ -26,6 +26,8 @@ import {classMap} from 'lit/directives/class-map.js';
 export class ContextInputChip extends LitElement {
   @query('#contextMenu') private contextMenu?: MdMenu;
 
+  @query('.add-link-input') private addLinkInput?: HTMLInputElement;
+
   @state() linkInputText = '';
 
   @state() selectedContextMenuItem: ContextItemType | null = null;
@@ -180,9 +182,11 @@ export class ContextInputChip extends LitElement {
     `;
   }
 
-  protected showLinkDialogInput(contextMenuItem: ContextItemType) {
+  protected async showLinkDialogInput(contextMenuItem: ContextItemType) {
     this.addLinkDialogOpened = true;
     this.selectedContextMenuItem = contextMenuItem;
+    await this.updateComplete;
+    this.addLinkInput?.focus();
   }
 
   protected addLinkContext() {
