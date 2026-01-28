@@ -107,6 +107,7 @@ export class GrCreateFlow extends LitElement {
       () => this.getConfigModel().serverConfig$,
       config => (this.serverConfig = config)
     );
+    this.hostUrl = window.location.origin + window.location.pathname;
   }
 
   static override get styles() {
@@ -147,14 +148,10 @@ export class GrCreateFlow extends LitElement {
     ];
   }
 
-  override firstUpdated() {
-    if (!this.hostUrl) {
-      this.hostUrl = window.location.origin + window.location.pathname;
+  override willUpdate(changedProperties: PropertyValues) {
+    if (changedProperties.has('changeNum')) {
+      this.getFlowActions();
     }
-    this.getFlowActions();
-  }
-
-  override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('stages')) {
       this.flowString = computeFlowString(this.stages);
     }
