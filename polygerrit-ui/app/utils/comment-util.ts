@@ -709,6 +709,18 @@ export function convertToCommentInput(comment: Comment): CommentInput {
   return output;
 }
 
+export function computeDisplayLine(excludePath: {
+  line?: number | string;
+  range?: CommentRange;
+  path?: string;
+}) {
+  if (excludePath.path === SpecialFilePath.PATCHSET_LEVEL_COMMENTS) return '';
+  if (excludePath.line === FILE) return FILE;
+  if (excludePath.line) return `#${excludePath.line}`;
+  if (excludePath.range) return `#${excludePath.range.end_line}`;
+  return '';
+}
+
 export function isFileLevelComment(comment: Comment) {
   return !comment.line && !comment.range;
 }

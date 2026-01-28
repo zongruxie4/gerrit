@@ -5,6 +5,7 @@
  */
 import '../test/common-test-setup';
 import {
+  computeDisplayLine,
   createCommentThreads,
   createNew,
   createUserFixSuggestion,
@@ -685,6 +686,52 @@ suite('comment-util', () => {
       ];
       sanitiseRanges(comments);
       assert.deepEqual(comments[1].range, comments[0].range);
+    });
+  });
+  suite('computeDisplayLine', () => {
+    test('PatchSetLevel', () => {
+      assert.equal(
+        computeDisplayLine({
+          path: SpecialFilePath.PATCHSET_LEVEL_COMMENTS,
+        }),
+        ''
+      );
+    });
+
+    test('FILE', () => {
+      assert.equal(
+        computeDisplayLine({
+          line: 'FILE',
+        }),
+        'FILE'
+      );
+    });
+
+    test('line number', () => {
+      assert.equal(
+        computeDisplayLine({
+          line: 123,
+        }),
+        '#123'
+      );
+    });
+
+    test('range', () => {
+      assert.equal(
+        computeDisplayLine({
+          range: {
+            start_line: 1,
+            start_character: 1,
+            end_line: 10,
+            end_character: 10,
+          },
+        }),
+        '#10'
+      );
+    });
+
+    test('empty', () => {
+      assert.equal(computeDisplayLine({}), '');
     });
   });
 });

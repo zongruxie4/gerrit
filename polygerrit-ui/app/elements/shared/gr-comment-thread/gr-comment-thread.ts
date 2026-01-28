@@ -19,6 +19,7 @@ import {
 } from 'lit/decorators.js';
 import {
   computeDiffFromContext,
+  computeDisplayLine,
   createNewReply,
   getFirstComment,
   getLastComment,
@@ -48,7 +49,6 @@ import {DiffInfo, DiffPreferencesInfo} from '../../../types/diff';
 import {
   CommentRangeLayer,
   DiffLayer,
-  FILE,
   RenderPreferences,
   Side,
 } from '../../../api/diff';
@@ -504,7 +504,7 @@ export class GrCommentThread extends LitElement {
   renderFilePath() {
     if (!this.showFilePath) return;
     const href = this.getUrlForFileComment();
-    const line = this.computeDisplayLine();
+    const line = computeDisplayLine(this.thread!);
     return html`
       ${this.renderFileName()}
       <div class="pathInfo">
@@ -860,15 +860,6 @@ export class GrCommentThread extends LitElement {
   private getDisplayPath() {
     if (this.isPatchsetLevel()) return 'Patchset';
     return computeDisplayPath(this.thread?.path);
-  }
-
-  private computeDisplayLine() {
-    assertIsDefined(this.thread, 'thread');
-    if (this.thread.line === FILE) return this.isPatchsetLevel() ? '' : FILE;
-    if (this.thread.line) return `#${this.thread.line}`;
-    // If range is set, then lineNum equals the end line of the range.
-    if (this.thread.range) return `#${this.thread.range.end_line}`;
-    return '';
   }
 
   private getFirstComment() {
