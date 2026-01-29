@@ -159,7 +159,7 @@ export class GrDashboardView extends LitElement {
         Date.now() - this.lastVisibleTimestampMs >
         RELOAD_DASHBOARD_INTERVAL_MS
       )
-        this.reload();
+        this.reload(true);
     } else {
       this.lastVisibleTimestampMs = Date.now();
     }
@@ -389,7 +389,7 @@ export class GrDashboardView extends LitElement {
    *
    * private but used in test
    */
-  async reload() {
+  async reload(isBackgroundReload = false) {
     if (!this.viewState) return;
 
     // See `firstTimeLoad` comment above.
@@ -398,7 +398,11 @@ export class GrDashboardView extends LitElement {
     }
     this.firstTimeLoad = false;
 
-    this.loading = true;
+    // Loading will show the spinner. Hide the spinner when refreshing the
+    // dashboard in the background.
+    if (!isBackgroundReload) {
+      this.loading = true;
+    }
     const {project, type, dashboard, title, user, sections} = this.viewState;
 
     const dashboardPromise: Promise<UserDashboard | undefined> = project
