@@ -235,16 +235,7 @@ export class ChatModel extends Model<ChatState> {
     chatState => chatState.models
   );
 
-  readonly selectedModelId$: Observable<string | undefined> = select(
-    combineLatest([
-      this.state$,
-      this.userModel.preferences$.pipe(startWith(undefined)),
-    ]),
-    ([chatState, preferences]) =>
-      chatState.selectedModelId ??
-      preferences?.ai_chat_selected_model ??
-      chatState.models?.default_model_id
-  );
+  readonly selectedModelId$: Observable<string | undefined>;
 
   readonly availableModelsMap$: Observable<ReadonlyMap<string, ModelInfo>> =
     select(
@@ -255,13 +246,7 @@ export class ChatModel extends Model<ChatState> {
         ) as ReadonlyMap<string, ModelInfo>
     );
 
-  readonly selectedModel$: Observable<ModelInfo | undefined> = select(
-    combineLatest([this.availableModelsMap$, this.selectedModelId$]),
-    ([availableModelsMap, selectedModelId]) => {
-      if (!selectedModelId) return undefined;
-      return availableModelsMap.get(selectedModelId);
-    }
-  );
+  readonly selectedModel$: Observable<ModelInfo | undefined>;
 
   readonly modelsLoadingError$: Observable<string | undefined> = select(
     this.state$,
@@ -363,6 +348,25 @@ export class ChatModel extends Model<ChatState> {
       mode: ChatPanelMode.CONVERSATION,
       ...initialConversationState,
     });
+
+    this.selectedModelId$ = select(
+      combineLatest([
+        this.state$,
+        this.userModel.preferences$.pipe(startWith(undefined)),
+      ]),
+      ([chatState, preferences]) =>
+        chatState.selectedModelId ??
+        preferences?.ai_chat_selected_model ??
+        chatState.models?.default_model_id
+    );
+
+    this.selectedModel$ = select(
+      combineLatest([this.availableModelsMap$, this.selectedModelId$]),
+      ([availableModelsMap, selectedModelId]) => {
+        if (!selectedModelId) return undefined;
+        return availableModelsMap.get(selectedModelId);
+      }
+    );
 
     this.pluginsModel.aiCodeReviewPlugins$.subscribe(plugins => {
       const provider = plugins[0]?.provider;
