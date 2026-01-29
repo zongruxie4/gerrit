@@ -32,7 +32,11 @@ import {
 import {commentsModelToken} from '../../models/comments/comments-model';
 import {resolve} from '../../models/dependency';
 import {NumericChangeId, PatchSetNumber} from '../../types/common';
-import {compareComments, createNew} from '../../utils/comment-util';
+import {
+  compareComments,
+  computeDisplayLine,
+  createNew,
+} from '../../utils/comment-util';
 import {assert} from '../../utils/common-util';
 import {subscribe} from '../lit/subscription-controller';
 
@@ -295,8 +299,9 @@ export class GeminiMessage extends LitElement {
             `
           )}
           ${when(!this.isBackgroundRequest, () =>
-            this.sortedComments().map(
-              comment => html`
+            this.sortedComments().map(comment => {
+              const lineNumber = computeDisplayLine(comment.comment);
+              return html`
                 ${when(
                   comment.comment.path,
                   () => html`
@@ -307,11 +312,11 @@ export class GeminiMessage extends LitElement {
                   `
                 )}
                 ${when(
-                  comment.comment.line,
+                  lineNumber,
                   () => html`
                     <div class="comment-line">
                       <gr-icon icon="code"></gr-icon>
-                      ${comment.comment.line}
+                      ${lineNumber}
                     </div>
                   `
                 )}
@@ -329,8 +334,8 @@ export class GeminiMessage extends LitElement {
                     >Add as Comment
                   </gr-button>
                 </div>
-              `
-            )
+              `;
+            })
           )}
           ${when(
             message.responseComplete && !this.isBackgroundRequest,
