@@ -17,7 +17,6 @@ package com.google.gerrit.server.permissions;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.auto.value.AutoValue;
-import com.google.auto.value.extension.memoized.Memoized;
 import com.google.common.cache.Cache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
@@ -121,11 +120,7 @@ public class SectionSortCache {
     }
   }
 
-  @AutoValue
-  abstract static class EntryKey {
-    public abstract String ref();
-
-    public abstract ImmutableList<String> patterns();
+  public record EntryKey(String ref, ImmutableList<String> patterns) {
 
     static EntryKey create(String refName, List<AccessSection> sections) {
       ImmutableList.Builder<String> patterns =
@@ -133,17 +128,7 @@ public class SectionSortCache {
       for (AccessSection s : sections) {
         patterns.add(s.getName());
       }
-      return new AutoValue_SectionSortCache_EntryKey(refName, patterns.build());
-    }
-
-    @Memoized
-    @Override
-    public int hashCode() {
-      int hc = ref().hashCode();
-      for (String n : patterns()) {
-        hc = hc * 31 + n.hashCode();
-      }
-      return hc;
+      return new EntryKey(refName, patterns.build());
     }
   }
 
