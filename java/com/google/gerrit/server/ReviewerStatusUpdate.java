@@ -25,20 +25,48 @@ import java.util.Optional;
 @AutoValue
 public abstract class ReviewerStatusUpdate {
   public static ReviewerStatusUpdate createForReviewer(
-      Instant ts, Account.Id updatedBy, Account.Id reviewer, ReviewerStateInternal state) {
+      Instant ts,
+      Account.Id updatedBy,
+      Account.Id realUpdatedBy,
+      Account.Id reviewer,
+      ReviewerStateInternal state) {
     return new AutoValue_ReviewerStatusUpdate(
-        ts, updatedBy, Optional.of(reviewer), Optional.empty(), state);
+        ts,
+        updatedBy,
+        Optional.ofNullable(realUpdatedBy),
+        Optional.of(reviewer),
+        Optional.empty(),
+        state);
   }
 
   public static ReviewerStatusUpdate createForReviewerByEmail(
-      Instant ts, Account.Id updatedBy, Address reviewerByEmail, ReviewerStateInternal state) {
+      Instant ts,
+      Account.Id updatedBy,
+      Account.Id realUpdatedBy,
+      Address reviewerByEmail,
+      ReviewerStateInternal state) {
     return new AutoValue_ReviewerStatusUpdate(
-        ts, updatedBy, Optional.empty(), Optional.of(reviewerByEmail), state);
+        ts,
+        updatedBy,
+        Optional.ofNullable(realUpdatedBy),
+        Optional.empty(),
+        Optional.of(reviewerByEmail),
+        state);
   }
 
   public abstract Instant date();
 
   public abstract Account.Id updatedBy();
+
+  /**
+   * The real user that performed the reviewer update.
+   *
+   * <p>This field is only set in case of impersonation using the RUN_AS permission. In case of
+   * impersonation, `updatedBy` will store the user that is being impersonated, and this field will
+   * store the caller. I.e. if User X is impersonating User Y, then `updatedBy` will be Y and
+   * `realUpdatedBy` will be X.
+   */
+  public abstract Optional<Account.Id> realUpdatedBy();
 
   /** Not set if a reviewer for which no Gerrit account exists is added by email. */
   public abstract Optional<Account.Id> reviewer();
