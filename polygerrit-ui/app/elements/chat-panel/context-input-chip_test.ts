@@ -57,6 +57,7 @@ suite('context-input-chip tests', () => {
     assert.isTrue(element.addLinkDialogOpened);
     const input = element.shadowRoot?.querySelector('.add-link-input');
     assert.isOk(input);
+    assert.equal(element.shadowRoot?.activeElement, input);
   });
 
   test('fires context-item-added event on enter', async () => {
