@@ -884,6 +884,36 @@ public class ImpersonationIT extends AbstractDaemonTest {
     assertThat(reviewerUpdate.realUpdatedBy._accountId).isEqualTo(realUser.id().get());
   }
 
+  @Test
+  public void addReviewerWithRunAs() throws Exception {
+    allowRunAs();
+    TestAccount realUser = admin;
+    TestAccount impersonatedUser = user;
+    TestAccount reviewer = admin2;
+    PushOneCommit.Result r = createChange();
+    assertThat(gApi.changes().id(r.getChangeId()).get(MESSAGES).messages).hasSize(1);
+
+    ReviewerInput in = new ReviewerInput();
+    in.reviewer = reviewer.email();
+
+    RestResponse res =
+        adminRestSession.postWithHeaders(
+            "/changes/" + r.getChangeId() + "/reviewers", in, runAsHeader(impersonatedUser.id()));
+    res.assertOK();
+    ReviewerResult result = newGson().fromJson(res.getEntityContent(), ReviewerResult.class);
+
+    assertThat(result.reviewers).hasSize(1);
+    assertThat(result.reviewers.get(0)._accountId).isEqualTo(reviewer.id().get());
+
+    Collection<ReviewerUpdateInfo> reviewerUpdates =
+        gApi.changes().id(r.getChangeId()).get().reviewerUpdates;
+    assertThat(reviewerUpdates).hasSize(1);
+    ReviewerUpdateInfo reviewerUpdate = reviewerUpdates.iterator().next();
+    assertThat(reviewerUpdate.updatedBy._accountId).isEqualTo(impersonatedUser.id().get());
+    assertThat(reviewerUpdate.reviewer._accountId).isEqualTo(reviewer.id().get());
+    assertThat(reviewerUpdate.realUpdatedBy._accountId).isEqualTo(realUser.id().get());
+  }
+
   private void assertLastChangeMessage(
       ChangeData changeData,
       String expectedMessage,
