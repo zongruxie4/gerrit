@@ -9348,6 +9348,12 @@ Timestamp of the update.
 |`updated_by`|
 The account which modified state of the reviewer in question as
 link:rest-api-accounts.html#account-info[AccountInfo] entity.
+|`real_updated_by`|
+The account which actually modified the state of the reviewer in question as
+link:rest-api-accounts.html#account-info[AccountInfo] entity. This will be
+different from `updated_by` in case of impersonation. For example, if Alice
+impersonates Bob and changes the state of a reviewer, `updated_by` will be
+Bob and `real_updated_by` will be Alice.
 |`reviewer`|
 The reviewer added or removed from the change as an
 link:rest-api-accounts.html#account-info[AccountInfo] entity. For
