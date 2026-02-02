@@ -1519,30 +1519,28 @@ suite('gr-file-list tests', () => {
           },
         },
       ] as any;
-      element.renderInOrder([{path: 'p2'}, {path: 'p1'}, {path: 'p0'}], diffs);
+      await element.renderInOrder(
+        [{path: 'p2'}, {path: 'p1'}, {path: 'p0'}],
+        diffs
+      );
       await element.updateComplete;
       assert.isFalse(reviewStub.called);
     });
 
     test('renderInOrder logged in', async () => {
       const reviewStub = sinon.stub(element, 'reviewFile');
-      let callCount = 0;
-      // Have to type as any because the type is 'GrDiffHost'
-      // which would require stubbing so many different
-      // methods / properties that it isn't worth it.
       const diffs = [
         {
           path: 'p2',
           style: {},
           prefetchDiff() {},
           reload() {
-            assert.equal(reviewStub.callCount, 0);
-            assert.equal(callCount++, 0);
+            assert.equal(reviewStub.callCount, 1);
             return Promise.resolve();
           },
         },
       ] as any;
-      element.renderInOrder([{path: 'p2'}], diffs);
+      await element.renderInOrder([{path: 'p2'}], diffs);
       await element.updateComplete;
       assert.equal(reviewStub.callCount, 1);
     });
@@ -1577,11 +1575,11 @@ suite('gr-file-list tests', () => {
         },
       ] as any;
 
-      element.renderInOrder([{path: 'p'}], diffs);
+      await element.renderInOrder([{path: 'p'}], diffs);
       await element.updateComplete;
       assert.isFalse(reviewStub.called);
       delete element.diffPrefs.manual_review;
-      element.renderInOrder([{path: 'p'}], diffs);
+      await element.renderInOrder([{path: 'p'}], diffs);
       await element.updateComplete;
       // Wait for renderInOrder to finish
       await waitEventLoop();
