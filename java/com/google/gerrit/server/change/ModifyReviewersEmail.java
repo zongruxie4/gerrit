@@ -23,6 +23,7 @@ import com.google.gerrit.entities.Account;
 import com.google.gerrit.entities.Address;
 import com.google.gerrit.entities.Change;
 import com.google.gerrit.server.IdentifiedUser;
+import com.google.gerrit.server.config.SendEmailEnabled;
 import com.google.gerrit.server.config.SendEmailExecutor;
 import com.google.gerrit.server.mail.EmailFactories;
 import com.google.gerrit.server.mail.send.ChangeEmail;
@@ -42,14 +43,17 @@ public class ModifyReviewersEmail {
   private final EmailFactories emailFactories;
   private final ExecutorService sendEmailsExecutor;
   private final MessageIdGenerator messageIdGenerator;
+  private final boolean sendEmailEnabled;
 
   @Inject
   ModifyReviewersEmail(
       EmailFactories emailFactories,
       @SendEmailExecutor ExecutorService sendEmailsExecutor,
+      @SendEmailEnabled Boolean sendEmailEnabled,
       MessageIdGenerator messageIdGenerator) {
     this.emailFactories = emailFactories;
     this.sendEmailsExecutor = sendEmailsExecutor;
+    this.sendEmailEnabled = sendEmailEnabled;
     this.messageIdGenerator = messageIdGenerator;
   }
 
@@ -63,6 +67,9 @@ public class ModifyReviewersEmail {
       Collection<Address> copiedByEmail,
       Collection<Address> removedByEmail,
       NotifyResolver.Result notify) {
+    if (!sendEmailEnabled) {
+      return;
+    }
     // The user knows they added/removed themselves, don't bother emailing them.
     Account.Id userId = user.getAccountId();
     ImmutableList<Account.Id> immutableToMail =

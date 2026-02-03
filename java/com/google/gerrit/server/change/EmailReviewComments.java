@@ -17,6 +17,8 @@ package com.google.gerrit.server.change;
 import static com.google.gerrit.server.CommentsUtil.COMMENT_ORDER;
 import static com.google.gerrit.server.mail.EmailFactories.COMMENTS_ADDED;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.common.Nullable;
@@ -28,6 +30,7 @@ import com.google.gerrit.entities.SubmitRequirement;
 import com.google.gerrit.entities.SubmitRequirementResult;
 import com.google.gerrit.server.CurrentUser;
 import com.google.gerrit.server.IdentifiedUser;
+import com.google.gerrit.server.config.SendEmailEnabled;
 import com.google.gerrit.server.config.SendEmailExecutor;
 import com.google.gerrit.server.mail.EmailFactories;
 import com.google.gerrit.server.mail.send.ChangeEmail;
@@ -82,11 +85,13 @@ public class EmailReviewComments {
   }
 
   private final ExecutorService sendEmailsExecutor;
-  private final AsyncSender asyncSender;
+  private final Supplier<AsyncSender> asyncSenderSupplier;
+  private final boolean sendEmailEnabled;
 
   @Inject
   EmailReviewComments(
       @SendEmailExecutor ExecutorService executor,
+      @SendEmailEnabled Boolean sendEmailEnabled,
       PatchSetInfoFactory patchSetInfoFactory,
       EmailFactories emailFactories,
       ThreadLocalRequestContext requestContext,
@@ -99,49 +104,56 @@ public class EmailReviewComments {
       @Nullable @Assisted("patchSetComment") String patchSetComment,
       @Assisted List<LabelVote> labels) {
     this.sendEmailsExecutor = executor;
+    this.sendEmailEnabled = sendEmailEnabled;
 
-    MessageId messageId;
-    try {
-      messageId =
-          messageIdGenerator.fromChangeUpdateAndReason(
-              postUpdateContext.getRepoView(), patchSet.id(), "EmailReviewComments");
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
+    this.asyncSenderSupplier =
+        Suppliers.memoize(
+            () -> {
+              MessageId messageId;
+              try {
+                messageId =
+                    messageIdGenerator.fromChangeUpdateAndReason(
+                        postUpdateContext.getRepoView(), patchSet.id(), "EmailReviewComments");
+              } catch (IOException e) {
+                throw new UncheckedIOException(e);
+              }
 
-    Change.Id changeId = patchSet.id().changeId();
+              Change.Id changeId = patchSet.id().changeId();
 
-    // Getting the change data from PostUpdateContext retrieves a cached ChangeData
-    // instance. This ChangeData instance has been created when the change was (re)indexed
-    // due to the update, and hence has submit requirement results already cached (since
-    // (re)indexing triggers the evaluation of the submit requirements).
-    Map<SubmitRequirement, SubmitRequirementResult> postUpdateSubmitRequirementResults =
-        postUpdateContext
-            .getChangeData(postUpdateContext.getProject(), changeId)
-            .submitRequirementsIncludingLegacy();
-    this.asyncSender =
-        new AsyncSender(
-            requestContext,
-            emailFactories,
-            patchSetInfoFactory,
-            postUpdateContext.getUser().asIdentifiedUser(),
-            messageId,
-            postUpdateContext.getNotify(changeId),
-            postUpdateContext.getProject(),
-            changeId,
-            patchSet,
-            preUpdateMetaId,
-            message,
-            postUpdateContext.getWhen(),
-            ImmutableList.copyOf(COMMENT_ORDER.sortedCopy(comments)),
-            patchSetComment,
-            ImmutableList.copyOf(labels),
-            postUpdateSubmitRequirementResults);
+              // Getting the change data from PostUpdateContext retrieves a cached ChangeData
+              // instance. This ChangeData instance has been created when the change was (re)indexed
+              // due to the update, and hence has submit requirement results already cached (since
+              // (re)indexing triggers the evaluation of the submit requirements).
+              Map<SubmitRequirement, SubmitRequirementResult> postUpdateSubmitRequirementResults =
+                  postUpdateContext
+                      .getChangeData(postUpdateContext.getProject(), changeId)
+                      .submitRequirementsIncludingLegacy();
+              return new AsyncSender(
+                  requestContext,
+                  emailFactories,
+                  patchSetInfoFactory,
+                  postUpdateContext.getUser().asIdentifiedUser(),
+                  messageId,
+                  postUpdateContext.getNotify(changeId),
+                  postUpdateContext.getProject(),
+                  changeId,
+                  patchSet,
+                  preUpdateMetaId,
+                  message,
+                  postUpdateContext.getWhen(),
+                  ImmutableList.copyOf(COMMENT_ORDER.sortedCopy(comments)),
+                  patchSetComment,
+                  ImmutableList.copyOf(labels),
+                  postUpdateSubmitRequirementResults);
+            });
   }
 
   public void sendAsync() {
+    if (!sendEmailEnabled) {
+      return;
+    }
     @SuppressWarnings("unused")
-    Future<?> possiblyIgnoredError = sendEmailsExecutor.submit(asyncSender);
+    Future<?> possiblyIgnoredError = sendEmailsExecutor.submit(asyncSenderSupplier.get());
   }
 
   /**

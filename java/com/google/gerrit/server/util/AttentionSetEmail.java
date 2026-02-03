@@ -17,12 +17,15 @@ package com.google.gerrit.server.util;
 import static com.google.gerrit.server.mail.EmailFactories.ATTENTION_SET_ADDED;
 import static com.google.gerrit.server.mail.EmailFactories.ATTENTION_SET_REMOVED;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.entities.Account;
 import com.google.gerrit.entities.Change;
 import com.google.gerrit.entities.Project;
 import com.google.gerrit.server.CurrentUser;
 import com.google.gerrit.server.change.NotifyResolver;
+import com.google.gerrit.server.config.SendEmailEnabled;
 import com.google.gerrit.server.config.SendEmailExecutor;
 import com.google.gerrit.server.mail.EmailFactories;
 import com.google.gerrit.server.mail.send.AttentionSetChangeEmailDecorator;
@@ -63,11 +66,13 @@ public class AttentionSetEmail {
   }
 
   private final ExecutorService sendEmailsExecutor;
-  private final AsyncSender asyncSender;
+  private final Supplier<AsyncSender> asyncSenderSupplier;
+  private final boolean sendEmailEnabled;
 
   @Inject
   AttentionSetEmail(
       @SendEmailExecutor ExecutorService executor,
+      @SendEmailEnabled Boolean sendEmailEnabled,
       ThreadLocalRequestContext requestContext,
       MessageIdGenerator messageIdGenerator,
       AccountTemplateUtil accountTemplateUtil,
@@ -78,33 +83,40 @@ public class AttentionSetEmail {
       @Assisted String reason,
       @Assisted Account.Id attentionUserId) {
     this.sendEmailsExecutor = executor;
+    this.sendEmailEnabled = sendEmailEnabled;
 
-    MessageId messageId;
-    try {
-      messageId =
-          messageIdGenerator.fromChangeUpdateAndReason(
-              ctx.getRepoView(), change.currentPatchSetId(), "AttentionSetEmail");
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
+    this.asyncSenderSupplier =
+        Suppliers.memoize(
+            () -> {
+              MessageId messageId;
+              try {
+                messageId =
+                    messageIdGenerator.fromChangeUpdateAndReason(
+                        ctx.getRepoView(), change.currentPatchSetId(), "AttentionSetEmail");
+              } catch (IOException e) {
+                throw new UncheckedIOException(e);
+              }
 
-    this.asyncSender =
-        new AsyncSender(
-            requestContext,
-            emailFactories,
-            ctx.getUser(),
-            ctx.getProject(),
-            attentionSetChange,
-            messageId,
-            ctx.getNotify(change.getId()),
-            attentionUserId,
-            accountTemplateUtil.replaceTemplates(reason),
-            change.getId());
+              return new AsyncSender(
+                  requestContext,
+                  emailFactories,
+                  ctx.getUser(),
+                  ctx.getProject(),
+                  attentionSetChange,
+                  messageId,
+                  ctx.getNotify(change.getId()),
+                  attentionUserId,
+                  accountTemplateUtil.replaceTemplates(reason),
+                  change.getId());
+            });
   }
 
   public void sendAsync() {
+    if (!sendEmailEnabled) {
+      return;
+    }
     @SuppressWarnings("unused")
-    Future<?> possiblyIgnoredError = sendEmailsExecutor.submit(asyncSender);
+    Future<?> possiblyIgnoredError = sendEmailsExecutor.submit(asyncSenderSupplier.get());
   }
 
   /**
