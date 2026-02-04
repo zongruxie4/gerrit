@@ -322,7 +322,9 @@ public class AccountManagerIT extends AbstractDaemonTest {
     AuthRequest who = authRequestFactory.createForUser(username);
     AccountException thrown =
         assertThrows(AccountException.class, () -> accountManager.authenticate(who));
-    assertThat(thrown).hasMessageThat().contains("Authentication error, account inactive");
+    assertThat(thrown)
+        .hasMessageThat()
+        .contains("Authentication error, account %s inactive".formatted(accountId));
   }
 
   @Test
@@ -341,7 +343,9 @@ public class AccountManagerIT extends AbstractDaemonTest {
     who.setAuthProvidesAccountActiveStatus(true);
     AccountException thrown =
         assertThrows(AccountException.class, () -> accountManager.authenticate(who));
-    assertThat(thrown).hasMessageThat().contains("Authentication error, account inactive");
+    assertThat(thrown)
+        .hasMessageThat()
+        .contains("Authentication error, account %s inactive".formatted(accountId));
   }
 
   @Test
@@ -404,7 +408,9 @@ public class AccountManagerIT extends AbstractDaemonTest {
     who.setAuthProvidesAccountActiveStatus(true);
     AccountException thrown =
         assertThrows(AccountException.class, () -> accountManager.authenticate(who));
-    assertThat(thrown).hasMessageThat().isEqualTo("Authentication error, account inactive");
+    assertThat(thrown)
+        .hasMessageThat()
+        .isEqualTo("Authentication error, account %s inactive".formatted(accountId));
 
     Optional<AccountState> accountState = accounts.get(accountId);
     assertThat(accountState).isPresent();
