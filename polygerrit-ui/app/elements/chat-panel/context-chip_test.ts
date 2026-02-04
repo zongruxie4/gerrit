@@ -14,6 +14,7 @@ import {pluginLoaderToken} from '../shared/gr-js-api-interface/gr-plugin-loader'
 import {chatProvider, createChange} from '../../test/test-data-generators';
 import {changeModelToken} from '../../models/change/change-model';
 import {ParsedChangeInfo} from '../../types/types';
+import {MdFilterChip} from '@material/web/chips/filter-chip';
 
 suite('context-chip tests', () => {
   let element: ContextChip;
@@ -48,7 +49,7 @@ suite('context-chip tests', () => {
     element.text = 'test text';
     await element.updateComplete;
     const chip = element.shadowRoot?.querySelector('md-filter-chip');
-    assert.equal(chip?.label, 'test text');
+    assert.equal(chip?.textContent?.trim(), 'test text');
   });
 
   test('renders with subtext', async () => {
@@ -127,5 +128,32 @@ suite('context-chip tests', () => {
     const chip = element.shadowRoot?.querySelector('md-filter-chip');
     chip?.click();
     assert.isTrue(openSpy.calledWith('http://gerrit.test/test.ts', '_blank'));
+  });
+
+  test('shortens long context item titles', async () => {
+    const contextItem: ContextItem = {
+      type_id: 'file',
+      title: 'very/long/path/to/some/deeply/nested/file.ts',
+      link: '...',
+    };
+    element.contextItem = contextItem;
+    await element.updateComplete;
+    const chip =
+      element.shadowRoot?.querySelector<MdFilterChip>('md-filter-chip');
+    assert.equal(chip?.textContent?.trim(), '\u2026/nested/file.ts');
+    assert.equal(chip?.title, 'very/long/path/to/some/deeply/nested/file.ts');
+  });
+
+  test('does not shorten short context item titles', async () => {
+    const contextItem: ContextItem = {
+      type_id: 'file',
+      title: 'short/file.ts',
+      link: '...',
+    };
+    element.contextItem = contextItem;
+    await element.updateComplete;
+    const chip =
+      element.shadowRoot?.querySelector<MdFilterChip>('md-filter-chip');
+    assert.equal(chip?.textContent?.trim(), 'short/file.ts');
   });
 });
