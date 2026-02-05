@@ -69,6 +69,12 @@ export class ContextInputChip extends LitElement {
       --md-assist-chip-label-text-weight: var(--font-weight-medium);
       --md-assist-chip-label-text-color: var(--primary-text-color);
       --md-assist-chip-outline-color: var(--border-color);
+      --md-assist-chip-hover-label-text-color: var(--primary-text-color);
+      --md-assist-chip-focus-label-text-color: var(--primary-text-color);
+      --md-assist-chip-pressed-label-text-color: var(--primary-text-color);
+      --md-assist-chip-hover-icon-color: var(--primary-text-color);
+      --md-assist-chip-focus-icon-color: var(--primary-text-color);
+      --md-assist-chip-pressed-icon-color: var(--primary-text-color);
       overflow: hidden;
       margin: 0;
       border-color: var(--border-color);
@@ -99,6 +105,8 @@ export class ContextInputChip extends LitElement {
       background-color: var(--background-color-primary);
       font-family: var(--font-family);
       font-size: var(--font-size-normal);
+      /* input color often defaults to browser/os default which might be dark even on dark mode if not set */
+      color: var(--primary-text-color);
       outline: none;
       width: 100%;
       height: 23px;

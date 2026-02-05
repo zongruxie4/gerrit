@@ -94,7 +94,7 @@ export class GeminiMessage extends LitElement {
         align-items: center;
       }
       .gemini-icon {
-        color: #4285f4;
+        color: var(--link-color);
       }
       .thinking-spinner {
         --md-circular-progress-size: 24px;

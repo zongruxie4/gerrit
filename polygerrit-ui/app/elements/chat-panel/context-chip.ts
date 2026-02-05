@@ -74,6 +74,9 @@ export class ContextChip extends LitElement {
       --md-filter-chip-label-text-weight: var(--font-weight-medium);
       --md-filter-chip-unselected-container-color: transparent;
       --md-filter-chip-outline-color: var(--border-color);
+      --md-filter-chip-hover-label-text-color: var(--primary-text-color);
+      --md-filter-chip-focus-label-text-color: var(--primary-text-color);
+      --md-filter-chip-pressed-label-text-color: var(--primary-text-color);
       overflow: hidden;
       margin: 0;
       border-radius: 8px;

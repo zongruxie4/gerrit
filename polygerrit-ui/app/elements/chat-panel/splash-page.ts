@@ -123,7 +123,7 @@ export class SplashPage extends LitElement {
       margin-block-end: var(--spacing-s);
     }
     .material-icon {
-      color: #5f6368;
+      color: var(--deemphasized-text-color);
     }
     .splash-question {
       color: var(--chat-splash-page-question-color);
