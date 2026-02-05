@@ -11,6 +11,7 @@ import {css, html, LitElement} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import {truncatePath} from '../../utils/path-list-util';
 import {ContextItem} from '../../api/ai-code-review';
 import {chatModelToken} from '../../models/chat/chat-model';
 import {resolve} from '../../models/dependency';
@@ -115,8 +116,10 @@ export class ContextChip extends LitElement {
           'custom-action-chip': this.isCustomAction,
           hidden: !this.supportsThisChange,
         })}
-        .label=${this.contextItem?.title ?? this.text}
-        .title=${this.contextItem?.tooltip ?? this.tooltip ?? ''}
+        .title=${this.contextItem?.tooltip ??
+        this.tooltip ??
+        this.contextItem?.title ??
+        this.text}
         @click=${this.navigateToUrl}
         ?removable=${this.isRemovable && !this.isSuggestion}
         @remove=${this.onRemoveContextChip}
@@ -126,6 +129,7 @@ export class ContextChip extends LitElement {
           class=${this.isCustomAction ? 'custom-action-icon' : ''}
           .icon=${icon}
         ></gr-icon>
+        ${truncatePath(this.contextItem?.title ?? this.text, 2)}
         ${when(
           this.subText,
           () => html`<span class="subtext">: ${this.subText}</span>`
