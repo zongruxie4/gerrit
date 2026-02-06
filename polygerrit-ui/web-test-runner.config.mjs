@@ -104,7 +104,7 @@ const config = {
   testFramework: {
     config: {
       ui: 'tdd',
-      timeout: 2000,
+      timeout: runScreenshots ? 10000 : 2000,
     },
   },
 
