@@ -855,6 +855,70 @@ public class ImpersonationIT extends AbstractDaemonTest {
   }
 
   @Test
+  public void setWorkInProgressWithRunAs() throws Exception {
+    allowRunAs();
+    TestAccount realUser = admin;
+    TestAccount impersonatedUser = user;
+
+    // Create a change as the user that will be impersonated.
+    TestRepository<InMemoryRepository> impersonatedUserRepo =
+        cloneProject(project, impersonatedUser);
+    PushOneCommit.Result r =
+        pushFactory
+            .create(
+                impersonatedUser.newIdent(), impersonatedUserRepo, "subject", "a.txt", "content")
+            .to("refs/for/master");
+    String changeId = r.getChangeId();
+
+    ChangeInfo info = gApi.changes().id(changeId).get();
+    assertThat(info.workInProgress).isNull();
+
+    RestResponse res =
+        adminRestSession.postWithHeaders(
+            "/changes/" + changeId + "/wip",
+            /* content= */ null,
+            runAsHeader(impersonatedUser.id()));
+    res.assertOK();
+
+    info = gApi.changes().id(changeId).get();
+    assertThat(info.workInProgress).isTrue();
+
+    assertLastChangeMessage(r.getChange(), "Set Work In Progress", impersonatedUser, realUser);
+  }
+
+  @Test
+  public void setReadyForReviewWithRunAs() throws Exception {
+    allowRunAs();
+    TestAccount realUser = admin;
+    TestAccount impersonatedUser = user;
+
+    // Create a change as the user that will be impersonated and set it to WIP.
+    TestRepository<InMemoryRepository> impersonatedUserRepo =
+        cloneProject(project, impersonatedUser);
+    PushOneCommit.Result r =
+        pushFactory
+            .create(
+                impersonatedUser.newIdent(), impersonatedUserRepo, "subject", "a.txt", "content")
+            .to("refs/for/master%wip");
+    String changeId = r.getChangeId();
+
+    ChangeInfo info = gApi.changes().id(changeId).get();
+    assertThat(info.workInProgress).isTrue();
+
+    RestResponse res =
+        adminRestSession.postWithHeaders(
+            "/changes/" + changeId + "/ready",
+            /* content= */ null,
+            runAsHeader(impersonatedUser.id()));
+    res.assertOK();
+
+    info = gApi.changes().id(changeId).get();
+    assertThat(info.workInProgress).isNull();
+
+    assertLastChangeMessage(r.getChange(), "Set Ready For Review", impersonatedUser, realUser);
+  }
+
+  @Test
   public void runAsValidUser() throws Exception {
     allowRunAs();
     RestResponse res = adminRestSession.getWithHeaders("/accounts/self", runAsHeader(user.id()));
