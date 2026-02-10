@@ -176,6 +176,7 @@ suite('gr-change-view screenshot tests', () => {
         email: 'john@example.com' as EmailAddress,
       },
       revisions: createRevisions(3),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       current_revision: '3' as any,
       actions: createActions(),
       labels: {
@@ -313,6 +314,7 @@ suite('gr-change-view screenshot tests', () => {
     // Set viewport to ensure media queries respond correctly
     await setViewport({width: 1280, height: 800});
     // Force open the chat panel
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (element as any).showSidebarChat = true;
 
     const container = document.createElement('div');

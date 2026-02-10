@@ -2802,11 +2802,17 @@ suite('gr-change-actions tests', () => {
             'executeChangeAction'
           ).callsFake(
             (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               _num: any,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               _method: any,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               _patchNum: any,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               _endpoint: any,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               _payload: any,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onErr: any
             ) => {
               onErr!();
@@ -2835,6 +2841,7 @@ suite('gr-change-actions tests', () => {
         test('revert single change change not reachable', async () => {
           let getChangeCall = 0;
           let errorFired = false;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           stubRestApi('getChange').callsFake((_: any, errFn: any) => {
             ++getChangeCall;
             if (getChangeCall === 1) {

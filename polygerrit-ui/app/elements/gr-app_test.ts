@@ -29,6 +29,7 @@ suite('gr-app callback tests', () => {
   );
   const dispatchLocationChangeEventSpy = sinon.spy(
     GrRouter.prototype,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <any>'dispatchLocationChangeEvent'
   );
   setup(async () => {

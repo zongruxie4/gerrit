@@ -295,6 +295,7 @@ suite('gr-messages-list tests', () => {
       // Have to type as any otherwise fails with
       // Argument of type 'ChangeMessageInfo[]' is not assignable to
       // parameter of type 'ConcatArray<never>'.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const messages = ([] as any).concat(
         randomMessage(),
         {
@@ -599,6 +600,7 @@ suite('gr-messages-list tests', () => {
 
     test('_computeLabelExtremes', () => {
       // Have to type as any to be able to use null.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       element.labels = null as any;
       assert.deepEqual(element.computeLabelExtremes(), {});
 

@@ -126,7 +126,9 @@ suite('gr-router tests', () => {
     // This test encodes the lists of route handler methods that gr-router
     // automatically checks for authentication before triggering.
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const requiresAuth: any = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const doesNotRequireAuth: any = {};
     sinon.stub(page, 'start');
     sinon

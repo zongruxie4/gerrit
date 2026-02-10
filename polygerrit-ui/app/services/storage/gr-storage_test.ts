@@ -15,15 +15,18 @@ suite('gr-storage tests', () => {
   function mockStorage(quotaExceeded: boolean): Storage {
     return {
       getItem(key: string) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (this as any)[key];
       },
       removeItem(key: string) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         delete (this as any)[key];
       },
       setItem(key: string, value: string) {
         if (quotaExceeded) {
           throw new DOMException('error', 'QuotaExceededError');
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this as any)[key] = value;
       },
     } as Storage;

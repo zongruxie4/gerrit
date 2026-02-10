@@ -161,6 +161,7 @@ suite('gr-dropdown-list tests', () => {
   });
 
   test('computeMobileText', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const item: any = {
       value: 1,
       text: 'text',

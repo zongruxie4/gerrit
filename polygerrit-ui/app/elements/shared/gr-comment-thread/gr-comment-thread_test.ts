@@ -707,6 +707,7 @@ suite('gr-comment-thread tests', () => {
         comments: [
           {
             ...createComment(),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             id: '123' as any,
             message: 'Test comment',
             author: {name: 'Test User', _account_id: 12345 as AccountId},
@@ -719,6 +720,7 @@ suite('gr-comment-thread tests', () => {
       element.thread = thread;
       element.changeNum = 123 as NumericChangeId;
       const createReplyCommentSpy = sinon.spy(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         element as any,
         'createReplyComment'
       );

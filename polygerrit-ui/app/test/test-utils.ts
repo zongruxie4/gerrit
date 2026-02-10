@@ -112,6 +112,7 @@ export function stubElement<
   return stub;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SinonSpyMember<F extends (...args: any) => any> = SinonSpy<
   Parameters<F>,
   ReturnType<F>
@@ -279,6 +280,7 @@ export function assertFails<T = unknown>(promise: Promise<unknown>, error?: T) {
 
 export function logProxy<T extends object>(obj: T, name?: string): T {
   const handler = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     get(target: object, prop: PropertyKey, receiver: any) {
       const result = Reflect.get(target, prop, receiver);
       if (result instanceof Function) {
@@ -316,6 +318,7 @@ export function assertRouteFalse<T extends ViewState>(
   assert.isFalse(matches);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function makePrefixedJSON(obj: any) {
   return JSON_PREFIX + JSON.stringify(obj);
 }

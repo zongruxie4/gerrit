@@ -35,6 +35,7 @@ suite('admin links', () => {
   const testAdminLinks = async (
     account: AccountDetailInfo | undefined,
     options: AdminNavLinksOption | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expected: any
   ) => {
     const res = await getAdminLinks(
@@ -114,6 +115,7 @@ suite('admin links', () => {
   };
 
   suite('logged out', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let expected: any;
 
     setup(() => {
@@ -164,6 +166,7 @@ suite('admin links', () => {
       name: 'test-user',
       registered_on: '' as Timestamp,
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let expected: any;
 
     setup(() => {
@@ -204,6 +207,7 @@ suite('admin links', () => {
       name: 'test-user',
       registered_on: '' as Timestamp,
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let expected: any;
 
     setup(() => {
@@ -304,6 +308,7 @@ suite('admin links', () => {
       name: 'test-user',
       registered_on: '' as Timestamp,
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let expected: any;
 
     setup(() => {
@@ -331,6 +336,7 @@ suite('admin links', () => {
       name: 'test-user',
       registered_on: '' as Timestamp,
     };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let expected: any;
 
     setup(() => {

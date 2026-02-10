@@ -12,6 +12,7 @@ suite('gr-reporting_mock tests', () => {
   test('mocks all public methods', () => {
     const methods = Object.getOwnPropertyNames(GrReporting.prototype)
       .filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         name => typeof (GrReporting as any).prototype[name] === 'function'
       )
       .filter(name => !name.startsWith('_') && name !== 'constructor')

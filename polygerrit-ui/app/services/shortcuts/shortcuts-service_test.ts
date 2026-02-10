@@ -97,6 +97,7 @@ suite('shortcuts-service tests', () => {
 
   suite('binding descriptions', () => {
     function mapToObject<K, V>(m: Map<K, V>) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const o: any = {};
       m.forEach((v: V, k: K) => (o[k] = v));
       return o;

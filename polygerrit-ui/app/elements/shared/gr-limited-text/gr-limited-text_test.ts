@@ -56,6 +56,7 @@ suite('gr-limited-text tests', () => {
     await element.updateComplete;
     assert.isNotOk(query(element, 'gr-tooltip-content'));
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     element.limit = null as any;
     await element.updateComplete;
     assert.isNotOk(query(element, 'gr-tooltip-content'));

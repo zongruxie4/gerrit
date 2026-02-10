@@ -102,6 +102,7 @@ suite('gr-change-list-copy-link-flow tests', () => {
     button?.click();
     await element.updateComplete;
     await waitUntil(() => element.shadowRoot?.querySelector('gr-copy-links'));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.isTrue((copyLinks as any).isDropdownOpen);
   });
 });

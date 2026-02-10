@@ -209,6 +209,7 @@ suite('gr-change-list-bulk-vote-flow tests', () => {
       state => state === LoadingState.LOADED
     );
     stubRestApi('saveChangeReview').callsFake(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_changeNum: any, _patchNum: any, _review: any, errFn: any) =>
         Promise.resolve(undefined).then(res => {
           errFn && errFn();
@@ -446,6 +447,7 @@ suite('gr-change-list-bulk-vote-flow tests', () => {
       getChangesStub.returns(Promise.resolve(changes));
 
       stubRestApi('saveChangeReview').callsFake(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (_changeNum: any, _patchNum: any, _review: any, errFn: any) =>
           Promise.resolve({}).then(res => {
             errFn && errFn();
@@ -504,6 +506,7 @@ suite('gr-change-list-bulk-vote-flow tests', () => {
       getChangesStub.returns(Promise.resolve(changes));
 
       stubRestApi('saveChangeReview').callsFake(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (_changeNum: any, _patchNum: any, _review: any, errFn: any) =>
           Promise.resolve(undefined).then(res => {
             errFn && errFn();

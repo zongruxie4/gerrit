@@ -103,9 +103,11 @@ suite('compare-util tests', () => {
   test('deepEqual recursive', () => {
     const a = {};
     const b = {a};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (a as any)['b'] = b;
     const c = {};
     const d = {a: c};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (c as any)['b'] = d;
 
     assert.isTrue(deepEqual(a, c));
@@ -139,8 +141,10 @@ suite('compare-util tests', () => {
 
   test('deepEqual direct self recursion', () => {
     const a = {value: 3};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (a as any).self = a;
     const b = {value: 3};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (b as any).self = b;
 
     assert.isTrue(deepEqual(a, b));
@@ -156,8 +160,11 @@ suite('compare-util tests', () => {
   });
 
   test('deepEqual recursively deeper', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const a: {link?: any} = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const b: {link?: any} = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const c: {link?: any} = {};
     a.link = b;
     b.link = c;

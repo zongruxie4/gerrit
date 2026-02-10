@@ -202,6 +202,7 @@ suite('gr-repo-commands tests', () => {
       element.repo = 'test' as RepoName;
 
       const response = {status: 404} as Response;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       stubRestApi('getProjectConfig').callsFake((_repo: any, errFn: any) => {
         if (errFn !== undefined) {
           errFn(response);

@@ -21,9 +21,11 @@ import {Interaction} from '../../constants/reporting';
 suite('gr-reporting tests', () => {
   // We have to type as any because we access
   // private properties for testing.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let service: any;
 
   let clock: SinonFakeTimers;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let fakePerformance: any;
 
   const NOW_TIME = 100;
@@ -502,6 +504,7 @@ suite('gr-reporting tests', () => {
   });
 
   suite('exception logging', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let fakeWindow: any;
     let reporter: sinon.SinonStub;
 

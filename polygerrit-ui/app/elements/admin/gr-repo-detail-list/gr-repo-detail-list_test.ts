@@ -2235,10 +2235,15 @@ suite('gr-repo-detail-list', () => {
         const response = {status: 404} as Response;
         stubRestApi('getRepoBranches').callsFake(
           (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _filter: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _repo: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _reposBranchesPerPage: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _offset: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             errFn: any
           ) => {
             if (errFn !== undefined) {
@@ -2438,10 +2443,15 @@ suite('gr-repo-detail-list', () => {
         const response = {status: 404} as Response;
         stubRestApi('getRepoTags').callsFake(
           (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _filter: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _repo: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _reposTagsPerPage: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             _offset: any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             errFn: any
           ) => {
             if (errFn !== undefined) {
