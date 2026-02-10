@@ -11,18 +11,22 @@ import {assert, fixture, html} from '@open-wc/testing';
 import {mockPromise, queryAndAssert} from '../../../test/test-utils';
 import {GrEndpointDecorator} from './gr-endpoint-decorator';
 import {PluginApi} from '../../../api/plugin';
+import {HookApi, PluginElement} from '../../../api/hook';
 import {GrEndpointParam} from '../gr-endpoint-param/gr-endpoint-param';
+
+interface TestModule extends PluginElement {
+  'first-param'?: string;
+  'second-param'?: string;
+  'banana-param'?: unknown;
+}
 
 suite('gr-endpoint-decorator', () => {
   let container: HTMLElement;
 
   let plugin: PluginApi;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let decorationHook: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let decorationHookWithSlot: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let replacementHook: any;
+  let decorationHook: HookApi<TestModule>;
+  let decorationHookWithSlot: HookApi<TestModule>;
+  let replacementHook: HookApi<TestModule>;
   let first: GrEndpointDecorator;
   let second: GrEndpointDecorator;
   let banana: GrEndpointDecorator;
@@ -75,12 +79,15 @@ suite('gr-endpoint-decorator', () => {
       'http://some/plugin/url.js'
     );
     // Decoration
-    decorationHook = plugin.registerCustomComponent('first', 'some-module');
+    decorationHook = plugin.registerCustomComponent<TestModule>(
+      'first',
+      'some-module'
+    );
     const decorationHookPromise = mockPromise();
     decorationHook.onAttached(() => decorationHookPromise.resolve());
 
     // Decoration with slot
-    decorationHookWithSlot = plugin.registerCustomComponent(
+    decorationHookWithSlot = plugin.registerCustomComponent<TestModule>(
       'first',
       'some-module-2',
       {slot: 'test'}
@@ -91,9 +98,13 @@ suite('gr-endpoint-decorator', () => {
     );
 
     // Replacement
-    replacementHook = plugin.registerCustomComponent('second', 'other-module', {
-      replace: true,
-    });
+    replacementHook = plugin.registerCustomComponent<TestModule>(
+      'second',
+      'other-module',
+      {
+        replace: true,
+      }
+    );
     const replacementHookPromise = mockPromise();
     replacementHook.onAttached(() => replacementHookPromise.resolve());
 
@@ -117,20 +128,17 @@ suite('gr-endpoint-decorator', () => {
     assert.equal(modules.length, 1);
     const [module] = modules;
     assert.isOk(module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.equal((module as any)['first-param'], 'barbar');
-    return (
-      decorationHook
-        .getLastAttached()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((element: any) => {
-          assert.strictEqual(element, module);
-        })
-        .then(() => {
-          element.remove();
-          assert.equal(decorationHook.getAllAttached().length, 0);
-        })
-    );
+    assert.equal((module as TestModule)['first-param'], 'barbar');
+    return decorationHook
+      .getLastAttached()
+
+      .then((element: unknown) => {
+        assert.strictEqual(element, module);
+      })
+      .then(() => {
+        element.remove();
+        assert.equal(decorationHook.getAllAttached().length, 0);
+      });
   });
 
   test('decoration with slot', () => {
@@ -139,20 +147,17 @@ suite('gr-endpoint-decorator', () => {
     assert.equal(modules.length, 1);
     const [module] = modules;
     assert.isOk(module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.equal((module as any)['first-param'], 'barbar');
-    return (
-      decorationHookWithSlot
-        .getLastAttached()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((element: any) => {
-          assert.strictEqual(element, module);
-        })
-        .then(() => {
-          element.remove();
-          assert.equal(decorationHookWithSlot.getAllAttached().length, 0);
-        })
-    );
+    assert.equal((module as TestModule)['first-param'], 'barbar');
+    return decorationHookWithSlot
+      .getLastAttached()
+
+      .then((element: unknown) => {
+        assert.strictEqual(element, module);
+      })
+      .then(() => {
+        element.remove();
+        assert.equal(decorationHookWithSlot.getAllAttached().length, 0);
+      });
   });
 
   test('replacement', () => {
@@ -161,24 +166,23 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'OTHER-MODULE'
     );
     assert.isOk(module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.equal((module as any)['second-param'], 'foofoo');
-    return (
-      replacementHook
-        .getLastAttached()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((element: any) => {
-          assert.strictEqual(element, module);
-        })
-        .then(() => {
-          element.remove();
-          assert.equal(replacementHook.getAllAttached().length, 0);
-        })
-    );
+    assert.equal((module as TestModule)['second-param'], 'foofoo');
+    return replacementHook
+      .getLastAttached()
+      .then((element: unknown) => {
+        assert.strictEqual(element, module);
+      })
+      .then(() => {
+        element.remove();
+        assert.equal(replacementHook.getAllAttached().length, 0);
+      });
   });
 
   test('late registration', async () => {
-    const bananaHook = plugin.registerCustomComponent('banana', 'noob-noob');
+    const bananaHook = plugin.registerCustomComponent<TestModule>(
+      'banana',
+      'noob-noob'
+    );
     const bananaHookPromise = mockPromise();
     bananaHook.onAttached(() => bananaHookPromise.resolve());
     await bananaHookPromise;
@@ -218,7 +222,10 @@ suite('gr-endpoint-decorator', () => {
     param['value'] = undefined;
     await param.updateComplete;
 
-    const bananaHook = plugin.registerCustomComponent('banana', 'noob-noob');
+    const bananaHook = plugin.registerCustomComponent<TestModule>(
+      'banana',
+      'noob-noob'
+    );
     const bananaHookPromise = mockPromise();
     bananaHook.onAttached(() => bananaHookPromise.resolve());
 
@@ -240,8 +247,7 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'NOOB-NOOB'
     );
     assert.isOk(module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.strictEqual((module as any)['banana-param'], value);
+    assert.strictEqual((module as TestModule)['banana-param'], value);
   });
 
   test('param is bound', async () => {
@@ -252,7 +258,10 @@ suite('gr-endpoint-decorator', () => {
     param.value = value1;
     await param.updateComplete;
 
-    const bananaHook = plugin.registerCustomComponent('banana', 'noob-noob');
+    const bananaHook = plugin.registerCustomComponent<TestModule>(
+      'banana',
+      'noob-noob'
+    );
     const bananaHookPromise = mockPromise();
     bananaHook.onAttached(() => bananaHookPromise.resolve());
     await bananaHookPromise;
@@ -261,12 +270,10 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'NOOB-NOOB'
     );
     assert.isOk(module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.strictEqual((module as any)['banana-param'], value1);
+    assert.strictEqual((module as TestModule)['banana-param'], value1);
 
     param.value = value2;
     await param.updateComplete;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    assert.strictEqual((module as any)['banana-param'], value2);
+    assert.strictEqual((module as TestModule)['banana-param'], value2);
   });
 });
