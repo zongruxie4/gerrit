@@ -106,7 +106,9 @@ suite('user-message tests', () => {
 
     const chips = element.shadowRoot?.querySelectorAll('context-chip');
     assert.equal(chips?.length, 2);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.equal((chips![0] as any).text, 'file1.ts');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.equal((chips![1] as any).text, 'file2.ts');
   });
 

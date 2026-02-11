@@ -50,6 +50,7 @@ suite('gr-selection-action-box', () => {
   });
 
   suite('mousedown reacts only to main button', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let e: any;
 
     setup(() => {

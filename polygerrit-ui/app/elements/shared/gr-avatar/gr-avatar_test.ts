@@ -65,8 +65,10 @@ suite('gr-avatar tests', () => {
 
     setup(() => {
       // Prevent 404s by stubbing buildAvatarURL to return data URI for local paths
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const orig = (GrAvatar.prototype as any).buildAvatarURL;
       sinon
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .stub(GrAvatar.prototype as any, 'buildAvatarURL')
         .callsFake(function (this: GrAvatar, account: unknown) {
           const url = orig.call(this, account);

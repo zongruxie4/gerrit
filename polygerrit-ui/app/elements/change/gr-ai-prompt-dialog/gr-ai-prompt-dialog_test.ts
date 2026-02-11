@@ -188,6 +188,7 @@ suite('gr-ai-prompt-dialog test', () => {
     element.selectedTemplate = 'HELP_REVIEW';
     await element.updateComplete;
     assert.include(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).promptContent,
       'You are a highly experienced code reviewer'
     );
@@ -196,6 +197,7 @@ suite('gr-ai-prompt-dialog test', () => {
   test('renders resolve comments prompt', async () => {
     element.selectedTemplate = 'RESOLVE_COMMENTS';
     await element.updateComplete;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.include((element as any).promptContent, 'No unresolved comments.');
   });
 
@@ -214,12 +216,14 @@ suite('gr-ai-prompt-dialog test', () => {
         line: 1,
         rootId: '1',
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any[];
     element.selectedTemplate = 'RESOLVE_COMMENTS';
     await element.updateComplete;
     const expected = `* File: test.txt (Line 1)
 Tester:
 test comment`;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.include((element as any).promptContent, expected);
   });
 });

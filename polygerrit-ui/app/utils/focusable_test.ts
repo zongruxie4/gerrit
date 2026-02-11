@@ -36,6 +36,7 @@ async function createDom() {
   // For some reason Typescript doesn't know about the `assign` method on
   // HTMLSlotElement.
   //
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (slot! as any).assign(slottedContent);
   const moreShadow = shadow
     .querySelector('#moreshadow')!

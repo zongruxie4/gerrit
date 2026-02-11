@@ -17,8 +17,11 @@ suite('gr-endpoint-decorator', () => {
   let container: HTMLElement;
 
   let plugin: PluginApi;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let decorationHook: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let decorationHookWithSlot: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let replacementHook: any;
   let first: GrEndpointDecorator;
   let second: GrEndpointDecorator;
@@ -114,16 +117,20 @@ suite('gr-endpoint-decorator', () => {
     assert.equal(modules.length, 1);
     const [module] = modules;
     assert.isOk(module);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.equal((module as any)['first-param'], 'barbar');
-    return decorationHook
-      .getLastAttached()
-      .then((element: any) => {
-        assert.strictEqual(element, module);
-      })
-      .then(() => {
-        element.remove();
-        assert.equal(decorationHook.getAllAttached().length, 0);
-      });
+    return (
+      decorationHook
+        .getLastAttached()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((element: any) => {
+          assert.strictEqual(element, module);
+        })
+        .then(() => {
+          element.remove();
+          assert.equal(decorationHook.getAllAttached().length, 0);
+        })
+    );
   });
 
   test('decoration with slot', () => {
@@ -132,16 +139,20 @@ suite('gr-endpoint-decorator', () => {
     assert.equal(modules.length, 1);
     const [module] = modules;
     assert.isOk(module);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.equal((module as any)['first-param'], 'barbar');
-    return decorationHookWithSlot
-      .getLastAttached()
-      .then((element: any) => {
-        assert.strictEqual(element, module);
-      })
-      .then(() => {
-        element.remove();
-        assert.equal(decorationHookWithSlot.getAllAttached().length, 0);
-      });
+    return (
+      decorationHookWithSlot
+        .getLastAttached()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((element: any) => {
+          assert.strictEqual(element, module);
+        })
+        .then(() => {
+          element.remove();
+          assert.equal(decorationHookWithSlot.getAllAttached().length, 0);
+        })
+    );
   });
 
   test('replacement', () => {
@@ -150,16 +161,20 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'OTHER-MODULE'
     );
     assert.isOk(module);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.equal((module as any)['second-param'], 'foofoo');
-    return replacementHook
-      .getLastAttached()
-      .then((element: any) => {
-        assert.strictEqual(element, module);
-      })
-      .then(() => {
-        element.remove();
-        assert.equal(replacementHook.getAllAttached().length, 0);
-      });
+    return (
+      replacementHook
+        .getLastAttached()
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((element: any) => {
+          assert.strictEqual(element, module);
+        })
+        .then(() => {
+          element.remove();
+          assert.equal(replacementHook.getAllAttached().length, 0);
+        })
+    );
   });
 
   test('late registration', async () => {
@@ -225,6 +240,7 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'NOOB-NOOB'
     );
     assert.isOk(module);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.strictEqual((module as any)['banana-param'], value);
   });
 
@@ -245,10 +261,12 @@ suite('gr-endpoint-decorator', () => {
       element => element.nodeName === 'NOOB-NOOB'
     );
     assert.isOk(module);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.strictEqual((module as any)['banana-param'], value1);
 
     param.value = value2;
     await param.updateComplete;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.strictEqual((module as any)['banana-param'], value2);
   });
 });

@@ -358,6 +358,7 @@ suite('gr-group tests', () => {
     element.groupId = '1' as GroupId;
 
     const response = {...new Response(), status: 404};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     stubRestApi('getGroupConfig').callsFake((_: any, errFn: any) => {
       if (errFn !== undefined) {
         errFn(response);

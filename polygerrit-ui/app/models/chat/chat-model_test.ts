@@ -128,6 +128,7 @@ suite('chat-model tests', () => {
 
     const state = model.getState();
     assert.isDefined(state.customActions);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     assert.deepEqual(state.customActions, customActions as any);
   });
 
@@ -178,6 +179,7 @@ suite('chat-model tests', () => {
         display_text: 'Default Action',
         initial_user_prompt: 'Hello',
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ] as any;
 
     model.chat('hello', undefined, 0);

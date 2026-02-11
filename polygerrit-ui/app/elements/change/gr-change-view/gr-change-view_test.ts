@@ -1353,8 +1353,11 @@ suite('gr-change-view tests', () => {
       const hookEl = await plugin
         .hook('change-view-integration')
         .getLastAttached();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.strictEqual((hookEl as any).plugin, plugin);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.strictEqual((hookEl as any).change, element.change);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.strictEqual((hookEl as any).revision, element.revision);
     });
   });

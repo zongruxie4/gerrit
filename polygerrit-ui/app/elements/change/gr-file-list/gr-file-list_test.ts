@@ -1109,6 +1109,7 @@ suite('gr-file-list tests', () => {
             openSelectedStub.reset();
             expandStub.reset();
             element.handleOpenFile();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = {} as any;
             if (openCursorStub.called) {
               result.opened_cursor = true;
@@ -1518,6 +1519,7 @@ suite('gr-file-list tests', () => {
             return Promise.resolve();
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any;
       await element.renderInOrder(
         [{path: 'p2'}, {path: 'p1'}, {path: 'p0'}],
@@ -1539,6 +1541,7 @@ suite('gr-file-list tests', () => {
             return Promise.resolve();
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any;
       await element.renderInOrder([{path: 'p2'}], diffs);
       await element.updateComplete;
@@ -1573,6 +1576,7 @@ suite('gr-file-list tests', () => {
             return Promise.resolve();
           },
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any;
 
       await element.renderInOrder([{path: 'p'}], diffs);
@@ -1729,7 +1733,9 @@ suite('gr-file-list tests', () => {
     });
 
     test('should not show separator if no unmodified files', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).modifiedFiles = createFiles(2);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).unmodifiedFiles = [];
       await element.updateComplete;
 
@@ -1738,7 +1744,9 @@ suite('gr-file-list tests', () => {
     });
 
     test('should not show separator if no modified files', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).modifiedFiles = [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).unmodifiedFiles = createFiles(2);
       await element.updateComplete;
 
@@ -1747,10 +1755,14 @@ suite('gr-file-list tests', () => {
     });
 
     test('should show separator if modified and unmodified files', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).modifiedFiles = createFiles(2);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (element as any).unmodifiedFiles = createFiles(3);
       element.files = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(element as any).modifiedFiles,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(element as any).unmodifiedFiles,
       ];
       await element.updateComplete;

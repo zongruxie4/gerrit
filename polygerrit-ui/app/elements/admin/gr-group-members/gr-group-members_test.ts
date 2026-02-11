@@ -448,6 +448,7 @@ suite('gr-group-members tests', () => {
     element.addEventListener('show-alert', alertStub);
     const errorResponse = {...new Response(), status: 404, ok: false};
     stubRestApi('saveIncludedGroup').callsFake(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (_: any, _non: any, errFn: any) => {
         if (errFn !== undefined) {
           errFn(errorResponse);
@@ -592,6 +593,7 @@ suite('gr-group-members tests', () => {
     element.groupId = 'testId1' as GroupId;
 
     const response = {...new Response(), status: 404};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     stubRestApi('getGroupConfig').callsFake((_: any, errFn: any) => {
       if (errFn !== undefined) {
         errFn(response);

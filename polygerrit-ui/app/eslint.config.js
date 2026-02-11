@@ -347,7 +347,6 @@ module.exports = {
         'test-utils.ts',
       ],
       rules: {
-        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/require-await': 'off',
       },
     },

@@ -394,6 +394,7 @@ suite('gr-comment tests', () => {
         '.draftTooltip'
       );
       assert.equal(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         tooltip.getAttribute('title') || (tooltip as any).originalTitle,
         "This draft is only visible to you. To publish drafts, click the 'Reply' or 'Start review' button at the top of the change or press the 'a' key."
       );

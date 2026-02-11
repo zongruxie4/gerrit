@@ -221,8 +221,11 @@ suite('gr-confirm-cherrypick-dialog tests', () => {
       assert.equal(args[0], 1);
       assert.equal(args[1], 'POST' as HttpMethod);
       assert.equal(args[2], '/cherrypick');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.equal((args[4] as any).destination, 'master');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.isTrue((args[4] as any).allow_conflicts);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.isTrue((args[4] as any).allow_empty);
     });
 

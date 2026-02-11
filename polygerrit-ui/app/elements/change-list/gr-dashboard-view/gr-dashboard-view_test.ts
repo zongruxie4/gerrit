@@ -616,6 +616,7 @@ suite('gr-dashboard-view tests', () => {
   test('404 page', async () => {
     const response = {...new Response(), status: 404};
     stubRestApi('getDashboard').callsFake(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       async (_project: any, _dashboard: any, errFn: any) => {
         if (errFn !== undefined) {
           errFn(response);

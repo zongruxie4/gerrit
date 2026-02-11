@@ -12,7 +12,9 @@ import {GrLibLoader} from './gr-lib-loader';
 
 suite('gr-lib-loader tests', () => {
   let grLibLoader: GrLibLoader;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let resolveLoad: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let rejectLoad: any;
   let loadStub: sinon.SinonStub;
 
@@ -101,6 +103,7 @@ suite('gr-lib-loader tests', () => {
 
     const libraryConfig = {
       src: 'foo.js',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       configureCallback: () => (window as any).library,
     };
 
@@ -110,6 +113,7 @@ suite('gr-lib-loader tests', () => {
     grLibLoader.getLibrary(libraryConfig).then(loaded1);
     grLibLoader.getLibrary(libraryConfig).then(loaded2);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).library = library;
     resolveLoad();
     await waitEventLoop();
@@ -127,18 +131,21 @@ suite('gr-lib-loader tests', () => {
 
   suite('preloaded', () => {
     setup(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).library = {
         initialize: sinon.stub(),
       };
     });
 
     teardown(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).library;
     });
 
     test('does not load library again if detected present', async () => {
       const libraryConfig = {
         src: 'foo.js',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         checkPresent: () => (window as any).library !== undefined,
       };
 
@@ -165,7 +172,9 @@ suite('gr-lib-loader tests', () => {
     test('runs configuration for externally loaded library', async () => {
       const libraryConfig = {
         src: 'foo.js',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         checkPresent: () => (window as any).library !== undefined,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         configureCallback: () => (window as any).library.initialize(),
       };
 
@@ -174,13 +183,16 @@ suite('gr-lib-loader tests', () => {
       resolveLoad();
       await waitEventLoop();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       assert.isTrue((window as any).library.initialize.calledOnce);
     });
 
     test('loads library again if not detected present', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).library = undefined;
       const libraryConfig = {
         src: 'foo.js',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         checkPresent: () => (window as any).library !== undefined,
       };
 
