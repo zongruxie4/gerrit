@@ -98,7 +98,6 @@ export class GrMarkedElement extends LitElement {
 
     const options = {
       renderer,
-      highlight: this.highlight.bind(this),
       breaks: this.breaks,
       pedantic: this.pedantic,
     };
@@ -110,15 +109,5 @@ export class GrMarkedElement extends LitElement {
     this.dispatchEvent(
       new CustomEvent('marked-render-complete', {bubbles: true, composed: true})
     );
-  }
-
-  private highlight(code: string, lang: string): string {
-    const event = new CustomEvent('syntax-highlight', {
-      detail: {code, lang},
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(event);
-    return event.detail.code || code;
   }
 }
