@@ -567,7 +567,7 @@ export class GrDiffView extends LitElement {
           margin-left: var(--spacing-s);
           margin-right: var(--spacing-m);
           font-weight: var(--font-weight-medium);
-          whitespace: no-wrap;
+          white-space: nowrap;
           overflow: auto;
         }
         .patchRangeLeft {
