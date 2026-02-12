@@ -114,6 +114,7 @@ export class SplashPage extends LitElement {
     .splash-greeting {
       background: linear-gradient(135deg, #217bfe 0, #078efb 33%, #ac87eb 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       -webkit-box-orient: vertical;
       color: transparent;
@@ -214,9 +215,7 @@ export class SplashPage extends LitElement {
       margin-left: auto;
       margin-right: 8px;
     }
-    .small-icon {
-      /* TODO: find small-icon styles equivalent */
-    }
+    /* TODO: find small-icon styles equivalent for .small-icon */
   `;
 
   override render() {

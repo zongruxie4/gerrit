@@ -148,6 +148,9 @@ export class GrSearchAutocomplete extends LitElement {
   @property({type: Boolean})
   showLeadingIcon = false;
 
+  @property({type: Number})
+  verticalOffset = 31;
+
   @property({type: Object})
   projectSuggestions: SuggestionProvider = () => Promise.resolve([]);
 
@@ -223,6 +226,7 @@ export class GrSearchAutocomplete extends LitElement {
           placeholder=${this.placeholder}
           .text=${this.inputVal}
           .query=${this.query}
+          .verticalOffset=${this.verticalOffset}
           allow-non-suggested-values
           multi
           skip-commit-on-item-select

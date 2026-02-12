@@ -162,8 +162,6 @@ export class GrAiPromptDialog extends LitElement {
           align-items: flex-start;
           margin-bottom: var(--spacing-m);
         }
-        .template-selector {
-        }
         .template-options {
           display: flex;
           flex-direction: column;

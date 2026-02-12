@@ -890,7 +890,7 @@ export class GrChangeView extends LitElement {
           line-height: var(--line-height-h3);
           margin-left: var(--spacing-l);
           line-break: anywhere;
-          whitespace: no-wrap;
+          white-space: nowrap;
           overflow: auto;
         }
         .changeNumberColon {
