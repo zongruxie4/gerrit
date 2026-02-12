@@ -138,6 +138,10 @@ export class GrDropdownList extends LitElement {
           --md-divider-color: var(--border-color);
         }
         md-menu-item {
+          -moz-user-select: text;
+          -ms-user-select: text;
+          -webkit-user-select: text;
+          user-select: text;
           max-height: 70vh;
           min-width: 266px;
           --md-sys-color-on-surface: var(
@@ -368,10 +372,16 @@ export class GrDropdownList extends LitElement {
   private renderMdMenuItem(item: DropdownItem, index: number) {
     return html`
       <md-menu-item
+        keep-open
         ?selected=${this.value === String(item.value)}
         ?active=${this.value === String(item.value)}
         ?disabled=${!!item.disabled}
-        @click=${() => {
+        @click=${(e: Event) => {
+          if (document.getSelection()?.toString().length !== 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
           this.value = String(item.value);
         }}
         @keydown=${(e: KeyboardEvent) => {
@@ -483,6 +493,9 @@ export class GrDropdownList extends LitElement {
    */
   private handleDropdownClick() {
     assertIsDefined(this.dropdown);
+    if (document.getSelection()?.toString().length !== 0) {
+      return;
+    }
 
     this.dropdown.close();
   }

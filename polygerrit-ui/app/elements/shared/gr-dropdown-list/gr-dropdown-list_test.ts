@@ -81,7 +81,7 @@ suite('gr-dropdown-list tests', () => {
               quick=""
               tabindex="-1"
             >
-              <md-menu-item md-menu-item="" tabindex="0">
+              <md-menu-item keep-open="" md-menu-item="" tabindex="0">
                 <div class="topContent">
                   <div>
                   <span class="desktopText">
@@ -93,7 +93,7 @@ suite('gr-dropdown-list tests', () => {
                 </div>
               </md-menu-item>
               <md-divider role="separator" tabindex="-1"> </md-divider>
-              <md-menu-item active="" md-menu-item="" selected="" tabindex="-1">
+              <md-menu-item active="" keep-open="" md-menu-item="" selected="" tabindex="-1">
                 <div class="topContent">
                   <div>
                   <span class="desktopText">
@@ -107,7 +107,7 @@ suite('gr-dropdown-list tests', () => {
                 </div>
               </md-menu-item>
               <md-divider role="separator" tabindex="-1"> </md-divider>
-              <md-menu-item disabled="" md-menu-item="" tabindex="-1">
+              <md-menu-item disabled="" keep-open="" md-menu-item="" tabindex="-1">
                 <div class="topContent">
                   <div>
                   <span class="desktopText">
