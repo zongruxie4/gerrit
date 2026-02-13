@@ -39,6 +39,9 @@ suite('context-chip tests', () => {
       element,
       /* HTML */ `
         <md-filter-chip class="context-chip no-link" removable="" title="">
+          <div class="context-chip-container">
+            <span class="context-chip-title"> </span>
+          </div>
         </md-filter-chip>
       `
     );
@@ -62,9 +65,9 @@ suite('context-chip tests', () => {
   test('renders as suggestion', async () => {
     element.isSuggestion = true;
     await element.updateComplete;
-    const icon = element.shadowRoot?.querySelector('md-icon');
+    const icon = element.shadowRoot?.querySelector('gr-icon');
     assert.isOk(icon);
-    assert.equal(icon.textContent?.trim(), 'add');
+    assert.equal(icon.getAttribute('icon'), 'add');
   });
 
   test('renders as custom action', async () => {
@@ -105,13 +108,13 @@ suite('context-chip tests', () => {
     assert.isTrue(spy.called);
   });
 
-  test('fires accept-context-item-suggestion event', async () => {
+  test('fires accept-context-item-suggestion event on chip click', async () => {
     element.isSuggestion = true;
     await element.updateComplete;
     const spy = sinon.spy();
     element.addEventListener('accept-context-item-suggestion', spy);
-    const trailingIcon = element.shadowRoot?.querySelector('md-icon');
-    trailingIcon?.click();
+    const chip = element.shadowRoot?.querySelector('md-filter-chip');
+    chip?.click();
     assert.isTrue(spy.called);
   });
 
