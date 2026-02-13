@@ -2762,7 +2762,7 @@ public class ChangeIT extends AbstractDaemonTest {
     assertThat(
             gApi.changes().id(changeId).get(DETAILED_LABELS).labels.get("Code-Review").all.stream()
                 .collect(toImmutableMap(vote -> Account.id(vote._accountId), vote -> vote.value)))
-        .isEqualTo(ImmutableMap.of(user.id(), 2, admin.id(), 0));
+        .isEqualTo(ImmutableMap.of(user.id(), 2));
 
     // Remove permissions for CODE_REVIEW. The user still has [-1,+1], inherited from All-Projects.
     projectOperations
@@ -2777,7 +2777,7 @@ public class ChangeIT extends AbstractDaemonTest {
     assertThat(
             get(changeId, DETAILED_LABELS).labels.get(LabelId.CODE_REVIEW).all.stream()
                 .map(vote -> vote.value))
-        .containsExactly(2, 0);
+        .containsExactly(2);
 
     // The change is still submittable
     requestScopeOperations.setApiUser(admin.id());
@@ -3453,10 +3453,9 @@ public class ChangeIT extends AbstractDaemonTest {
     gApi.changes().id(triplet).addReviewer(user.username());
     ChangeInfo c = gApi.changes().id(triplet).get(DETAILED_LABELS);
     LabelInfo codeReview = c.labels.get(LabelId.CODE_REVIEW);
-    assertThat(codeReview.all).hasSize(2);
-    ApprovalInfo approval =
-        codeReview.all.stream().filter(a -> a._accountId == user.id().get()).findFirst().get();
-    assertThat(approval).isNotNull();
+    assertThat(codeReview.all).hasSize(1);
+    ApprovalInfo approval = codeReview.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
     assertThat(approval.value).isEqualTo(0);
 
     projectOperations
@@ -3471,9 +3470,9 @@ public class ChangeIT extends AbstractDaemonTest {
 
     c = gApi.changes().id(triplet).get(DETAILED_LABELS);
     codeReview = c.labels.get(LabelId.CODE_REVIEW);
-    assertThat(codeReview.all).hasSize(2);
-    approval =
-        codeReview.all.stream().filter(a -> a._accountId.equals(user.id().get())).findFirst().get();
+    assertThat(codeReview.all).hasSize(1);
+    approval = codeReview.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
     assertThat(approval.value).isNull();
   }
 
@@ -3675,9 +3674,7 @@ public class ChangeIT extends AbstractDaemonTest {
     ChangeInfo change = gApi.changes().id(r.getChangeId()).get(options);
     assertThat(change.status).isEqualTo(ChangeStatus.NEW);
     assertThat(change.labels.keySet()).containsExactly(LabelId.CODE_REVIEW);
-    assertThat(change.labels.get(LabelId.CODE_REVIEW).all).hasSize(1);
-    assertThat(change.labels.get(LabelId.CODE_REVIEW).all.get(0)._accountId)
-        .isEqualTo(admin.id().get());
+    assertThat(change.labels.get(LabelId.CODE_REVIEW).all).isNull();
 
     voteLabel(r.getChangeId(), LabelId.CODE_REVIEW, +1);
     change = gApi.changes().id(r.getChangeId()).get(options);
@@ -4126,10 +4123,9 @@ public class ChangeIT extends AbstractDaemonTest {
 
     ChangeInfo c = gApi.changes().id(triplet).get(DETAILED_LABELS);
     LabelInfo codeReview = c.labels.get(LabelId.CODE_REVIEW);
-    assertThat(codeReview.all).hasSize(2);
-    ApprovalInfo approval =
-        codeReview.all.stream().filter(a -> a._accountId == user.id().get()).findFirst().get();
-    assertThat(approval).isNotNull();
+    assertThat(codeReview.all).hasSize(1);
+    ApprovalInfo approval = codeReview.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
     assertThat(approval.permittedVotingRange).isNotNull();
     // default values
     assertThat(approval.permittedVotingRange.min).isEqualTo(-1);
@@ -4147,9 +4143,9 @@ public class ChangeIT extends AbstractDaemonTest {
 
     c = gApi.changes().id(triplet).get(DETAILED_LABELS);
     codeReview = c.labels.get(LabelId.CODE_REVIEW);
-    assertThat(codeReview.all).hasSize(2);
-    approval =
-        codeReview.all.stream().filter(a -> a._accountId.equals(user.id().get())).findFirst().get();
+    assertThat(codeReview.all).hasSize(1);
+    approval = codeReview.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
     assertThat(approval.permittedVotingRange).isNotNull();
     assertThat(approval.permittedVotingRange.min).isEqualTo(minPermittedValue);
     assertThat(approval.permittedVotingRange.max).isEqualTo(maxPermittedValue);
@@ -4174,10 +4170,9 @@ public class ChangeIT extends AbstractDaemonTest {
 
     ChangeInfo c = gApi.changes().id(triplet).get(DETAILED_LABELS);
     LabelInfo codeReview = c.labels.get(LabelId.CODE_REVIEW);
-    assertThat(codeReview.all).hasSize(2);
-    ApprovalInfo approval =
-        codeReview.all.stream().filter(a -> a._accountId == user.id().get()).findFirst().get();
-    assertThat(approval).isNotNull();
+    assertThat(codeReview.all).hasSize(1);
+    ApprovalInfo approval = codeReview.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
     assertThat(approval.permittedVotingRange).isNull();
   }
 
@@ -4821,7 +4816,7 @@ public class ChangeIT extends AbstractDaemonTest {
     ChangeInfo c = gApi.changes().id(changeId).get(DETAILED_LABELS);
     Set<ReviewerState> states =
         c.reviewers.entrySet().stream()
-            .filter(e -> e.getValue().stream().anyMatch(a -> a._accountId.equals(accountId.get())))
+            .filter(e -> e.getValue().stream().anyMatch(a -> a._accountId == accountId.get()))
             .map(Map.Entry::getKey)
             .collect(toSet());
     assertWithMessage(states.toString()).that(states.size()).isAtMost(1);

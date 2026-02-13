@@ -440,10 +440,9 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     LabelInfo label = c.labels.get(LabelId.CODE_REVIEW);
     assertThat(label).isNotNull();
     assertThat(label.all).isNotNull();
-    assertThat(label.all).hasSize(2);
-    ApprovalInfo approval =
-        label.all.stream().filter(a -> a._accountId == user.id().get()).findFirst().get();
-    assertThat(approval).isNotNull();
+    assertThat(label.all).hasSize(1);
+    ApprovalInfo approval = label.all.get(0);
+    assertThat(approval._accountId).isEqualTo(user.id().get());
   }
 
   @Test
@@ -470,8 +469,7 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     assertThat(c.labels).isNotNull();
     LabelInfo label = c.labels.get(LabelId.CODE_REVIEW);
     assertThat(label).isNotNull();
-    assertThat(label.all).hasSize(1);
-    assertThat(label.all.get(0)._accountId).isEqualTo(admin.id().get());
+    assertThat(label.all).isNull();
   }
 
   @Test
@@ -485,8 +483,7 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     assertReviewers(c, CC);
     LabelInfo label = c.labels.get(LabelId.CODE_REVIEW);
     assertThat(label).isNotNull();
-    assertThat(label.all).hasSize(1);
-    assertThat(label.all.get(0)._accountId).isEqualTo(admin.id().get());
+    assertThat(label.all).isNull();
 
     // Add user as REVIEWER.
     ReviewInput input = new ReviewInput().reviewer(user.username());
@@ -502,7 +499,7 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     label = c.labels.get(LabelId.CODE_REVIEW);
     assertThat(label).isNotNull();
     assertThat(label.all).isNotNull();
-    assertThat(label.all).hasSize(2);
+    assertThat(label.all).hasSize(1);
     Map<Integer, Integer> approvals = new HashMap<>();
     for (ApprovalInfo approval : label.all) {
       approvals.put(approval._accountId, approval.value);
@@ -526,7 +523,7 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     label = c.labels.get(LabelId.CODE_REVIEW);
     assertThat(label).isNotNull();
     assertThat(label.all).isNotNull();
-    assertThat(label.all).hasSize(2);
+    assertThat(label.all).hasSize(1);
     approvals.clear();
     for (ApprovalInfo approval : label.all) {
       approvals.put(approval._accountId, approval.value);
@@ -776,14 +773,12 @@ public class ChangeReviewersIT extends AbstractDaemonTest {
     deleteResult.assertNoContent();
 
     changeLabels = getChangeLabels(r.getChangeId());
-    assertThat(changeLabels.get(crLabel).all).hasSize(1);
-    assertThat(changeLabels.get(crLabel).all.get(0)._accountId).isEqualTo(admin.id().get());
+    assertThat(changeLabels.get(crLabel).all).isNull();
 
     // Check that the vote is gone even after the reviewer is added back
     addReviewer(r.getChangeId(), admin.email());
     changeLabels = getChangeLabels(r.getChangeId());
-    assertThat(changeLabels.get(crLabel).all).hasSize(1);
-    assertThat(changeLabels.get(crLabel).all.get(0)._accountId).isEqualTo(admin.id().get());
+    assertThat(changeLabels.get(crLabel).all).isNull();
   }
 
   @Test
