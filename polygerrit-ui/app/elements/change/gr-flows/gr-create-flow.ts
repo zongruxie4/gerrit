@@ -243,7 +243,10 @@ export class GrCreateFlow extends LitElement {
     if (changedProperties.has('changeNum')) {
       this.getFlowActions();
     }
-    if (changedProperties.has('stages')) {
+    if (
+      changedProperties.has('stages') &&
+      !changedProperties.has('flowString')
+    ) {
       this.flowString = computeFlowString(this.stages);
     }
   }
