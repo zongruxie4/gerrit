@@ -58,6 +58,7 @@ import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.acceptance.testsuite.project.ProjectOperations;
 import com.google.gerrit.acceptance.testsuite.request.RequestScopeOperations;
 import com.google.gerrit.common.Nullable;
+import com.google.gerrit.entities.Account;
 import com.google.gerrit.entities.AttentionSetUpdate;
 import com.google.gerrit.entities.BranchNameKey;
 import com.google.gerrit.entities.Change;
@@ -79,7 +80,6 @@ import com.google.gerrit.extensions.client.ChangeStatus;
 import com.google.gerrit.extensions.client.InheritableBoolean;
 import com.google.gerrit.extensions.client.ListChangesOption;
 import com.google.gerrit.extensions.client.SubmitType;
-import com.google.gerrit.extensions.common.ApprovalInfo;
 import com.google.gerrit.extensions.common.ChangeInfo;
 import com.google.gerrit.extensions.common.ChangeInput;
 import com.google.gerrit.extensions.common.LabelInfo;
@@ -1504,9 +1504,9 @@ public abstract class AbstractSubmit extends AbstractDaemonTest {
   protected void assertApproved(String changeId, TestAccount user) throws Throwable {
     ChangeInfo c = get(changeId, DETAILED_LABELS);
     LabelInfo cr = c.labels.get(LabelId.CODE_REVIEW);
-    ApprovalInfo approval =
-        cr.all.stream().filter(a -> a._accountId.equals(user.id().get())).findFirst().get();
-    assertThat(approval.value).isEqualTo(2);
+    assertThat(cr.all).hasSize(1);
+    assertThat(cr.all.get(0).value).isEqualTo(2);
+    assertThat(Account.id(cr.all.get(0)._accountId)).isEqualTo(user.id());
   }
 
   protected void assertMerged(String changeId) throws RestApiException {
