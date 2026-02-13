@@ -871,12 +871,6 @@ export class GrChangeView extends LitElement {
         .header .download {
           margin-right: var(--spacing-l);
         }
-        gr-change-status {
-          margin-left: var(--spacing-s);
-        }
-        gr-change-status:first-child {
-          margin-left: 0;
-        }
         .headerTitle {
           align-items: center;
           display: flex;
@@ -961,6 +955,7 @@ export class GrChangeView extends LitElement {
         }
         .changeStatuses {
           flex-wrap: wrap;
+          gap: var(--spacing-s);
         }
         .mainChangeInfo {
           display: flex;
