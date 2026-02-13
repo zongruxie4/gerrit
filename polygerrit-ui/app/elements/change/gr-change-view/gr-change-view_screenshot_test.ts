@@ -37,6 +37,7 @@ import {
   AccountId,
   ActionInfo,
   EmailAddress,
+  NumericChangeId,
   RepoName,
   RevisionPatchSetNum,
   Timestamp,
@@ -307,6 +308,46 @@ suite('gr-change-view screenshot tests', () => {
 
       await visualDiff(container, 'gr-change-view-801px');
       await visualDiffDarkTheme(container, 'gr-change-view-801px');
+    } finally {
+      document.body.removeChild(container);
+    }
+  });
+
+  test('wrapped statuses 801px', async () => {
+    // Set viewport to ensure media queries respond correctly
+    await setViewport({width: 801, height: 900});
+
+    const changeModel = testResolver(changeModelToken);
+    changeModel.updateStateChange({
+      ...element.change!,
+      revert_of: 12345 as NumericChangeId,
+      submittable: true,
+      subject: 'Reland "Add initial jj support to `gclient sync`."',
+    });
+    await element.updateComplete;
+
+    const container = document.createElement('div');
+    container.style.width = '801px';
+    container.style.height = '900px';
+    container.style.overflow = 'hidden';
+    container.style.display = 'block';
+    container.style.backgroundColor = 'var(--view-background-color, #fff)';
+    container.appendChild(element);
+    document.body.appendChild(container);
+
+    try {
+      // Wait for all nested components to render
+      await waitUntil(() => !!element.fileList);
+      await element.updateComplete;
+      if (element.fileList) {
+        await element.fileList.updateComplete;
+      }
+      // Additional wait for any remaining async rendering
+      await waitUntil(
+        () => !!element.shadowRoot!.querySelector('gr-file-list')
+      );
+
+      await visualDiff(container, 'gr-change-view-wrapped-statuses-801px');
     } finally {
       document.body.removeChild(container);
     }
