@@ -918,6 +918,9 @@ export class GrChangeActions
     if (this.chatCapabilitiesLoaded && this.aiChatLoadingCleanup) {
       this.aiChatLoadingCleanup();
       this.aiChatLoadingCleanup = undefined;
+      // When capabilities are loaded, we also want to automatically open the Review
+      // Agent chat panel if the user had clicked the button while it was loading.
+      fire(this, 'ai-chat', {});
     }
   }
 
