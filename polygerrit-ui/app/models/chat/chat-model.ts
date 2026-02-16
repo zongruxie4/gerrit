@@ -375,6 +375,16 @@ export class ChatModel extends Model<ChatState> {
       this.updateState({
         provider,
       });
+
+      // If the plugin registers after the change object was loaded, the
+      // initial fetch would have silently returned undefined, leaving capabilitiesLoaded
+      // in an infinite loading state. We must re-trigger the fetches when the plugin arrives.
+      if (this.change) {
+        this.getModels();
+        this.getActions();
+        this.getContextItemTypes();
+        this.listConversations();
+      }
     });
 
     this.filesModel.files$.subscribe(files => (this.files = files ?? []));
