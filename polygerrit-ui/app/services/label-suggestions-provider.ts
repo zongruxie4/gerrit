@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import {RestApiService} from '../services/gr-rest-api/gr-rest-api';
-import {AutocompleteSuggestion} from './autocomplete-util';
+import {AutocompleteSuggestion} from '../utils/autocomplete-util';
 import {getAppContext} from '../services/app-context';
 import {RepoName} from '../types/common';
 import {LabelDefinitionInfo} from '../api/rest-api';
