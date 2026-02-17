@@ -42,7 +42,7 @@ import {FlowCustomConditionInfo} from '../../../api/flows';
 import {changeModelToken} from '../../../models/change/change-model';
 import {combineLatest} from 'rxjs';
 import {getUserName} from '../../../utils/display-name-util';
-import {LabelSuggestionsProvider} from '../../../utils/label-suggestions-provider';
+import {LabelSuggestionsProvider} from '../../../services/label-suggestions-provider';
 
 const MAX_AUTOCOMPLETE_RESULTS = 10;
 
