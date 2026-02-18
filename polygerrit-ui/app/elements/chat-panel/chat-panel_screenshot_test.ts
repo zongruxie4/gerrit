@@ -373,4 +373,26 @@ suite('chat-panel screenshot tests', () => {
     await visualDiff(element, 'chat-panel-prompt-box-suggested-items');
     await visualDiffDarkTheme(element, 'chat-panel-prompt-box-suggested-items');
   });
+
+  test('chat mode history scrolling', async () => {
+    const conversations = Array.from({length: 15}).map((_, i) => {
+      return {
+        id: `${i}`,
+        title: `Long Conversation Title Number ${i}`,
+        timestamp_millis: 1704110400000 - i * 1000000,
+      };
+    });
+
+    chatModel.updateState({
+      ...chatModel.getState(),
+      mode: ChatPanelMode.HISTORY,
+      conversations,
+    });
+    element.style.display = 'block';
+    element.style.width = '400px';
+    element.style.height = '400px';
+    await element.updateComplete;
+    await visualDiff(element, 'chat-panel-history-scrolling');
+    await visualDiffDarkTheme(element, 'chat-panel-history-scrolling');
+  });
 });
