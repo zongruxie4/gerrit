@@ -448,9 +448,6 @@ export class GrCreateFlow extends LitElement {
     return html`<md-select-option value="Gerrit">
         <div slot="headline">Gerrit</div>
       </md-select-option>
-      <md-select-option value="Other">
-        <div slot="headline">Other</div>
-      </md-select-option>
       ${this.renderCustomConditions()}`;
   }
 
