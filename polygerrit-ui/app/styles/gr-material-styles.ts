@@ -119,4 +119,16 @@ export const materialStyles = css`
     --md-sys-color-primary: var(--select-primary);
     --md-sys-color-on-surface: var(--select-on-surface);
   }
+
+  md-menu {
+    --md-menu-container-color: var(--dialog-background-color);
+    --md-menu-item-label-text-color: var(--primary-text-color);
+    --md-menu-item-icon-color: var(--primary-text-color);
+    --md-menu-item-hover-label-text-color: var(--primary-text-color);
+    --md-menu-item-focus-label-text-color: var(--primary-text-color);
+    --md-menu-item-pressed-label-text-color: var(--primary-text-color);
+    --md-menu-item-hover-icon-color: var(--primary-text-color);
+    --md-menu-item-focus-icon-color: var(--primary-text-color);
+    --md-menu-item-pressed-icon-color: var(--primary-text-color);
+  }
 `;
