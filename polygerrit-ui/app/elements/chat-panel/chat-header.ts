@@ -21,110 +21,111 @@ import {ModelInfo} from '../../api/ai-code-review';
 import {chatModelToken, ChatPanelMode} from '../../models/chat/chat-model';
 import {resolve} from '../../models/dependency';
 import {classMap} from 'lit/directives/class-map.js';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 @customElement('chat-header')
 export class ChatHeader extends LitElement {
-  static override styles = css`
-    :host {
-      display: flex;
-      padding: 0 var(--spacing-xxl) 0 var(--spacing-xl);
-      align-items: center;
-      color: var(--primary-text-color);
-    }
-    .title {
-      color: var(--primary-text-color);
-      font-family: var(--header-font-family);
-      font-size: var(--font-size-h2);
-      font-weight: var(--font-weight-h2);
-      line-height: var(--line-height-h2);
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    md-text-button.select-model-trigger {
-      height: auto;
-      min-width: 50px;
-    }
-    .title-group {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-    }
-    .subtitle {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--deemphasized-text-color);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      max-width: 100%;
-    }
-    .subtitle-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .arrow-drop-down {
-      height: 16px;
-      width: 16px;
-      font-size: 18px;
-      margin-top: -2px;
-    }
-    .hidden {
-      visibility: hidden;
-      pointer-events: none;
-    }
-    :host > md-icon-button,
-    :host > gr-icon {
-      flex-shrink: 0;
-    }
-    md-icon-button {
-      height: 40px;
-      width: 40px;
-      font-size: 20px;
-      font-weight: 500;
-    }
-    md-icon-button.back-arrow {
-      height: 32px;
-      width: 32px;
-      padding-right: 0px;
-    }
-    md-icon {
-      vertical-align: middle;
-    }
-    md-icon-button:disabled md-icon {
-      color: var(--deemphasized-text-color);
-    }
-    .gemini-icon {
-      color: var(--deemphasized-text-color);
-      font-size: 24px;
-      margin-right: 3px;
-    }
-    .first-right-button {
-      margin-left: auto;
-    }
-    .more-actions-menu md-menu-item md-icon {
-      color: var(--deemphasized-text-color);
-    }
-    .select-model-menu {
-      max-width: 500px;
-    }
-    md-text-button.select-model-trigger > span {
-      min-width: 0;
-    }
-    md-icon-button {
-      color: var(--primary-text-color);
-      --md-icon-button-icon-color: var(--primary-text-color);
-      --md-icon-button-hover-icon-color: var(--primary-text-color);
-    }
-    md-icon-button md-icon {
-      color: var(--primary-text-color);
-    }
-    md-menu {
-      --md-menu-container-color: var(--dialog-background-color);
-    }
-  `;
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        display: flex;
+        padding: 0 var(--spacing-xxl) 0 var(--spacing-xl);
+        align-items: center;
+        color: var(--primary-text-color);
+      }
+      .title {
+        color: var(--primary-text-color);
+        font-family: var(--header-font-family);
+        font-size: var(--font-size-h2);
+        font-weight: var(--font-weight-h2);
+        line-height: var(--line-height-h2);
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      md-text-button.select-model-trigger {
+        height: auto;
+        min-width: 50px;
+      }
+      .title-group {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+      }
+      .subtitle {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--deemphasized-text-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        max-width: 100%;
+      }
+      .subtitle-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .arrow-drop-down {
+        height: 16px;
+        width: 16px;
+        font-size: 18px;
+        margin-top: -2px;
+      }
+      .hidden {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      :host > md-icon-button,
+      :host > gr-icon {
+        flex-shrink: 0;
+      }
+      md-icon-button {
+        height: 40px;
+        width: 40px;
+        font-size: 20px;
+        font-weight: 500;
+      }
+      md-icon-button.back-arrow {
+        height: 32px;
+        width: 32px;
+        padding-right: 0px;
+      }
+      md-icon {
+        vertical-align: middle;
+      }
+      md-icon-button:disabled md-icon {
+        color: var(--deemphasized-text-color);
+      }
+      .gemini-icon {
+        color: var(--deemphasized-text-color);
+        font-size: 24px;
+        margin-right: 3px;
+      }
+      .first-right-button {
+        margin-left: auto;
+      }
+      .more-actions-menu md-menu-item md-icon {
+        color: var(--deemphasized-text-color);
+      }
+      .select-model-menu {
+        max-width: 500px;
+      }
+      md-text-button.select-model-trigger > span {
+        min-width: 0;
+      }
+      md-icon-button {
+        color: var(--primary-text-color);
+        --md-icon-button-icon-color: var(--primary-text-color);
+        --md-icon-button-hover-icon-color: var(--primary-text-color);
+      }
+      md-icon-button md-icon {
+        color: var(--primary-text-color);
+      }
+    `,
+  ];
 
   @state() availableModels: ModelInfo[] = [];
 
