@@ -1253,7 +1253,8 @@ export class GrChangeActions
     if (!this.flagService.isEnabled(KnownExperimentId.ENABLE_AI_CHAT)) {
       return null;
     }
-    if (!this.change?.can_ai_review) {
+    // When undefined, assume AI chat is allowed.
+    if (this.change?.can_ai_review === false) {
       return null;
     }
     if (!this.aiPluginsRegistered) {
