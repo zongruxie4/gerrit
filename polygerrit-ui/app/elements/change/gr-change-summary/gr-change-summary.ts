@@ -608,7 +608,7 @@ export class GrChangeSummary extends LitElement {
                   showCommentCategoryName
                   clickableChips
                 ></gr-comments-summary>
-                ${this.canAiReview
+                ${this.canAiReview !== false
                   ? html`<gr-button link @click=${this.handleOpenAiPromptDialog}
                       >Create AI Review Prompt</gr-button
                     >`
