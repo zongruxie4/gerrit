@@ -83,12 +83,24 @@ suite('gr-change-summary test', () => {
                       clickablechips=""
                       showcommentcategoryname=""
                     ></gr-comments-summary>
+                    <gr-button
+                      aria-disabled="false"
+                      link=""
+                      role="button"
+                      tabindex="0"
+                    >
+                      Create AI Review Prompt
+                    </gr-button>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <dialog id="aiPromptModal" tabindex="-1">
+          <gr-ai-prompt-dialog id="aiPromptDialog" role="dialog">
+          </gr-ai-prompt-dialog>
+        </dialog>
       `
     );
   });
