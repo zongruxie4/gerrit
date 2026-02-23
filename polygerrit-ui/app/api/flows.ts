@@ -39,6 +39,11 @@ export declare interface FlowsProvider {
    * List all custom conditions for the current user and the given change.
    */
   getCustomConditions(change: ChangeInfo): Promise<FlowCustomConditionInfo[]>;
+
+  /**
+   * Returns a string containing a link to the feature documentation.
+   */
+  getDocumentation(): string;
 }
 
 export declare interface FlowsPluginApi {
