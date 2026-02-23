@@ -37,6 +37,7 @@ import {
 import {ValueChangedEvent} from '../../../types/events';
 import {SuggestionProvider} from '../../core/gr-search-autocomplete/gr-search-autocomplete';
 import {when} from 'lit/directives/when.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 import {MdOutlinedTextField} from '@material/web/textfield/outlined-text-field.js';
 import {
   computeFlowString,
@@ -104,6 +105,8 @@ export class GrCreateFlow extends LitElement {
   @state()
   // private but used in tests
   flowActions: FlowActionInfo[] = [];
+
+  @state() private documentationLink?: string;
 
   private readonly restApiService = getAppContext().restApiService;
 
@@ -218,6 +221,9 @@ export class GrCreateFlow extends LitElement {
           this.getFlowsModel().providers$,
         ]),
       async ([change, providers]) => {
+        this.documentationLink = providers
+          .map(p => p.getDocumentation())
+          .find(doc => !!doc);
         if (!change || providers.length === 0) {
           this.customConditions = [];
           return;
@@ -445,6 +451,7 @@ export class GrCreateFlow extends LitElement {
       >
         Create Flow
       </gr-button>
+      ${this.renderDocumentationLink(this.documentationLink)}
       ${this.renderCreateFlowDialog()}
     `;
   }
@@ -464,15 +471,12 @@ export class GrCreateFlow extends LitElement {
       ${this.renderCustomConditions()}`;
   }
 
-  private renderDocumentationLink() {
-    const condition = this.customConditions.find(
-      condition => condition.name === this.currentConditionPrefix
-    );
-    if (!condition || !condition.documentation) return;
+  private renderDocumentationLink(link?: string, slot?: string) {
+    if (!link) return;
     return html` <a
       class="help"
-      slot="trailing-icon"
-      href=${condition.documentation}
+      slot=${ifDefined(slot)}
+      href=${link}
       target="_blank"
       rel="noopener noreferrer"
       tabindex="-1"
@@ -569,7 +573,12 @@ export class GrCreateFlow extends LitElement {
                               e.target as MdOutlinedTextField
                             ).value)}
                         >
-                          ${this.renderDocumentationLink()}
+                          ${this.renderDocumentationLink(
+                            this.customConditions.find(
+                              c => c.name === this.currentConditionPrefix
+                            )?.documentation,
+                            'trailing-icon'
+                          )}
                         </md-outlined-text-field>`}
                   </div>
                   <div class="stage-label">Action: Then</div>
