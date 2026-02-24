@@ -738,7 +738,7 @@ suite('gr-change-actions tests', () => {
         title: 'Rebase onto tip of branch or parent change',
       };
       assert.isTrue(fetchChangesStub.called);
-      element.handleRebaseConfirm(
+      await element.handleRebaseConfirm(
         new CustomEvent('', {
           detail: {
             base: '1234',
@@ -791,7 +791,7 @@ suite('gr-change-actions tests', () => {
         title: 'Rebase onto tip of branch or parent change',
       };
       assert.isTrue(fetchChangesStub.called);
-      element.handleRebaseConfirm(
+      await element.handleRebaseConfirm(
         new CustomEvent('', {
           detail: {
             base: '1234',
