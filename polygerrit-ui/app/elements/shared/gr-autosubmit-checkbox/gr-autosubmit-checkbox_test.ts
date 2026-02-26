@@ -9,8 +9,8 @@ import './gr-autosubmit-checkbox';
 import {
   FlowsModel,
   flowsModelToken,
+  getSubmitCondition,
   SUBMIT_ACTION_NAME,
-  SUBMIT_CONDITION,
 } from '../../../models/flows/flows-model';
 import {AccountId, FlowStageState} from '../../../api/rest-api';
 import {GrIcon} from '../../shared/gr-icon/gr-icon';
@@ -75,7 +75,7 @@ suite('gr-autosubmit-checkbox tests', () => {
         stages: [
           {
             expression: {
-              condition: SUBMIT_CONDITION,
+              condition: getSubmitCondition(),
               action: {name: SUBMIT_ACTION_NAME},
             },
             state: FlowStageState.DONE,
