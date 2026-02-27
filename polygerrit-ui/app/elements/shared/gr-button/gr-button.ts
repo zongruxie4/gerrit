@@ -52,7 +52,7 @@ export class GrButton extends LitElement {
   loading = false;
 
   @property({type: Boolean, reflect: true})
-  disabled: boolean | null = null;
+  disabled = false;
 
   // Private but used in tests.
   readonly reporting = getAppContext().reportingService;
