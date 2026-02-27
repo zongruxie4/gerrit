@@ -609,21 +609,6 @@ export class GrReplyDialog extends LitElement {
         .patchsetLevelContainer.unresolved {
           background-color: var(--unresolved-comment-background-color);
         }
-        .autosubmit-label {
-          display: flex;
-          align-items: center;
-        }
-        .autosubmit-text {
-          padding-left: var(--spacing-m);
-        }
-        .autosubmit-info {
-          display: flex;
-          align-items: center;
-        }
-        .autosubmit-info gr-icon {
-          color: var(--info-foreground);
-          margin-right: var(--spacing-m);
-        }
         .privateVisiblityInfo {
           display: flex;
           justify-content: center;
