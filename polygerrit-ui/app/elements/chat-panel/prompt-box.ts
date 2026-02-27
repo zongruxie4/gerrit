@@ -315,7 +315,7 @@ export class PromptBox extends LitElement {
       --md-assist-chip-label-text-size: 12px;
       --md-assist-chip-label-text-weight: 500;
       --md-assist-chip-label-line-height: 16px;
-      --md-assist-chip-label-text-color: var(--primary-default, purple);
+      --md-assist-chip-label-text-color: var(--primary-text-color);
       margin: 0;
       margin-left: auto;
       border-color: var(--border-color);
