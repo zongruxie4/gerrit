@@ -4,7 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import {testResolver} from '../../test/common-test-setup';
-import {FlowsModel, SUBMIT_ACTION_NAME, SUBMIT_CONDITION} from './flows-model';
+import {
+  FlowsModel,
+  getSubmitCondition,
+  SUBMIT_ACTION_NAME,
+} from './flows-model';
 import {ChangeModel, changeModelToken} from '../change/change-model';
 import {PluginsModel} from '../plugins/plugins-model';
 import {stubRestApi, waitUntil} from '../../test/test-utils';
@@ -106,7 +110,7 @@ suite('flows-model tests', () => {
     assert.deepEqual(args[1], {
       stage_expressions: [
         {
-          condition: SUBMIT_CONDITION,
+          condition: getSubmitCondition(),
           action: {name: SUBMIT_ACTION_NAME},
         },
       ],
@@ -160,7 +164,7 @@ suite('flows-model tests', () => {
         stages: [
           {
             expression: {
-              condition: SUBMIT_CONDITION,
+              condition: getSubmitCondition(),
               action: {name: SUBMIT_ACTION_NAME},
             },
             state: FlowStageState.DONE,
