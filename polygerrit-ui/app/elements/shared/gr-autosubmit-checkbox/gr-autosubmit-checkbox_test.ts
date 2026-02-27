@@ -27,6 +27,7 @@ import {
 } from '../../../test/test-data-generators';
 import {changeModelToken} from '../../../models/change/change-model';
 import {ParsedChangeInfo} from '../../../types/types';
+import {ChangeStatus} from '../../../constants/constants';
 
 suite('gr-autosubmit-checkbox tests', () => {
   let element: GrAutosubmitCheckbox;
@@ -118,6 +119,40 @@ suite('gr-autosubmit-checkbox tests', () => {
       userModel.setAccount(createAccountDetailWithId(456 as AccountId));
       await element.updateComplete;
       assert.isTrue(element.isAutosubmitEnabled);
+    });
+
+    test('isAutosubmitEnabled is false if change is merged', async () => {
+      const changeModel = testResolver(changeModelToken);
+      const userModel = testResolver(userModelToken);
+
+      flowsModel.updateState({
+        isEnabled: true,
+        autosubmitProviders: [
+          {
+            isAutosubmitEnabled: () => true,
+            getSubmitCondition: () => '',
+            getSubmitAction: () => undefined,
+          },
+        ],
+        flows: [],
+      });
+
+      const change = {
+        ...createParsedChange(),
+        status: ChangeStatus.NEW,
+        owner: {_account_id: 456 as AccountId},
+      };
+      userModel.setAccount(createAccountDetailWithId(456 as AccountId));
+      changeModel.updateStateChange(change);
+      await element.updateComplete;
+      assert.isTrue(element.isAutosubmitEnabled);
+
+      changeModel.updateStateChange({
+        ...change,
+        status: ChangeStatus.MERGED,
+      });
+      await element.updateComplete;
+      assert.isFalse(element.isAutosubmitEnabled);
     });
   });
 
