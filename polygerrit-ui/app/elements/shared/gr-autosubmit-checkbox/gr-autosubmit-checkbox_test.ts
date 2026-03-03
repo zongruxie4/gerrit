@@ -16,7 +16,7 @@ import {AccountId, FlowStageState} from '../../../api/rest-api';
 import {GrIcon} from '../../shared/gr-icon/gr-icon';
 import {testResolver} from '../../../test/common-test-setup';
 import {query, queryAndAssert} from '../../../utils/common-util';
-import {isVisible} from '../../../test/test-utils';
+import {isVisible, stubReporting} from '../../../test/test-utils';
 import {GrAutosubmitCheckbox} from './gr-autosubmit-checkbox';
 import {assert, fixture, html, waitUntil} from '@open-wc/testing';
 import {
@@ -31,6 +31,11 @@ import {ChangeStatus} from '../../../constants/constants';
 
 suite('gr-autosubmit-checkbox tests', () => {
   let element: GrAutosubmitCheckbox;
+  let reportStub: sinon.SinonStub;
+
+  setup(async () => {
+    reportStub = stubReporting('reportInteraction');
+  });
 
   suite('autosubmit checkbox rendering', () => {
     let flowsModel: FlowsModel;
@@ -157,6 +162,12 @@ suite('gr-autosubmit-checkbox tests', () => {
   });
 
   suite('autosubmit info message rendering', () => {
+    setup(async () => {
+      element = await fixture<GrAutosubmitCheckbox>(html`
+        <gr-autosubmit-checkbox></gr-autosubmit-checkbox>
+      `);
+    });
+
     test('info message rendered when showAutosubmitInfoMessage is true', async () => {
       element.showAutosubmitInfoMessage = true;
       await element.updateComplete;
@@ -175,6 +186,53 @@ suite('gr-autosubmit-checkbox tests', () => {
       element.showAutosubmitInfoMessage = false;
       await element.updateComplete;
       assert.isNotOk(query(element, '.autosubmit-info'));
+    });
+  });
+
+  suite('reporting', () => {
+    setup(async () => {
+      element = await fixture<GrAutosubmitCheckbox>(html`
+        <gr-autosubmit-checkbox></gr-autosubmit-checkbox>
+      `);
+    });
+
+    test('reports when checkbox is shown', async () => {
+      reportStub.resetHistory();
+      const flowsModel = testResolver(flowsModelToken);
+      const changeModel = testResolver(changeModelToken);
+      const userModel = testResolver(userModelToken);
+
+      const change = createChange();
+      userModel.setAccount(createAccountDetailWithId(change.owner._account_id));
+      changeModel.updateState({
+        change: change as ParsedChangeInfo,
+      });
+
+      flowsModel.updateState({
+        isEnabled: true,
+        autosubmitProviders: [
+          {
+            isAutosubmitEnabled: () => true,
+            getSubmitCondition: () => '',
+            getSubmitAction: () => undefined,
+          },
+        ],
+      });
+
+      await waitUntil(() => reportStub.calledWith('autosubmit-checkbox-shown'));
+    });
+
+    test('reports when checkbox is clicked', async () => {
+      element.isAutosubmitEnabled = true;
+      await element.updateComplete;
+      reportStub.resetHistory();
+
+      const checkbox = queryAndAssert<HTMLElement>(element, '#autosubmit');
+      checkbox.click();
+
+      assert.isTrue(
+        reportStub.calledWith('autosubmit-checkbox-clicked', {checked: true})
+      );
     });
   });
 });

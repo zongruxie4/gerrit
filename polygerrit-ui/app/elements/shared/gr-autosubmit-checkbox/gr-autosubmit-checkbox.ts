@@ -15,6 +15,7 @@ import {changeModelToken} from '../../../models/change/change-model';
 import {resolve} from '../../../models/dependency';
 import {sharedStyles} from '../../../styles/shared-styles';
 import {formStyles} from '../../../styles/form-styles';
+import {getAppContext} from '../../../services/app-context';
 import {ChangeInfo} from '../../../types/common';
 import {ParsedChangeInfo} from '../../../types/types';
 import {fire} from '../../../utils/event-util';
@@ -54,6 +55,8 @@ export class GrAutosubmitCheckbox extends LitElement {
   private flowsDocumentationLink?: string;
 
   readonly getChangeModel = resolve(this, changeModelToken);
+
+  private readonly reporting = getAppContext().reportingService;
 
   static override get styles() {
     return [
@@ -107,12 +110,16 @@ export class GrAutosubmitCheckbox extends LitElement {
           this.getChangeModel().change$,
         ]),
       ([isAutosubmitEnabled, isFlowsEnabled, _, isOwner, change]) => {
+        const oldEnabled = this.isAutosubmitEnabled;
         this.isAutosubmitEnabled =
           isAutosubmitEnabled &&
           isFlowsEnabled &&
           !this.getFlowsModel().hasAutosubmitFlowAlready() &&
           isOwner &&
           !changeIsMerged(change);
+        if (this.isAutosubmitEnabled && !oldEnabled) {
+          this.reporting.reportInteraction('autosubmit-checkbox-shown');
+        }
         this.showAutosubmitInfoMessage =
           isAutosubmitEnabled &&
           isFlowsEnabled &&
@@ -180,6 +187,9 @@ export class GrAutosubmitCheckbox extends LitElement {
   private handleAutosubmitChanged(e: Event) {
     if (!(e.target instanceof MdCheckbox)) return;
     this.autosubmitChecked = e.target.checked;
+    this.reporting.reportInteraction('autosubmit-checkbox-clicked', {
+      checked: this.autosubmitChecked,
+    });
     fire(this, 'autosubmit-checked-changed', {checked: this.autosubmitChecked});
   }
 
