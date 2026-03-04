@@ -536,7 +536,11 @@ case "$ACTION" in
                 echo -16 > "/proc/${PID}/oom_adj"
             fi
         fi
-    elif [ "$(uname -s)"=="Linux" ] && test -d "/proc/${PID}"; then
+    elif test -f "/proc/${PID}/oom_score_adj" && ! test "$(cat "/proc/${PID}/oom_score_adj")" = "0" ; then
+        : # Do nothing. OOM score already adjusted.
+    elif test -f "/proc/${PID}/oom_adj" && ! test "$(cat "/proc/${PID}/oom_adj")" = "0" ; then
+        : # Do nothing. OOM score already adjusted.
+    elif test "$(uname -s)" = "Linux" && test -d "/proc/${PID}"; then
         echo "WARNING: Could not adjust Gerrit's process for the kernel's out-of-memory killer."
         echo "         This may be caused by ${0} not being run as root."
         echo "         Consider changing the OOM score adjustment manually for Gerrit's PID=${PID} with e.g.:"
