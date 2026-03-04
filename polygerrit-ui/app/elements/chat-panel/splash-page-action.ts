@@ -101,7 +101,7 @@ export class SplashPageAction extends LitElement {
       display: flex;
       flex-direction: column;
       height: 100%;
-      overflow-x: hidden;
+      overflow: hidden;
     }
     .main-action-text-container {
       margin-left: 20px;
@@ -119,7 +119,7 @@ export class SplashPageAction extends LitElement {
       font-weight: var(--font-weight-normal);
       line-height: var(--line-height-normal);
       color: var(--primary-text-color);
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -129,7 +129,7 @@ export class SplashPageAction extends LitElement {
       padding: 0px 15px 8px;
       font-size: 0.8em;
       color: var(--chat-splash-page-question-color);
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
