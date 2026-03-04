@@ -12,6 +12,7 @@ ExecStart=/usr/bin/java -Xmx1024m -jar ${GERRIT_HOME}/bin/gerrit.war daemon -d $
 User=gerritsrv
 SyslogIdentifier=GerritCodeReview
 StandardInput=socket
+OOMScoreAdjust=-1000
 
 [Install]
 WantedBy=multi-user.target
