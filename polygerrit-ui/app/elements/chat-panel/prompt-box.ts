@@ -30,6 +30,7 @@ import {ParsedChangeInfo} from '../../types/types';
 import {debounce, DelayedTask} from '../../utils/async-util';
 import {fire} from '../../utils/event-util';
 import {subscribe} from '../lit/subscription-controller';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 const MAX_VISIBLE_CONTEXT_ITEMS_COLLAPSED = 3;
 const MAX_VISIBLE_SUGGESTED_CONTEXT_ITEMS_COLLAPSED = 1;
@@ -238,93 +239,96 @@ export class PromptBox extends LitElement {
     return this.showAllContextItems ? '▲' : `+${this.numExcessContextItems}`;
   }
 
-  static override styles = css`
-    :host {
-      background-color: var(--background-color-tertiary);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      /* For high contrast mode. */
-      outline: 1px solid transparent;
-      padding: var(--spacing-l) var(--spacing-l) var(--spacing-m)
-        var(--spacing-xl);
-      transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    :host(:focus-within) {
-      background: var(
-        --search-box-focus-bg-color,
-        var(--background-color-primary)
-      );
-      box-shadow: 0px 1px 2px 0px var(--elevation-color),
-        0px 2px 6px 2px var(--elevation-color);
-    }
-    .tab-chip-set md-assist-chip.tab-chip {
-      --md-assist-chip-container-height: 16px;
-      --md-assist-chip-label-text-size: 10px;
-      --md-assist-chip-label-text-color: var(--primary-fg-color);
-      --md-assist-chip-label-line-height: 16px;
-      background-color: var(--tab-chip-bg-color);
-      border-radius: 4px;
-      margin: 0;
-      padding: 0;
-    }
-    gr-icon,
-    md-icon {
-      font-size: 20px;
-      line-height: 24px;
-    }
-    .prompt-box-inner-container {
-      display: flex;
-      height: auto;
-      min-height: 32px;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 8px;
-    }
-    .prompt-input-container {
-      flex-grow: 1;
-      height: inherit;
-      margin-right: var(--spacing-xs);
-      position: relative;
-    }
-    .prompt-input {
-      background: transparent;
-      color: var(--primary-text-color);
-      font: inherit;
-      font-size: 16px; /* $font-size-large */
-      /* Explicitly set line-height to ensure consistent height in tests (e.g. 20px). */
-      line-height: 20px;
-      border: none;
-      outline: none;
-      resize: none;
-      padding: 0;
-      margin: 0;
-      height: auto;
-      width: 100%;
-      max-width: 100%;
-    }
-    .prompt-input::placeholder {
-      color: var(--deemphasized-text-color);
-    }
-    .context-chip-set {
-      gap: 4px;
-    }
-    .context-chip-set md-assist-chip.context-toggle-chip {
-      --md-assist-chip-container-height: 20px;
-      --md-assist-chip-label-text-size: 12px;
-      --md-assist-chip-label-text-weight: 500;
-      --md-assist-chip-label-line-height: 16px;
-      --md-assist-chip-label-text-color: var(--primary-text-color);
-      margin: 0;
-      margin-left: auto;
-      border-color: var(--border-color);
-      background-color: var(--elevation-2);
-      border-radius: 8px;
-      display: flex;
-      padding: 0 4px;
-    }
-  `;
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        background-color: var(--background-color-tertiary);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        /* For high contrast mode. */
+        outline: 1px solid transparent;
+        padding: var(--spacing-l) var(--spacing-l) var(--spacing-m)
+          var(--spacing-xl);
+        transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      :host(:focus-within) {
+        background: var(
+          --search-box-focus-bg-color,
+          var(--background-color-primary)
+        );
+        box-shadow: 0px 1px 2px 0px var(--elevation-color),
+          0px 2px 6px 2px var(--elevation-color);
+      }
+      .tab-chip-set md-assist-chip.tab-chip {
+        --md-assist-chip-container-height: 16px;
+        --md-assist-chip-label-text-size: 10px;
+        --md-assist-chip-label-text-color: var(--primary-fg-color);
+        --md-assist-chip-label-line-height: 16px;
+        background-color: var(--tab-chip-bg-color);
+        border-radius: 4px;
+        margin: 0;
+        padding: 0;
+      }
+      gr-icon,
+      md-icon {
+        font-size: 20px;
+        line-height: 24px;
+      }
+      .prompt-box-inner-container {
+        display: flex;
+        height: auto;
+        min-height: 32px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 8px;
+      }
+      .prompt-input-container {
+        flex-grow: 1;
+        height: inherit;
+        margin-right: var(--spacing-xs);
+        position: relative;
+      }
+      .prompt-input {
+        background: transparent;
+        color: var(--primary-text-color);
+        font: inherit;
+        font-size: 16px; /* $font-size-large */
+        /* Explicitly set line-height to ensure consistent height in tests (e.g. 20px). */
+        line-height: 20px;
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 0;
+        margin: 0;
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+      }
+      .prompt-input::placeholder {
+        color: var(--deemphasized-text-color);
+      }
+      .context-chip-set {
+        gap: 4px;
+      }
+      .context-chip-set md-assist-chip.context-toggle-chip {
+        --md-assist-chip-container-height: 20px;
+        --md-assist-chip-label-text-size: 12px;
+        --md-assist-chip-label-text-weight: 500;
+        --md-assist-chip-label-line-height: 16px;
+        --md-assist-chip-label-text-color: var(--primary-text-color);
+        margin: 0;
+        margin-left: auto;
+        border-color: var(--border-color);
+        background-color: var(--elevation-2);
+        border-radius: 8px;
+        display: flex;
+        padding: 0 4px;
+      }
+    `,
+  ];
 
   override render() {
     return html`

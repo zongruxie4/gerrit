@@ -23,6 +23,7 @@ import {userModelToken} from '../../models/user/user-model';
 import {AccountDetailInfo, ServerInfo} from '../../types/common';
 import {subscribe} from '../lit/subscription-controller';
 import {getDisplayName} from '../../utils/display-name-util';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 /**
  * A component for displaying a splash page when there are no chat messages.
@@ -99,124 +100,132 @@ export class SplashPage extends LitElement {
     return turn?.userMessage.isBackgroundRequest ? turn : undefined;
   }
 
-  static override styles = css`
-    :host {
-      overflow: auto;
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-top: 20px;
-    }
-    .splash-container {
-      display: flex;
-      justify-content: center;
-      flex-flow: column nowrap;
-    }
-    .splash-greeting {
-      background: linear-gradient(135deg, #217bfe 0, #078efb 33%, #ac87eb 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-box-orient: vertical;
-      color: transparent;
-      display: -webkit-inline-box;
-      font-size: 24px;
-      font-weight: 400;
-      margin-block-end: var(--spacing-s);
-    }
-    .material-icon {
-      color: var(--deemphasized-text-color);
-    }
-    .splash-question {
-      color: var(--chat-splash-page-question-color);
-      margin-bottom: 16px;
-      margin-top: 0px;
-      font-family: var(--header-font-family);
-      font-size: var(--font-size-h1);
-      font-weight: var(--font-weight-h1);
-      line-height: var(--line-height-h1);
-    }
-    .background-request-container {
-      background-color: var(--chat-splash-page-info-panel-bg-color);
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-    }
-    .background-request-container-inner {
-      position: relative;
-      max-height: 10em;
-      min-height: 10em;
-      overflow: hidden;
-    }
-    .background-request-container-inner.expanded {
-      max-height: none;
-      overflow: auto;
-    }
-    .background-request-container-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to top,
-        var(--chat-splash-page-info-panel-bg-color),
-        transparent 50%
-      );
-    }
-    .user-background-question {
-      font-family: var(--header-font-family);
-      font-size: var(--font-size-normal);
-      font-weight: var(--font-weight-normal);
-      line-height: var(--line-height-normal);
-    }
-    .expansion-button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .info-panel-expansion-button {
-      top: 10px;
-      font-size: 1.5em;
-      border: none;
-      background-color: transparent;
-      color: var(--primary-default);
-      cursor: pointer;
-    }
-    .background-request-header {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-    .background-request-header .thinking-spinner {
-      margin-left: auto;
-    }
-    .action-container {
-      background-color: transparent;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    .action-container-title {
-      height: 28px;
-      display: flex;
-      align-items: center;
-      vertical-align: middle;
-      font-size: 0.9em;
-      font-weight: 500;
-      color: var(--chat-splash-page-action-set-title-color);
-    }
-    .action-container-title .autoreview-run-all-button {
-      margin-left: auto;
-      margin-right: 8px;
-    }
-    /* TODO: find small-icon styles equivalent for .small-icon */
-  `;
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        overflow: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+      }
+      .splash-container {
+        display: flex;
+        justify-content: center;
+        flex-flow: column nowrap;
+      }
+      .splash-greeting {
+        background: linear-gradient(
+          135deg,
+          #217bfe 0,
+          #078efb 33%,
+          #ac87eb 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-box-orient: vertical;
+        color: transparent;
+        display: -webkit-inline-box;
+        font-size: 24px;
+        font-weight: 400;
+        margin-block-end: var(--spacing-s);
+      }
+      .material-icon {
+        color: var(--deemphasized-text-color);
+      }
+      .splash-question {
+        color: var(--chat-splash-page-question-color);
+        margin-bottom: 16px;
+        margin-top: 0px;
+        font-family: var(--header-font-family);
+        font-size: var(--font-size-h1);
+        font-weight: var(--font-weight-h1);
+        line-height: var(--line-height-h1);
+      }
+      .background-request-container {
+        background-color: var(--chat-splash-page-info-panel-bg-color);
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        flex-direction: column;
+      }
+      .background-request-container-inner {
+        position: relative;
+        max-height: 10em;
+        min-height: 10em;
+        overflow: hidden;
+      }
+      .background-request-container-inner.expanded {
+        max-height: none;
+        overflow: auto;
+      }
+      .background-request-container-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          var(--chat-splash-page-info-panel-bg-color),
+          transparent 50%
+        );
+      }
+      .user-background-question {
+        font-family: var(--header-font-family);
+        font-size: var(--font-size-normal);
+        font-weight: var(--font-weight-normal);
+        line-height: var(--line-height-normal);
+      }
+      .expansion-button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .info-panel-expansion-button {
+        top: 10px;
+        font-size: 1.5em;
+        border: none;
+        background-color: transparent;
+        color: var(--primary-default);
+        cursor: pointer;
+      }
+      .background-request-header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 12px;
+        font-weight: bold;
+      }
+      .background-request-header .thinking-spinner {
+        margin-left: auto;
+      }
+      .action-container {
+        background-color: transparent;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      .action-container-title {
+        height: 28px;
+        display: flex;
+        align-items: center;
+        vertical-align: middle;
+        font-size: 0.9em;
+        font-weight: 500;
+        color: var(--chat-splash-page-action-set-title-color);
+      }
+      .action-container-title .autoreview-run-all-button {
+        margin-left: auto;
+        margin-right: 8px;
+      }
+      /* TODO: find small-icon styles equivalent for .small-icon */
+    `,
+  ];
 
   override render() {
     const config = {user: {anonymous_coward_name: ''}} as ServerInfo;

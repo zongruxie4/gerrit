@@ -21,6 +21,7 @@ import {assertIsDefined} from '../../utils/common-util';
 import {fire, fireAlert} from '../../utils/event-util';
 import {subscribe} from '../lit/subscription-controller';
 import {classMap} from 'lit/directives/class-map.js';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 @customElement('context-input-chip')
 export class ContextInputChip extends LitElement {
@@ -58,80 +59,83 @@ export class ContextInputChip extends LitElement {
     );
   }
 
-  static override styles = css`
-    .context-input-container {
-      position: relative;
-    }
-    /* .mat-mdc-standard-chip replaced by md-assist-chip */
-    md-assist-chip {
-      --md-assist-chip-container-height: 22px;
-      --md-assist-chip-label-text-size: var(--font-size-small);
-      --md-assist-chip-label-text-weight: var(--font-weight-medium);
-      --md-assist-chip-label-text-color: var(--primary-text-color);
-      --md-assist-chip-outline-color: var(--border-color);
-      --md-assist-chip-hover-label-text-color: var(--primary-text-color);
-      --md-assist-chip-focus-label-text-color: var(--primary-text-color);
-      --md-assist-chip-pressed-label-text-color: var(--primary-text-color);
-      --md-assist-chip-hover-icon-color: var(--primary-text-color);
-      --md-assist-chip-focus-icon-color: var(--primary-text-color);
-      --md-assist-chip-pressed-icon-color: var(--primary-text-color);
-      overflow: hidden;
-      margin: 0;
-      border-color: var(--border-color);
-      background-color: transparent;
-      border-radius: 8px;
-    }
-    .add-icon {
-      color: var(--primary-text-color);
-    }
-    .add-link-container {
-      position: absolute;
-      text-align: center;
-      width: 200px;
-      left: 0;
-      bottom: 25px;
-    }
-    .add-link-input {
-      padding: var(--spacing-m);
-      margin-left: var(--spacing-m);
-      margin-right: var(--spacing-m);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      background-color: var(--background-color-primary);
-      font-family: var(--font-family);
-      font-size: var(--font-size-normal);
-      /* input color often defaults to browser/os default which might be dark even on dark mode if not set */
-      color: var(--primary-text-color);
-      outline: none;
-      width: 100%;
-      height: 23px;
-      max-width: 100%;
-    }
-    .add-link-input::placeholder {
-      color: var(--chat-card-placeholder-text-color);
-    }
-    .add-link-input:focus {
-      background-color: var(--background-color-primary);
-      border: 1px solid var(--border-color);
-    }
-    .context-menu-icon {
-      width: 14px;
-      height: 14px;
-      margin-left: var(--spacing-m);
-    }
-    .hidden {
-      visibility: hidden;
-      pointer-events: none;
-    }
-    md-menu-item {
-      white-space: nowrap;
-      --md-menu-item-top-space: var(--spacing-s);
-      --md-menu-item-bottom-space: var(--spacing-s);
-      --md-menu-item-leading-space: var(--spacing-m);
-      --md-menu-item-trailing-space: var(--spacing-m);
-      --md-menu-item-one-line-container-height: 24px;
-    }
-  `;
+  static override styles = [
+    materialStyles,
+    css`
+      .context-input-container {
+        position: relative;
+      }
+      /* .mat-mdc-standard-chip replaced by md-assist-chip */
+      md-assist-chip {
+        --md-assist-chip-container-height: 22px;
+        --md-assist-chip-label-text-size: var(--font-size-small);
+        --md-assist-chip-label-text-weight: var(--font-weight-medium);
+        --md-assist-chip-label-text-color: var(--primary-text-color);
+        --md-assist-chip-outline-color: var(--border-color);
+        --md-assist-chip-hover-label-text-color: var(--primary-text-color);
+        --md-assist-chip-focus-label-text-color: var(--primary-text-color);
+        --md-assist-chip-pressed-label-text-color: var(--primary-text-color);
+        --md-assist-chip-hover-icon-color: var(--primary-text-color);
+        --md-assist-chip-focus-icon-color: var(--primary-text-color);
+        --md-assist-chip-pressed-icon-color: var(--primary-text-color);
+        overflow: hidden;
+        margin: 0;
+        border-color: var(--border-color);
+        background-color: transparent;
+        border-radius: 8px;
+      }
+      .add-icon {
+        color: var(--primary-text-color);
+      }
+      .add-link-container {
+        position: absolute;
+        text-align: center;
+        width: 200px;
+        left: 0;
+        bottom: 25px;
+      }
+      .add-link-input {
+        padding: var(--spacing-m);
+        margin-left: var(--spacing-m);
+        margin-right: var(--spacing-m);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background-color: var(--background-color-primary);
+        font-family: var(--font-family);
+        font-size: var(--font-size-normal);
+        /* input color often defaults to browser/os default which might be dark even on dark mode if not set */
+        color: var(--primary-text-color);
+        outline: none;
+        width: 100%;
+        height: 23px;
+        max-width: 100%;
+      }
+      .add-link-input::placeholder {
+        color: var(--chat-card-placeholder-text-color);
+      }
+      .add-link-input:focus {
+        background-color: var(--background-color-primary);
+        border: 1px solid var(--border-color);
+      }
+      .context-menu-icon {
+        width: 14px;
+        height: 14px;
+        margin-left: var(--spacing-m);
+      }
+      .hidden {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      md-menu-item {
+        white-space: nowrap;
+        --md-menu-item-top-space: var(--spacing-s);
+        --md-menu-item-bottom-space: var(--spacing-s);
+        --md-menu-item-leading-space: var(--spacing-m);
+        --md-menu-item-trailing-space: var(--spacing-m);
+        --md-menu-item-one-line-container-height: 24px;
+      }
+    `,
+  ];
 
   override render() {
     return html`

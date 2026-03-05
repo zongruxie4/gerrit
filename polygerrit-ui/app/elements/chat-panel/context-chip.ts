@@ -18,6 +18,7 @@ import {resolve} from '../../models/dependency';
 import {fire} from '../../utils/event-util';
 import {subscribe} from '../lit/subscription-controller';
 import {classMap} from 'lit/directives/class-map.js';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 @customElement('context-chip')
 export class ContextChip extends LitElement {
@@ -50,78 +51,81 @@ export class ContextChip extends LitElement {
     );
   }
 
-  static override styles = css`
-    :host {
-      overflow: hidden;
-      max-width: 300px;
-    }
-    md-filter-chip.suggested-chip {
-      opacity: 0.5;
-      border-style: dashed;
-      border-width: 1px;
-      border-color: var(--border-color);
-      --md-filter-chip-outline-color: transparent;
-    }
-    md-filter-chip.suggested-chip:hover {
-      opacity: 0.7;
-    }
-    md-filter-chip.custom-action-chip {
-      --md-sys-color-primary: var(--custom-action-context-chip-color);
-      --md-filter-chip-selected-container-color: transparent;
-    }
-    md-filter-chip {
-      --md-sys-color-primary: var(--primary-text-color);
-      --md-filter-chip-label-text-color: var(--primary-text-color);
-      --md-filter-chip-container-height: 20px;
-      --md-filter-chip-label-text-size: var(--font-size-small);
-      --md-filter-chip-label-text-weight: var(--font-weight-medium);
-      --md-filter-chip-unselected-container-color: transparent;
-      --md-filter-chip-outline-color: var(--border-color);
-      --md-filter-chip-hover-label-text-color: var(--primary-text-color);
-      --md-filter-chip-focus-label-text-color: var(--primary-text-color);
-      --md-filter-chip-pressed-label-text-color: var(--primary-text-color);
-      overflow: hidden;
-      margin: 0;
-      border-radius: 8px;
-    }
-    md-filter-chip.no-link {
-      --md-filter-chip-unselected-hover-state-layer-color: transparent;
-      --md-ripple-hover-color: transparent;
-      --md-ripple-pressed-color: transparent;
-      --md-ripple-focus-color: transparent;
-    }
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        overflow: hidden;
+        max-width: 300px;
+      }
+      md-filter-chip.suggested-chip {
+        opacity: 0.5;
+        border-style: dashed;
+        border-width: 1px;
+        border-color: var(--border-color);
+        --md-filter-chip-outline-color: transparent;
+      }
+      md-filter-chip.suggested-chip:hover {
+        opacity: 0.7;
+      }
+      md-filter-chip.custom-action-chip {
+        --md-sys-color-primary: var(--custom-action-context-chip-color);
+        --md-filter-chip-selected-container-color: transparent;
+      }
+      md-filter-chip {
+        --md-sys-color-primary: var(--primary-text-color);
+        --md-filter-chip-label-text-color: var(--primary-text-color);
+        --md-filter-chip-container-height: 20px;
+        --md-filter-chip-label-text-size: var(--font-size-small);
+        --md-filter-chip-label-text-weight: var(--font-weight-medium);
+        --md-filter-chip-unselected-container-color: transparent;
+        --md-filter-chip-outline-color: var(--border-color);
+        --md-filter-chip-hover-label-text-color: var(--primary-text-color);
+        --md-filter-chip-focus-label-text-color: var(--primary-text-color);
+        --md-filter-chip-pressed-label-text-color: var(--primary-text-color);
+        overflow: hidden;
+        margin: 0;
+        border-radius: 8px;
+      }
+      md-filter-chip.no-link {
+        --md-filter-chip-unselected-hover-state-layer-color: transparent;
+        --md-ripple-hover-color: transparent;
+        --md-ripple-pressed-color: transparent;
+        --md-ripple-focus-color: transparent;
+      }
 
-    .context-chip-icon-base {
-      width: 12px;
-      height: 12px;
-    }
-    .custom-action-icon {
-      color: var(--custom-action-context-chip-color);
-    }
-    .external-context-text,
-    .custom-action-text {
-      margin-left: var(--spacing-s);
-    }
-    .custom-action-text {
-      color: var(--custom-action-context-chip-color);
-    }
-    .subtext {
-      color: var(--deemphasized-text-color);
-    }
-    .hidden {
-      visibility: hidden;
-      pointer-events: none;
-    }
-    .context-chip-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: center;
-    }
-    .context-chip-title {
-      padding-top: 2px;
-    }
-  `;
+      .context-chip-icon-base {
+        width: 12px;
+        height: 12px;
+      }
+      .custom-action-icon {
+        color: var(--custom-action-context-chip-color);
+      }
+      .external-context-text,
+      .custom-action-text {
+        margin-left: var(--spacing-s);
+      }
+      .custom-action-text {
+        color: var(--custom-action-context-chip-color);
+      }
+      .subtext {
+        color: var(--deemphasized-text-color);
+      }
+      .hidden {
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .context-chip-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+      }
+      .context-chip-title {
+        padding-top: 2px;
+      }
+    `,
+  ];
 
   override render() {
     const type = this.getChatModel().contextItemToType(this.contextItem);

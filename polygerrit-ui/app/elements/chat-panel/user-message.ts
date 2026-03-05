@@ -17,6 +17,7 @@ import {resolve} from '../../models/dependency';
 import {userModelToken} from '../../models/user/user-model';
 import {AccountDetailInfo} from '../../types/common';
 import {subscribe} from '../lit/subscription-controller';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 const MAX_VISIBLE_CONTEXT_ITEMS_COLLAPSED = 3;
 
@@ -82,56 +83,59 @@ export class UserMessage extends LitElement {
     return this.showAllContextItems ? '▲' : `+${this.numExcessContextItems}`;
   }
 
-  static override styles = css`
-    :host {
-      display: flex;
-      flex-direction: column;
-      padding-bottom: var(--spacing-xl);
-    }
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: var(--spacing-xl);
+      }
 
-    .user-input-container {
-      padding-top: var(--spacing-m);
-    }
+      .user-input-container {
+        padding-top: var(--spacing-m);
+      }
 
-    .text-content {
-      white-space: pre-wrap;
-      margin: 0px;
-    }
+      .text-content {
+        white-space: pre-wrap;
+        margin: 0px;
+      }
 
-    .context-chip-set {
-      margin-top: var(--spacing-m);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 4px;
-    }
+      .context-chip-set {
+        margin-top: var(--spacing-m);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px;
+      }
 
-    gr-avatar {
-      display: block;
-      height: 24px;
-      width: 24px;
-      margin-right: 10px;
-    }
+      gr-avatar {
+        display: block;
+        height: 24px;
+        width: 24px;
+        margin-right: 10px;
+      }
 
-    md-filter-chip.context-toggle-chip {
-      margin: 0;
-      margin-left: auto;
-      --md-filter-chip-unselected-outline-color: var(--border-color);
-      --md-filter-chip-unselected-container-color: var(--elevation-2);
-      --md-filter-chip-container-shape: 8px;
-      --md-filter-chip-container-height: 20px;
+      md-filter-chip.context-toggle-chip {
+        margin: 0;
+        margin-left: auto;
+        --md-filter-chip-unselected-outline-color: var(--border-color);
+        --md-filter-chip-unselected-container-color: var(--elevation-2);
+        --md-filter-chip-container-shape: 8px;
+        --md-filter-chip-container-height: 20px;
 
-      /* from @include mat.chips-overrides */
-      --md-filter-chip-label-text-line-height: var(
-        --line-height-small,
-        1.25rem
-      );
-      --md-filter-chip-label-text-size: var(--font-size-small, 0.75rem);
-      --md-filter-chip-label-text-weight: var(--font-weight-medium, 500);
-      --md-filter-chip-label-text-color: var(--primary-default, purple);
-      cursor: pointer;
-    }
-  `;
+        /* from @include mat.chips-overrides */
+        --md-filter-chip-label-text-line-height: var(
+          --line-height-small,
+          1.25rem
+        );
+        --md-filter-chip-label-text-size: var(--font-size-small, 0.75rem);
+        --md-filter-chip-label-text-weight: var(--font-weight-medium, 500);
+        --md-filter-chip-label-text-color: var(--primary-default, purple);
+        cursor: pointer;
+      }
+    `,
+  ];
 
   override render() {
     if (!this.message) {

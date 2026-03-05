@@ -18,6 +18,7 @@ import {
 } from '../../models/chat/chat-model';
 import {resolve} from '../../models/dependency';
 import {subscribe} from '../lit/subscription-controller';
+import {materialStyles} from '../../styles/gr-material-styles';
 
 /**
  * Component to display message actions for a Gemini message (e.g. thumbs up,
@@ -25,31 +26,34 @@ import {subscribe} from '../lit/subscription-controller';
  */
 @customElement('message-actions')
 export class MessageActions extends LitElement {
-  static override styles = css`
-    :host {
-      display: flex;
-    }
-    md-icon-button {
-      margin-left: var(--spacing-l);
-      --md-icon-button-icon-size: 24px;
-      --md-icon-size: 24px;
-    }
-    .copy-button {
-      --gr-icon-size: 24px;
-      margin: auto 0;
-    }
-    .feedback-button.thumbs-up-icon {
-      margin-left: auto;
-    }
-    md-icon-button {
-      color: var(--primary-text-color);
-      --md-icon-button-icon-color: var(--primary-text-color);
-      --md-icon-button-hover-icon-color: var(--primary-text-color);
-    }
-    md-icon-button md-icon {
-      color: var(--primary-text-color);
-    }
-  `;
+  static override styles = [
+    materialStyles,
+    css`
+      :host {
+        display: flex;
+      }
+      md-icon-button {
+        margin-left: var(--spacing-l);
+        --md-icon-button-icon-size: 24px;
+        --md-icon-size: 24px;
+      }
+      .copy-button {
+        --gr-icon-size: 24px;
+        margin: auto 0;
+      }
+      .feedback-button.thumbs-up-icon {
+        margin-left: auto;
+      }
+      md-icon-button {
+        color: var(--primary-text-color);
+        --md-icon-button-icon-color: var(--primary-text-color);
+        --md-icon-button-hover-icon-color: var(--primary-text-color);
+      }
+      md-icon-button md-icon {
+        color: var(--primary-text-color);
+      }
+    `,
+  ];
 
   @property({type: Object}) turnId!: UniqueTurnId;
 
