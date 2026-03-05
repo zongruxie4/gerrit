@@ -13,10 +13,11 @@ import './citations-box';
 import './references-dropdown';
 import './message-actions';
 
-import {css, html, LitElement} from 'lit';
+import {css, html, LitElement, PropertyValues} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import {AiAgentEventDetails, Interaction} from '../../constants/reporting';
 import {changeModelToken} from '../../models/change/change-model';
 import {
   filesModelToken,
@@ -31,6 +32,7 @@ import {
 } from '../../models/chat/chat-model';
 import {commentsModelToken} from '../../models/comments/comments-model';
 import {resolve} from '../../models/dependency';
+import {getAppContext} from '../../services/app-context';
 import {NumericChangeId, PatchSetNumber} from '../../types/common';
 import {
   compareComments,
@@ -64,6 +66,10 @@ export class GeminiMessage extends LitElement {
 
   @state() latestPatchNum?: PatchSetNumber;
 
+  @state() private conversationId?: string;
+
+  private reportedSuggestionsShown = false;
+
   private readonly getChatModel = resolve(this, chatModelToken);
 
   private readonly getCommentsModel = resolve(this, commentsModelToken);
@@ -71,6 +77,8 @@ export class GeminiMessage extends LitElement {
   private readonly getChangeModel = resolve(this, changeModelToken);
 
   private readonly getFilesModel = resolve(this, filesModelToken);
+
+  private readonly reportingService = getAppContext().reportingService;
 
   static override styles = [
     materialStyles,
@@ -212,6 +220,11 @@ export class GeminiMessage extends LitElement {
       () => this.getChangeModel().latestPatchNum$,
       x => (this.latestPatchNum = x)
     );
+    subscribe(
+      this,
+      () => this.getChatModel().conversationId$,
+      x => (this.conversationId = x)
+    );
   }
 
   private async onAddAsComment(part: CreateCommentPart) {
@@ -240,6 +253,17 @@ export class GeminiMessage extends LitElement {
 
   private handleFileClick(path: string, lineNum?: number) {
     fire(this, 'open-diff-in-change-view', {path, lineNum});
+  }
+
+  override updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('turns') && !this.reportedSuggestionsShown) {
+      if (
+        this.turnIndex < this.turns.length &&
+        this.message()?.responseComplete
+      ) {
+        this.reportSuggestionsShown();
+      }
+    }
   }
 
   override render() {
@@ -405,10 +429,9 @@ export class GeminiMessage extends LitElement {
   }
 
   private sortedComments() {
-    return this.message()
-      .responseParts.filter(
-        part => part.type === ResponsePartType.CREATE_COMMENT
-      )
+    const parts = this.message()?.responseParts ?? [];
+    return parts
+      .filter(part => part.type === ResponsePartType.CREATE_COMMENT)
       .sort((p1, p2) => {
         const c1 = {...createNew(p1.comment.message), ...p1.comment};
         const c2 = {...createNew(p2.comment.message), ...p2.comment};
@@ -419,8 +442,26 @@ export class GeminiMessage extends LitElement {
   private turnId() {
     return {
       turnIndex: this.turnIndex,
-      regenerationIndex: this.message().regenerationIndex,
+      regenerationIndex: this.message()?.regenerationIndex ?? 0,
     };
+  }
+
+  private reportSuggestionsShown() {
+    if (!this.conversationId) return;
+    this.reportedSuggestionsShown = true;
+
+    const agentId = this.turns[this.turnIndex]?.userMessage?.actionId ?? '';
+    const details: AiAgentEventDetails = {
+      host: window.location.host,
+      agentId,
+      conversationId: this.conversationId,
+      turnIndex: this.turnIndex,
+      commentCount: this.sortedComments().length,
+    };
+    this.reportingService.reportInteraction(
+      Interaction.AI_AGENT_SUGGESTIONS_SHOWN,
+      details
+    );
   }
 }
 
