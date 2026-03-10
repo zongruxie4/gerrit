@@ -70,6 +70,7 @@ EXPORTS = [
     "//lib/antlr:java-runtime",
     "//lib/auto:auto-value-annotations",
     "//lib/auto:auto-value-gson",
+    "//lib/commons:codec",
     "//lib/commons:compress",
     "//lib/commons:dbcp",
     "//lib/commons:lang3",
