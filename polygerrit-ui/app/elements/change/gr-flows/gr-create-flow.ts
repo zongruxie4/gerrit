@@ -55,6 +55,7 @@ import {LabelSuggestionsProvider} from '../../../services/label-suggestions-prov
 import {queryAndAssert, unique} from '../../../utils/common-util';
 import {fireAlert} from '../../../utils/event-util';
 import {MdOutlinedSelect} from '@material/web/select/outlined-select.js';
+import {Interaction} from '../../../constants/reporting';
 
 const MAX_AUTOCOMPLETE_RESULTS = 10;
 
@@ -374,6 +375,10 @@ export class GrCreateFlow extends LitElement {
     ];
   }
 
+  protected override firstUpdated() {
+    this.reportingService.reportInteraction(Interaction.FLOWS_TAB_RENDERED);
+  }
+
   override willUpdate(changedProperties: PropertyValues) {
     if (changedProperties.has('changeNum')) {
       this.getFlowActions();
@@ -458,6 +463,9 @@ export class GrCreateFlow extends LitElement {
         <gr-button
           aria-label="Create Flow"
           @click=${() => {
+            this.reportingService.reportInteraction(
+              Interaction.CREATE_FLOW_DIALOG_OPENED
+            );
             this.createModal?.showModal();
           }}
         >
@@ -833,6 +841,7 @@ export class GrCreateFlow extends LitElement {
       }),
     };
     await this.getFlowsModel().createFlow(flowInput);
+    this.reportingService.reportInteraction(Interaction.FLOW_CREATED);
     this.stages = [];
     this.currentCondition = '';
     this.currentAction = '';
