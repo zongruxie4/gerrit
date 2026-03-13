@@ -20,8 +20,9 @@
 #
 # * IDEs require real files on disk. Simply listing paths is insufficient.
 #
-# * To ensure jars are materialized under the Bazel execution root, this rule
-#   declares them as inputs to small, no-op actions ("stamp" actions).
+# * To ensure jars are materialized under the Bazel execution root, the
+#   actions producing the metadata files declare them as inputs and validate
+#   that they exist.
 #
 # * A param file is used for source jars to avoid command-line length limits.
 #   Bazel does not automatically expand "@paramfile" in run_shell, so the
@@ -57,27 +58,30 @@ def _classpath_collector_impl(ctx):
     source_files = depset(transitive = source_sets).to_list()
     processor_files = depset(transitive = processor_sets).to_list()
 
-    # Runtime classpath: metadata file.
-    ctx.actions.write(
-        output = ctx.outputs.runtime,
-        content = "\n".join(sorted([f.path for f in runtime_files])),
-    )
+    # Runtime classpath: write stable sorted list, and materialize jars by
+    # declaring them as inputs.
+    pf = ctx.actions.args()
+    pf.set_param_file_format("multiline")
+    pf.use_param_file("%s", use_always = True)
+    pf.add_all([f.path for f in runtime_files])
 
-    # Force runtime jars to be present on disk.
-    runtime_stamp = ctx.actions.declare_file(ctx.label.name + ".runtime_materialized")
     ctx.actions.run_shell(
         inputs = runtime_files,
-        outputs = [runtime_stamp],
-        arguments = [runtime_stamp.path] + [f.path for f in runtime_files],
+        outputs = [ctx.outputs.runtime],
+        arguments = [ctx.outputs.runtime.path, pf],
         command = r"""
 set -euo pipefail
 OUT="$1"
-shift
-# Touch/validate inputs to force materialization of symlinks/remote outputs.
-for f in "$@"; do
-  test -e "$f"
-done
-: > "$OUT"
+PF="$2"
+PF="${PF#@}"
+if [ -n "$PF" ] && [ -f "$PF" ]; then
+  while IFS= read -r f; do
+    test -e "$f"
+  done < "$PF"
+  sort "$PF" > "$OUT"
+else
+  : > "$OUT"
+fi
 """,
     )
 
@@ -98,6 +102,9 @@ OUT="$1"
 PF="$2"
 PF="${PF#@}"
 if [ -n "$PF" ] && [ -f "$PF" ]; then
+  while IFS= read -r f; do
+    test -e "$f"
+  done < "$PF"
   sort "$PF" > "$OUT"
 else
   : > "$OUT"
@@ -105,27 +112,30 @@ fi
 """,
     )
 
-    # Processor classpath: metadata file.
-    ctx.actions.write(
-        output = ctx.outputs.processors,
-        content = "\n".join(sorted([f.path for f in processor_files])),
-    )
+    # Processor classpath: write stable sorted list, and materialize jars by
+    # declaring them as inputs.
+    pf = ctx.actions.args()
+    pf.set_param_file_format("multiline")
+    pf.use_param_file("%s", use_always = True)
+    pf.add_all([f.path for f in processor_files])
 
-    # Force processor jars to be present on disk.
-    processor_stamp = ctx.actions.declare_file(ctx.label.name + ".processors_materialized")
     ctx.actions.run_shell(
         inputs = processor_files,
-        outputs = [processor_stamp],
-        arguments = [processor_stamp.path] + [f.path for f in processor_files],
+        outputs = [ctx.outputs.processors],
+        arguments = [ctx.outputs.processors.path, pf],
         command = r"""
 set -euo pipefail
 OUT="$1"
-shift
-# Touch/validate inputs to force materialization of symlinks/remote outputs.
-for f in "$@"; do
-  test -e "$f"
-done
-: > "$OUT"
+PF="$2"
+PF="${PF#@}"
+if [ -n "$PF" ] && [ -f "$PF" ]; then
+  while IFS= read -r f; do
+    test -e "$f"
+  done < "$PF"
+  sort "$PF" > "$OUT"
+else
+  : > "$OUT"
+fi
 """,
     )
 
