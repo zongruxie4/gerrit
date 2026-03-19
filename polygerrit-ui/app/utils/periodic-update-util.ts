@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {LitElement} from 'lit';
+export interface Updatable {
+  requestUpdate(): void;
+}
 
-export class PeriodicUpdateManager<T extends LitElement = LitElement> {
+export class PeriodicUpdateManager<T extends Updatable = Updatable> {
   readonly components = new Set<T>();
 
   refreshTimer: ReturnType<typeof setInterval> | null = null;

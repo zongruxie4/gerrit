@@ -3,16 +3,15 @@
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
-import {LitElement} from 'lit';
 import * as sinon from 'sinon';
 import '../test/common-test-setup';
-import {PeriodicUpdateManager} from './periodic-update-util';
+import {PeriodicUpdateManager, Updatable} from './periodic-update-util';
 import {assert} from '@open-wc/testing';
 
 suite('periodic-update-util tests', () => {
-  class TestElement extends LitElement {}
-
-  customElements.define('periodic-update-test-element', TestElement);
+  class TestElement implements Updatable {
+    requestUpdate() {}
+  }
 
   let manager: PeriodicUpdateManager;
 
