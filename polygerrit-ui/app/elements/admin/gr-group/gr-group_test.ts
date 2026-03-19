@@ -296,16 +296,16 @@ suite('gr-group tests', () => {
 
     assert.isDefined(element.groupId);
 
-    // Test that loading shows instead of filling
-    // in group details
+    // Test that loading is set to false to avoid infinite spinner.
     await element.loadGroup();
-    assert.isTrue(
+    await element.updateComplete;
+    assert.isFalse(
       queryAndAssert<HTMLDivElement>(element, '#loading').classList.contains(
         'loading'
       )
     );
 
-    assert.isTrue(element.loading);
+    assert.isFalse(element.loading);
   });
 
   test('test fire event', async () => {
