@@ -267,4 +267,25 @@ suite('chat-model tests', () => {
     assert.isUndefined(state.selectedModelId);
     assert.isEmpty(state.turns);
   });
+
+  test('change property update does not trigger API calls', () => {
+    const change = {
+      ...createParsedChange(),
+      _number: 123,
+    } as unknown as ParsedChangeInfo;
+    changeModel.updateStateChange(change);
+    assert.isTrue((provider.getModels as sinon.SinonStub).calledOnce);
+
+    // Update some property but keep _number the same
+    const updatedChange = {
+      ...change,
+      subject: 'updated subject',
+    } as unknown as ParsedChangeInfo;
+    changeModel.updateStateChange(updatedChange);
+
+    // API calls should not be triggered again
+    assert.isTrue((provider.getModels as sinon.SinonStub).calledOnce);
+    assert.isTrue((provider.getActions as sinon.SinonStub).calledOnce);
+    assert.isTrue((provider.getContextItemTypes as sinon.SinonStub).calledOnce);
+  });
 });
