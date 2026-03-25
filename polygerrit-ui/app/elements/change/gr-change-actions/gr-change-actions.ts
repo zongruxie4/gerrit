@@ -1722,18 +1722,27 @@ export class GrChangeActions
   }
 
   // private but used in test
-  handleCherrypickConfirm() {
-    this.handleCherryPickRestApi(false);
+  async handleCherrypickConfirm() {
+    await this.handleCherryPickRestApi(false);
   }
 
   // private but used in test
-  handleCherrypickConflictConfirm() {
-    this.handleCherryPickRestApi(true);
+  async handleCherrypickConflictConfirm() {
+    await this.handleCherryPickRestApi(true);
   }
 
-  private handleCherryPickRestApi(conflicts: boolean) {
+  private async handleCherryPickRestApi(conflicts: boolean) {
     assertIsDefined(this.confirmCherrypick, 'confirmCherrypick');
     assertIsDefined(this.actionsModal, 'actionsModal');
+
+    if (
+      !(await this.getPluginLoader().jsApiService.handleBeforeCherryPick(
+        this.change as ChangeInfo
+      ))
+    ) {
+      return;
+    }
+
     const el = this.confirmCherrypick;
     if (!el.branch) {
       fireAlert(this, ERR_BRANCH_EMPTY);

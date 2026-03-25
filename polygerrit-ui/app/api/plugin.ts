@@ -47,6 +47,7 @@ export enum EventType {
   BEFORE_PUBLISH_EDIT = 'before-publish-edit',
   PUBLISH_EDIT = 'publish-edit',
   BEFORE_REBASE = 'before-rebase',
+  BEFORE_CHERRY_PICK = 'before-cherry-pick',
 }
 
 export declare interface PluginApi {
