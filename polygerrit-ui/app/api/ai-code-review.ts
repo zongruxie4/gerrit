@@ -181,6 +181,7 @@ export declare interface ChatResponsePart {
 
 export declare interface CreateCommentAction extends Partial<CommentInfo> {
   comment_text: string;
+  patchset: number;
 }
 
 export declare interface CopyableText {
@@ -210,7 +211,7 @@ export declare interface Conversation {
 
 export declare interface ConversationTurn {
   user_input: UserInput;
-  response: ChatResponse;
+  response?: ChatResponse;
   regeneration_index?: number;
   timestamp_millis?: number;
   // TODO: Clean this up - when loadConversation is used we get chat_response instead of response
