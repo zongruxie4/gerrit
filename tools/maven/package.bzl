@@ -39,7 +39,7 @@ def maven_package(
         doc = {},
         war = {}):
     build_cmd = ["bazel_cmd", "build", "'$$@'"]
-    mvn_cmd = ["python", "tools/maven/mvn.py", "-v", version]
+    mvn_cmd = ["python3", "tools/maven/mvn.py", "-v", version]
     api_cmd = mvn_cmd[:]
     api_targets = []
     for type, d in [("jar", jar), ("java-source", src), ("javadoc", doc)]:
