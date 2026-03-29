@@ -144,13 +144,13 @@
     "org.apache.httpcomponents:httpcore": -1696303652,
     "org.apache.james:apache-mime4j-core": -753273784,
     "org.apache.james:apache-mime4j-dom": -1889888125,
-    "org.apache.lucene:lucene-analysis-common": 561245500,
-    "org.apache.lucene:lucene-backward-codecs": 1393610641,
-    "org.apache.lucene:lucene-core": 278911929,
+    "org.apache.lucene:lucene-analysis-common": 582251708,
+    "org.apache.lucene:lucene-backward-codecs": 1414616849,
+    "org.apache.lucene:lucene-core": 299918137,
     "org.apache.lucene:lucene-facet": -125344464,
-    "org.apache.lucene:lucene-misc": -1777764660,
+    "org.apache.lucene:lucene-misc": -1756758452,
     "org.apache.lucene:lucene-queries": 1341801569,
-    "org.apache.lucene:lucene-queryparser": 2069199089,
+    "org.apache.lucene:lucene-queryparser": 2090205297,
     "org.apache.lucene:lucene-sandbox": 1803509280,
     "org.apache.mina:mina-core": -955969490,
     "org.apache.sshd:sshd-common": 1844247612,
@@ -387,16 +387,16 @@
     "org.apache.james:apache-mime4j-core:jar:sources": 1221134342,
     "org.apache.james:apache-mime4j-dom": 2052814931,
     "org.apache.james:apache-mime4j-dom:jar:sources": 2056952874,
-    "org.apache.lucene:lucene-analysis-common": 405823323,
-    "org.apache.lucene:lucene-analysis-common:jar:sources": 576892134,
-    "org.apache.lucene:lucene-backward-codecs": -1964423893,
-    "org.apache.lucene:lucene-backward-codecs:jar:sources": 920459868,
-    "org.apache.lucene:lucene-core": -1356627399,
-    "org.apache.lucene:lucene-core:jar:sources": -1958675978,
-    "org.apache.lucene:lucene-misc": -444550320,
-    "org.apache.lucene:lucene-misc:jar:sources": -686377473,
-    "org.apache.lucene:lucene-queryparser": 2122205138,
-    "org.apache.lucene:lucene-queryparser:jar:sources": 389798721,
+    "org.apache.lucene:lucene-analysis-common": 1674710283,
+    "org.apache.lucene:lucene-analysis-common:jar:sources": 334029180,
+    "org.apache.lucene:lucene-backward-codecs": -508942990,
+    "org.apache.lucene:lucene-backward-codecs:jar:sources": 1999324390,
+    "org.apache.lucene:lucene-core": -1994692613,
+    "org.apache.lucene:lucene-core:jar:sources": -164995544,
+    "org.apache.lucene:lucene-misc": -739909715,
+    "org.apache.lucene:lucene-misc:jar:sources": -128984682,
+    "org.apache.lucene:lucene-queryparser": -1416736164,
+    "org.apache.lucene:lucene-queryparser:jar:sources": 1960943881,
     "org.apache.mina:mina-core": -1457162716,
     "org.apache.mina:mina-core:jar:sources": 1763715353,
     "org.apache.sshd:sshd-mina": -1732444781,
@@ -1142,38 +1142,38 @@
     },
     "org.apache.lucene:lucene-analysis-common": {
       "shasums": {
-        "jar": "4dc1acc6b5a43be0049057bc99772dd24717cf0084c7ff79c68c984f120c140b",
-        "sources": "755fffa9a0eee9467af6a2dc7b36022b7ac11b71269866a531b1b4c347d2002c"
+        "jar": "8e768c9b2a3870f1fc2655181516699e719a56b9aaf8664226a11ae7d90cb4e9",
+        "sources": "c14727f25cc1a6c73d90720531309672300ca473f2d1f52e74281bfef4299c63"
       },
-      "version": "10.2.2"
+      "version": "10.4.0"
     },
     "org.apache.lucene:lucene-backward-codecs": {
       "shasums": {
-        "jar": "2abe4c2d92382805938ae5d43eca4d894c33846df01e49225ce0234d9af49a1d",
-        "sources": "d96ffe2085682b1469cabb6fab05a9e8c2d8a6b7f4c5c4e3b3bdd475790f782a"
+        "jar": "4e77973982b8e24e4357b18e75f54cffe74b1ab7a354b1b81e1d23d6265de493",
+        "sources": "909b951a578828c40120eb7c12a12a02677b9974b88d47993517eb82089ec059"
       },
-      "version": "10.2.2"
+      "version": "10.4.0"
     },
     "org.apache.lucene:lucene-core": {
       "shasums": {
-        "jar": "9c219c702449a41c16ad60edc58d12f6d2f4989ef555e875e942904209e25029",
-        "sources": "ee7cd1e88f50cbeb3b09fba318cfa2c83f6f62c1de46479331867509adc4814a"
+        "jar": "8f894d211a8123938ccb9ff6827d136747e0eb6b1782ada6ac9086aa911b52e2",
+        "sources": "2411eab5a52ef845327fae889a7ed14f2d75d0c765bedb30156fe95195e05e16"
       },
-      "version": "10.2.2"
+      "version": "10.4.0"
     },
     "org.apache.lucene:lucene-misc": {
       "shasums": {
-        "jar": "894e835d7b8285d5a23527df73cc78d7698b86a14cc87c088a86a7c832f86e64",
-        "sources": "650e77129b2ef4d0ca2d71456436c89758978f3a90ecf3c6867d10b75c6069ac"
+        "jar": "399f56e1bc2e08d927505139f9f459f1e33059e177eace080ea2bbcd88505fd5",
+        "sources": "a7a398e89dd21881c3bfa44c5a517ee93678b6260dc40185dd7e65afddaa5ade"
       },
-      "version": "10.2.2"
+      "version": "10.4.0"
     },
     "org.apache.lucene:lucene-queryparser": {
       "shasums": {
-        "jar": "010e1478b6649a5f62aa411a512519cf1f849b6bc48961fd117c73a8dc591c67",
-        "sources": "c6b93557d461fdcac68765df992af8df3ef8c0d53c258b3a89e57d06fa2dfb78"
+        "jar": "4635f2a14e9c01574c4cf9ad60e018ab2b041b7889369107a991ef950648c847",
+        "sources": "70615c5d3f3e1a610716176c599fc79e0687a7879ede2c117ce22efde92ec9b0"
       },
-      "version": "10.2.2"
+      "version": "10.4.0"
     },
     "org.apache.mina:mina-core": {
       "shasums": {
@@ -3052,6 +3052,9 @@
       "org.apache.lucene.backward_codecs",
       "org.apache.lucene.backward_codecs.compressing",
       "org.apache.lucene.backward_codecs.lucene100",
+      "org.apache.lucene.backward_codecs.lucene101",
+      "org.apache.lucene.backward_codecs.lucene102",
+      "org.apache.lucene.backward_codecs.lucene103",
       "org.apache.lucene.backward_codecs.lucene40.blocktree",
       "org.apache.lucene.backward_codecs.lucene50",
       "org.apache.lucene.backward_codecs.lucene50.compressing",
@@ -3062,6 +3065,7 @@
       "org.apache.lucene.backward_codecs.lucene86",
       "org.apache.lucene.backward_codecs.lucene87",
       "org.apache.lucene.backward_codecs.lucene90",
+      "org.apache.lucene.backward_codecs.lucene90.blocktree",
       "org.apache.lucene.backward_codecs.lucene91",
       "org.apache.lucene.backward_codecs.lucene912",
       "org.apache.lucene.backward_codecs.lucene92",
@@ -3078,10 +3082,9 @@
       "org.apache.lucene.codecs",
       "org.apache.lucene.codecs.compressing",
       "org.apache.lucene.codecs.hnsw",
-      "org.apache.lucene.codecs.lucene101",
-      "org.apache.lucene.codecs.lucene102",
+      "org.apache.lucene.codecs.lucene103.blocktree",
+      "org.apache.lucene.codecs.lucene104",
       "org.apache.lucene.codecs.lucene90",
-      "org.apache.lucene.codecs.lucene90.blocktree",
       "org.apache.lucene.codecs.lucene90.compressing",
       "org.apache.lucene.codecs.lucene94",
       "org.apache.lucene.codecs.lucene95",
@@ -5096,6 +5099,8 @@
     "org.apache.lucene:lucene-backward-codecs": {
       "org.apache.lucene.codecs.Codec": [
         "org.apache.lucene.backward_codecs.lucene100.Lucene100Codec",
+        "org.apache.lucene.backward_codecs.lucene101.Lucene101Codec",
+        "org.apache.lucene.backward_codecs.lucene103.Lucene103Codec",
         "org.apache.lucene.backward_codecs.lucene80.Lucene80Codec",
         "org.apache.lucene.backward_codecs.lucene84.Lucene84Codec",
         "org.apache.lucene.backward_codecs.lucene86.Lucene86Codec",
@@ -5112,13 +5117,19 @@
         "org.apache.lucene.backward_codecs.lucene80.Lucene80DocValuesFormat"
       ],
       "org.apache.lucene.codecs.KnnVectorsFormat": [
+        "org.apache.lucene.backward_codecs.lucene102.Lucene102BinaryQuantizedVectorsFormat",
+        "org.apache.lucene.backward_codecs.lucene102.Lucene102HnswBinaryQuantizedVectorsFormat",
         "org.apache.lucene.backward_codecs.lucene90.Lucene90HnswVectorsFormat",
         "org.apache.lucene.backward_codecs.lucene91.Lucene91HnswVectorsFormat",
         "org.apache.lucene.backward_codecs.lucene92.Lucene92HnswVectorsFormat",
         "org.apache.lucene.backward_codecs.lucene94.Lucene94HnswVectorsFormat",
-        "org.apache.lucene.backward_codecs.lucene95.Lucene95HnswVectorsFormat"
+        "org.apache.lucene.backward_codecs.lucene95.Lucene95HnswVectorsFormat",
+        "org.apache.lucene.backward_codecs.lucene99.Lucene99HnswScalarQuantizedVectorsFormat",
+        "org.apache.lucene.backward_codecs.lucene99.Lucene99ScalarQuantizedVectorsFormat"
       ],
       "org.apache.lucene.codecs.PostingsFormat": [
+        "org.apache.lucene.backward_codecs.lucene101.Lucene101PostingsFormat",
+        "org.apache.lucene.backward_codecs.lucene103.Lucene103PostingsFormat",
         "org.apache.lucene.backward_codecs.lucene50.Lucene50PostingsFormat",
         "org.apache.lucene.backward_codecs.lucene84.Lucene84PostingsFormat",
         "org.apache.lucene.backward_codecs.lucene90.Lucene90PostingsFormat",
@@ -5131,20 +5142,18 @@
         "org.apache.lucene.analysis.standard.StandardTokenizerFactory"
       ],
       "org.apache.lucene.codecs.Codec": [
-        "org.apache.lucene.codecs.lucene101.Lucene101Codec"
+        "org.apache.lucene.codecs.lucene104.Lucene104Codec"
       ],
       "org.apache.lucene.codecs.DocValuesFormat": [
         "org.apache.lucene.codecs.lucene90.Lucene90DocValuesFormat"
       ],
       "org.apache.lucene.codecs.KnnVectorsFormat": [
-        "org.apache.lucene.codecs.lucene102.Lucene102BinaryQuantizedVectorsFormat",
-        "org.apache.lucene.codecs.lucene102.Lucene102HnswBinaryQuantizedVectorsFormat",
-        "org.apache.lucene.codecs.lucene99.Lucene99HnswScalarQuantizedVectorsFormat",
-        "org.apache.lucene.codecs.lucene99.Lucene99HnswVectorsFormat",
-        "org.apache.lucene.codecs.lucene99.Lucene99ScalarQuantizedVectorsFormat"
+        "org.apache.lucene.codecs.lucene104.Lucene104HnswScalarQuantizedVectorsFormat",
+        "org.apache.lucene.codecs.lucene104.Lucene104ScalarQuantizedVectorsFormat",
+        "org.apache.lucene.codecs.lucene99.Lucene99HnswVectorsFormat"
       ],
       "org.apache.lucene.codecs.PostingsFormat": [
-        "org.apache.lucene.codecs.lucene101.Lucene101PostingsFormat"
+        "org.apache.lucene.codecs.lucene104.Lucene104PostingsFormat"
       ],
       "org.apache.lucene.index.SortFieldProvider": [
         "org.apache.lucene.search.SortField$Provider",
