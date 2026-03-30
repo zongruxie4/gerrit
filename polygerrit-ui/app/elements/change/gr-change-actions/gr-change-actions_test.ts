@@ -1146,14 +1146,14 @@ suite('gr-change-actions tests', () => {
           title: 'Cherry pick change to a different branch',
         };
 
-        element.handleCherrypickConfirm();
+        await element.handleCherrypickConfirm();
         assert.equal(fireActionStub.callCount, 0);
 
         queryAndAssert<GrConfirmCherrypickDialog>(
           element,
           '#confirmCherrypick'
         ).branch = 'master' as BranchName;
-        element.handleCherrypickConfirm();
+        await element.handleCherrypickConfirm();
         assert.equal(fireActionStub.callCount, 0); // Still needs a message.
 
         // Add attributes that are used to determine the message.
@@ -1171,7 +1171,7 @@ suite('gr-change-actions tests', () => {
         ).commitNum = '123' as CommitId;
         await element.updateComplete;
 
-        element.handleCherrypickConfirm();
+        await element.handleCherrypickConfirm();
         await element.updateComplete;
 
         const autogrowEl = queryAndAssert<GrAutogrowTextarea>(
@@ -1229,7 +1229,7 @@ suite('gr-change-actions tests', () => {
         ).commitNum = '123' as CommitId;
         await element.updateComplete;
 
-        element.handleCherrypickConflictConfirm();
+        await element.handleCherrypickConflictConfirm();
         await element.updateComplete;
 
         assert.deepEqual(fireActionStub.lastCall.args, [
@@ -1244,6 +1244,30 @@ suite('gr-change-actions tests', () => {
             committer_email: null,
           },
         ]);
+      });
+
+      test('handleBeforeCherryPick blocks action', async () => {
+        const handleBeforeCherryPickStub = sinon
+          .stub(
+            testResolver(pluginLoaderToken).jsApiService,
+            'handleBeforeCherryPick'
+          )
+          .returns(Promise.resolve(false));
+
+        element.handleCherrypickTap();
+        queryAndAssert<GrConfirmCherrypickDialog>(
+          element,
+          '#confirmCherrypick'
+        ).branch = 'master' as BranchName;
+        queryAndAssert<GrConfirmCherrypickDialog>(
+          element,
+          '#confirmCherrypick'
+        ).commitMessage = 'foo message';
+        await element.updateComplete;
+
+        await element.handleCherrypickConfirm();
+        assert.equal(fireActionStub.callCount, 0);
+        assert.isTrue(handleBeforeCherryPickStub.called);
       });
 
       test('branch name cleared when re-open cherrypick', () => {
