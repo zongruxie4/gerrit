@@ -137,7 +137,9 @@ def should_skip_packaged_jar(jar_name):
     for pfx in EXCLUDE_WAR_JAR_PREFIXES:
         if jar_name.startswith(pfx):
             return True
-    return False
+
+    # Bazel 8: skip protobuf runtime shards (duplicate protobuf-java)
+    return jar_name in ("libcore.jar", "liblite_runtime_only.jar")
 
 def is_third_party_jar_id(jar_id):
     """Return True if jar_id should be tracked in third-party allowlists.
