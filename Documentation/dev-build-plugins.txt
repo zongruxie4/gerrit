@@ -209,6 +209,17 @@ ln -s oauth/external_plugin_deps.MODULE.bazel external_plugin_deps.MODULE.bazel
 This makes the plugin's Bazel module and its plugin-scoped Maven
 repository visible to Gerrit's root module.
 
+To support multiple plugins, include their `external_plugin_deps.MODULE.bazel`
+files.
+
+For example, to import external dependencies for the `oauth` and `javamelody`
+plugins, add the following lines to `plugins/external_plugin_deps.MODULE.bazel`:
+
+----
+include("//plugins/javamelody:external_plugin_deps.MODULE.bazel")
+include("//plugins/oauth:external_plugin_deps.MODULE.bazel")
+----
+
 [NOTE]
 When multiple plugins are built in-tree, `rules_jvm_external` merges
 `maven.install()` tags with the same name across all modules. Plugin runtime
