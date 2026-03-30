@@ -2744,6 +2744,12 @@ class ReceiveCommits {
                 "Creating new change for %s even though it is already tracked", name);
           }
 
+          Change change = null;
+          ChangeLookup lookup = pending.get(c);
+          if (lookup.changeKey != null && lookup.destChanges.size() == 1) {
+            change = lookup.destChanges.getFirst().change();
+          }
+
           // Validate the received commits. Do not invoke the CommitValidationInfoListener's yet
           // because we create changes/patch-sets for the commits only later and we need to provide
           // the patch set ID, that we don't know yet, to CommitValidationInfoListener's.
@@ -2758,7 +2764,7 @@ class ReceiveCommits {
                   magicBranch.merged,
                   rejectCommits,
                   /* invokeCommitValidationInfoListeners= */ false,
-                  /* change= */ null);
+                  change);
           validationInfosByCommit.put(c.name(), validationResult.validationInfos());
           messages.addAll(validationResult.messages());
           if (!validationResult.isValid()) {
