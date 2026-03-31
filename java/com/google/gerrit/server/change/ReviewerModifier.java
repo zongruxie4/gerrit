@@ -717,6 +717,10 @@ public class ReviewerModifier {
               a -> {
                 if (a.isFailure()) {
                   if (a.isIgnorableFailure()) {
+                    logger.atWarning().log(
+                        "Ignored failure while adding reviewer '%s': %s",
+                        a.input.reviewer, a.result.error);
+
                     return false;
                   }
                   // Shouldn't happen, caller should have checked that there were no errors.
