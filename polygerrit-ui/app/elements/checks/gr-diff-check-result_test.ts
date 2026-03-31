@@ -89,6 +89,12 @@ suite('gr-diff-check-result tests', () => {
             </div>
           </div>
           <div class="details">
+          </div>
+          <div class="footer">
+            <div class="tags">
+              <gr-checks-tag></gr-checks-tag>
+              <gr-checks-tag></gr-checks-tag>
+            </div>
             <div class="actions">
               <gr-checks-action
                 id="please-fix"
@@ -112,12 +118,6 @@ suite('gr-diff-check-result tests', () => {
       /* HTML */ `
         <div class="details">
           <gr-result-expanded hidecodepointers=""></gr-result-expanded>
-          <div class="actions">
-            <gr-checks-action
-              id="please-fix"
-              context="diff-fix"
-            ></gr-checks-action>
-          </div>
         </div>
       `
     );

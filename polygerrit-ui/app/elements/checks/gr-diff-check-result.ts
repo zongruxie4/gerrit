@@ -17,6 +17,7 @@ import {
 import {modifierPressed} from '../../utils/dom-util';
 import './gr-checks-results';
 import './gr-hovercard-run';
+import './gr-checks-tag';
 import {fontStyles} from '../../styles/gr-font-styles';
 import {Action, Category} from '../../api/checks';
 import {assertIsDefined} from '../../utils/common-util';
@@ -153,6 +154,14 @@ export class GrDiffCheckResult extends LitElement {
           position: relative;
           top: 2px;
         }
+        div.footer {
+          display: flex;
+          justify-content: space-between;
+        }
+        div.tags {
+          display: flex;
+          justify-content: flex-start;
+        }
         div.actions {
           display: flex;
           justify-content: flex-end;
@@ -231,9 +240,8 @@ export class GrDiffCheckResult extends LitElement {
           </div>
           ${this.renderToggle()}
         </div>
-        <div class="details">
-          ${this.renderExpanded()}${this.renderActions()}
-        </div>
+        <div class="details">${this.renderExpanded()}</div>
+        <div class="footer">${this.renderTags()} ${this.renderActions()}</div>
       </div>
     `;
   }
@@ -275,6 +283,13 @@ export class GrDiffCheckResult extends LitElement {
       .fixSuggestionInfos=${[this.suggestion]}
       .patchSet=${this.result?.patchset as PatchSetNumber | undefined}
     ></gr-checks-fix-preview>`;
+  }
+
+  private renderTags() {
+    const tags = this.result?.tags ?? [];
+    return html`<div class="tags">
+      ${tags.map(tag => html`<gr-checks-tag .tag=${tag}></gr-checks-tag>`)}
+    </div>`;
   }
 
   private renderActions() {

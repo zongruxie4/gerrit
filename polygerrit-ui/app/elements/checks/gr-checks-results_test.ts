@@ -101,24 +101,8 @@ suite('gr-result-row test', () => {
           </div>
           <div class="message"></div>
           <div class="tags">
-            <gr-tooltip-content
-              has-tooltip=""
-              position-below=""
-              title="A category tag for this check result. Click to filter."
-            >
-              <button class="tag">
-                <span> OBSOLETE </span>
-              </button>
-            </gr-tooltip-content>
-            <gr-tooltip-content
-              has-tooltip=""
-              position-below=""
-              title="A category tag for this check result. Click to filter."
-            >
-              <button class="tag">
-                <span> E2E </span>
-              </button>
-            </gr-tooltip-content>
+            <gr-checks-tag> </gr-checks-tag>
+            <gr-checks-tag> </gr-checks-tag>
           </div>
         </div>
         <div

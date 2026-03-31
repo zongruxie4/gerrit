@@ -18,6 +18,7 @@ import {
 import {customElement, property, query, state} from 'lit/decorators.js';
 import './gr-checks-action';
 import './gr-hovercard-run';
+import './gr-checks-tag';
 import '../shared/gr-tooltip-content/gr-tooltip-content';
 import {KnownExperimentId} from '../../services/flags/flags';
 import {
@@ -27,7 +28,6 @@ import {
   LinkIcon,
   NOT_USEFUL,
   RunStatus,
-  Tag,
   USEFUL,
 } from '../../api/checks';
 import {sharedStyles} from '../../styles/shared-styles';
@@ -314,33 +314,7 @@ export class GrResultRow extends LitElement {
         tr.detailsRow.collapsed {
           display: none;
         }
-        td .summary-cell .tags .tag {
-          color: var(--primary-text-color);
-          display: inline-block;
-          border-radius: 20px;
-          background-color: var(--tag-background);
-          padding: 0 var(--spacing-m);
-          margin-left: var(--spacing-s);
-          cursor: pointer;
-        }
-        td .summary-cell .tag.gray {
-          background-color: var(--tag-gray);
-        }
-        td .summary-cell .tag.yellow {
-          background-color: var(--tag-yellow);
-        }
-        td .summary-cell .tag.pink {
-          background-color: var(--tag-pink);
-        }
-        td .summary-cell .tag.purple {
-          background-color: var(--tag-purple);
-        }
-        td .summary-cell .tag.cyan {
-          background-color: var(--tag-cyan);
-        }
-        td .summary-cell .tag.brown {
-          background-color: var(--tag-brown);
-        }
+
         .actions-shown-on-collapsed gr-checks-action,
         .actions gr-checks-action,
         .actions gr-dropdown {
@@ -453,7 +427,12 @@ export class GrResultRow extends LitElement {
             </div>
             ${this.renderLinks()} ${this.renderActions()}
             <div class="tags">
-              ${(this.result.tags ?? []).map(t => this.renderTag(t))}
+              ${(this.result.tags ?? []).map(
+                t => html`<gr-checks-tag
+                  .tag=${t}
+                  @click=${(e: MouseEvent) => this.tagClick(e, t.name)}
+                ></gr-checks-tag>`
+              )}
             </div>
             ${this.renderLabel()}
           </div>
@@ -699,22 +678,6 @@ export class GrResultRow extends LitElement {
       context="result-row"
       .action=${action}
     ></gr-checks-action>`;
-  }
-
-  renderTag(tag: Tag) {
-    return html`<gr-tooltip-content
-      has-tooltip
-      ?position-below=${true}
-      title=${tag.tooltip ??
-      'A category tag for this check result. Click to filter.'}
-    >
-      <button
-        class="tag ${tag.color}"
-        @click=${(e: MouseEvent) => this.tagClick(e, tag.name)}
-      >
-        <span>${tag.name}</span>
-      </button>
-    </gr-tooltip-content>`;
   }
 
   private renderSuggestionPreview() {
