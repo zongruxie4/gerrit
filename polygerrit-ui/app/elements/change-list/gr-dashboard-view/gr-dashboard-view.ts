@@ -35,7 +35,6 @@ import {
   firePageError,
   fireTitleChange,
 } from '../../../utils/event-util';
-import {RELOAD_DASHBOARD_INTERVAL_MS} from '../../../constants/constants';
 import {ChangeListSection} from '../gr-change-list/gr-change-list';
 import {a11yStyles} from '../../../styles/gr-a11y-styles';
 import {sharedStyles} from '../../../styles/shared-styles';
@@ -113,8 +112,6 @@ export class GrDashboardView extends LitElement {
 
   private readonly getViewModel = resolve(this, dashboardViewModelToken);
 
-  private lastVisibleTimestampMs = 0;
-
   /**
    * For `DASHBOARD_DISPLAYED` timing we can only rely on the router to have
    * reset the timer properly when the dashboard loads for the first time.
@@ -151,34 +148,6 @@ export class GrDashboardView extends LitElement {
     );
     this.addEventListener('reload', () => this.reload());
     this.shortcuts.addAbstract(Shortcut.UP_TO_DASHBOARD, () => this.reload());
-  }
-
-  private readonly visibilityChangeListener = () => {
-    if (document.visibilityState === 'visible') {
-      if (
-        Date.now() - this.lastVisibleTimestampMs >
-        RELOAD_DASHBOARD_INTERVAL_MS
-      )
-        this.reload(true);
-    } else {
-      this.lastVisibleTimestampMs = Date.now();
-    }
-  };
-
-  override connectedCallback() {
-    super.connectedCallback();
-    document.addEventListener(
-      'visibilitychange',
-      this.visibilityChangeListener
-    );
-  }
-
-  override disconnectedCallback() {
-    document.removeEventListener(
-      'visibilitychange',
-      this.visibilityChangeListener
-    );
-    super.disconnectedCallback();
   }
 
   static override get styles() {
@@ -389,7 +358,7 @@ export class GrDashboardView extends LitElement {
    *
    * private but used in test
    */
-  async reload(isBackgroundReload = false) {
+  async reload() {
     if (!this.viewState) return;
 
     // See `firstTimeLoad` comment above.
@@ -398,11 +367,6 @@ export class GrDashboardView extends LitElement {
     }
     this.firstTimeLoad = false;
 
-    // Loading will show the spinner. Hide the spinner when refreshing the
-    // dashboard in the background.
-    if (!isBackgroundReload) {
-      this.loading = true;
-    }
     const {project, type, dashboard, title, user, sections} = this.viewState;
 
     const dashboardPromise: Promise<UserDashboard | undefined> = project
