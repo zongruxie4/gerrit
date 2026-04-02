@@ -161,86 +161,88 @@ suite('gr-result-expanded test', () => {
     assert.shadowDom.equal(
       element,
       /* HTML */ `
-        <div class="links">
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" icon="download"> </gr-icon>
-            <span> Download </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" icon="system_update"> </gr-icon>
-            <span> Download </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" filled="" icon="image"> </gr-icon>
-            <span> Link to image </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" filled="" icon="image"> </gr-icon>
-            <span> Link to image </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" filled="" icon="bug_report"> </gr-icon>
-            <span> Link for reporting a problem </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" icon="help"> </gr-icon>
-            <span> Link to help page </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" icon="history"> </gr-icon>
-            <span> Link to result history </span>
-          </a>
-        </div>
-        <div class="links">
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" icon="open_in_new"> </gr-icon>
-            <span> Link to details </span>
-          </a>
-          <a
-            href="https://google.com"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <gr-icon class="link" filled="" icon="image"> </gr-icon>
-            <span> Link to image </span>
-          </a>
-        </div>
-        <div>
-          <gr-icon custom="" icon="ai" small=""> </gr-icon>
-          <span class="ai-generated"> AI Generated </span>
-          by FAKE Error Finder Finder Finder Finder Finder Finder Finder
+        <div class="header-content">
+          <div class="links">
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="download"> </gr-icon>
+              <span> Download </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="system_update"> </gr-icon>
+              <span> Download </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" filled="" icon="image"> </gr-icon>
+              <span> Link to image </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" filled="" icon="image"> </gr-icon>
+              <span> Link to image </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" filled="" icon="bug_report"> </gr-icon>
+              <span> Link for reporting a problem </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="help"> </gr-icon>
+              <span> Link to help page </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="history"> </gr-icon>
+              <span> Link to result history </span>
+            </a>
+          </div>
+          <div class="links">
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="open_in_new"> </gr-icon>
+              <span> Link to details </span>
+            </a>
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" filled="" icon="image"> </gr-icon>
+              <span> Link to image </span>
+            </a>
+          </div>
+          <div>
+            <gr-icon custom="" icon="ai" small=""> </gr-icon>
+            <span class="ai-generated"> AI Generated </span>
+            by FAKE Error Finder Finder Finder Finder Finder Finder Finder
+          </div>
         </div>
         <gr-endpoint-decorator name="check-result-expanded">
           <gr-endpoint-param name="run"> </gr-endpoint-param>
@@ -263,11 +265,13 @@ suite('gr-result-expanded test', () => {
     assert.shadowDom.equal(
       element,
       /* HTML */ `
-        <div class="links"></div>
-        <div>
-          <gr-icon custom="" icon="ai" small=""> </gr-icon>
-          <span class="ai-generated"> AI Generated </span>
-          by FAKE Super Check
+        <div class="header-content">
+          <div class="links"></div>
+          <div>
+            <gr-icon custom="" icon="ai" small=""> </gr-icon>
+            <span class="ai-generated"> AI Generated </span>
+            by FAKE Super Check
+          </div>
         </div>
         <gr-endpoint-decorator name="check-result-expanded">
           <gr-endpoint-param name="run"> </gr-endpoint-param>
