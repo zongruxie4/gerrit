@@ -1,0 +1,62 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+import '../../test/common-test-setup';
+import {assert, fixture, html} from '@open-wc/testing';
+// Until https://github.com/modernweb-dev/web/issues/2804 is fixed
+// @ts-ignore
+import {visualDiff} from '@web/test-runner-visual-regression';
+import './splash-page-action';
+import {SplashPageAction} from './splash-page-action';
+import {Action} from '../../api/ai-code-review';
+import {visualDiffDarkTheme} from '../../test/test-utils';
+
+suite('splash-page-action screenshot tests', () => {
+  let element: SplashPageAction;
+
+  setup(async () => {
+    element = await fixture(html`<splash-page-action></splash-page-action>`);
+    await element.updateComplete;
+  });
+
+  test('card rendering', async () => {
+    const action: Action = {
+      id: 'test-action',
+      display_text: 'Test Action',
+      initial_user_prompt: 'Test prompt',
+    };
+    element.action = action;
+    await element.updateComplete;
+
+    await visualDiff(element, 'splash-page-action-card');
+    await visualDiffDarkTheme(element, 'splash-page-action-card');
+  });
+
+  test('details modal rendering', async () => {
+    const action: Action = {
+      id: 'test-action',
+      display_text: 'Test Action',
+      initial_user_prompt: 'Test prompt',
+    };
+    element.action = action;
+    await element.updateComplete;
+
+    // Trigger the modal to open
+    const infoButton = element.shadowRoot?.querySelector(
+      '.info-button'
+    ) as HTMLElement;
+    assert.isOk(infoButton);
+    infoButton.click();
+    await element.updateComplete;
+
+    const modal = element.shadowRoot?.querySelector(
+      '#detailsModal'
+    ) as HTMLElement;
+    assert.isOk(modal);
+
+    await visualDiff(modal, 'splash-page-action-details-modal');
+    await visualDiffDarkTheme(modal, 'splash-page-action-details-modal');
+  });
+});
