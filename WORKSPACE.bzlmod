@@ -27,10 +27,15 @@ workspace(
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("//plugins:external_plugin_deps.bzl", "external_plugin_deps")
 
+# Gerrit-specific patched rules_nodejs 5.8.5 release artifact.
+# Windows-specific paths are disabled since Gerrit only supports Linux
+# and macOS builders.
 http_archive(
     name = "build_bazel_rules_nodejs",
-    sha256 = "a1295b168f183218bc88117cf00674bcd102498f294086ff58318f830dd9d9d1",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.5/rules_nodejs-5.8.5.tar.gz"],
+    sha256 = "cd4f06efb688067a2a891c9b5647184b12708dcff36bebabeddce666f5422e7f",
+    urls = [
+        "https://github.com/davido/rules_nodejs/releases/download/v5.8.5-unixonly/rules_nodejs-5.8.5-gerrit.tar.gz",
+    ],
 )
 
 load("@build_bazel_rules_nodejs//:repositories.bzl", "build_bazel_rules_nodejs_dependencies")
