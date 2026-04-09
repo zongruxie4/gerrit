@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Gerrit-specific genrule helpers."""
+
 # Syntactic sugar for native genrule() rule:
 #   expose ROOT shell variable
 #   expose TMP shell variable

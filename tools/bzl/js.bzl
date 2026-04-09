@@ -1,6 +1,8 @@
+"""Gerrit-specific rules for JavaScript."""
+
+load("@com_googlesource_gerrit_bazlets//tools:genrule2.bzl", "genrule2")
 load("@npm//@bazel/rollup:index.bzl", "rollup_bundle")
 load("@npm//@bazel/terser:index.bzl", "terser_minified")
-load("@com_googlesource_gerrit_bazlets//tools:genrule2.bzl", "genrule2")
 
 ComponentInfo = provider()
 
