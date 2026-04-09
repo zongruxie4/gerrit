@@ -61,6 +61,10 @@ public class ExperimentFeaturesConstants {
   public static final String ALLOW_FIX_SUGGESTIONS_IN_COMMENTS =
       "GerritBackendFeature__allow_fix_suggestions_in_comments";
 
+  /** Whether to enforce a timeout during file diff computation. */
+  public static final String TIMEOUT_FILE_DIFF_COMPUTATION =
+      "GerritBackendFeature__timeout_file_diff_computation";
+
   /** Whether submit_records should only be returned along with submit_requirements. */
   public static final String SKIP_SUBMIT_RECORDS_WITHOUT_SUBMIT_REQUIREMENTS =
       "GerritBackendFeature__skip_submit_records_without_submit_requirements";
@@ -71,8 +75,4 @@ public class ExperimentFeaturesConstants {
 
   /** Whether AI chat/review features are enabled in the UI. */
   public static final String ENABLE_AI_CHAT = "UiFeature__enable_ai_chat";
-
-  /** Whether to enforce a timeout during file diff computation. */
-  public static final String TIMEOUT_FILE_DIFF_COMPUTATION =
-      "GerritBackendFeature__timeout_file_diff_computation";
 }
