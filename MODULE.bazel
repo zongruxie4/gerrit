@@ -14,7 +14,7 @@ bazel_dep(name = "rules_python", version = "1.8.0-rc1")
 bazel_dep(name = "rules_shell", version = "0.6.1")
 
 # Libraries / toolchains.
-bazel_dep(name = "protobuf", version = "33.4")
+bazel_dep(name = "protobuf", version = "34.1")
 
 # In-tree modules.
 bazel_dep(name = "jgit")
