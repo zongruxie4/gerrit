@@ -202,7 +202,7 @@ To build a specific plugin:
   bazelisk build plugins/<name>
 ----
 
-The output JAR file will be be placed in:
+The output JAR file will be placed in:
 
 ----
   bazel-bin/plugins/<name>/<name>.jar
