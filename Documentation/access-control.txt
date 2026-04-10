@@ -1825,7 +1825,7 @@ All-Projects: project.config
 When determining access, first "read = DENY group A" on "refs/a" is
 encountered. The following rule to consider is "ALLOW read group A" on
 "refs/a". The latter rule applies to the same (permission,
-ref-pattern, group) tuple, so it it is ignored.
+ref-pattern, group) tuple, so it is ignored.
 
 The DENY rule does not affect the last rule for "refs/*", since that
 has a different ref pattern and a different group. If group B is a

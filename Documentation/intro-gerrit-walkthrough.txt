@@ -176,7 +176,7 @@ Hannah notices a possible issue with Max's change, so she selects a `-1` vote.
 She uses the *Cover Message* text box to provide Max with some additional
 feedback. When she is satisfied with her review, Hannah clicks the
 *SEND* button. At this point, her vote and cover message become
-visible to to all users.
+visible to all users.
 
 == Reworking the Change
 
