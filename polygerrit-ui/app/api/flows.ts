@@ -41,6 +41,16 @@ export declare interface FlowsProvider {
   getCustomConditions(change: ChangeInfo): Promise<FlowCustomConditionInfo[]>;
 
   /**
+   * Returns a list of disabled custom conditions.
+   */
+  getDisabledConditions?(): string[];
+
+  /**
+   * Returns a list of disabled actions.
+   */
+  getDisabledActions?(): string[];
+
+  /**
    * Returns a string containing a link to the feature documentation.
    */
   getDocumentation(): string;
