@@ -1131,6 +1131,10 @@ export class GrChecksResults extends LitElement {
         .headerBottomRow a {
           margin-right: var(--spacing-l);
         }
+        #moreActions {
+          --gr-dropdown-position: relative;
+          --gr-dropdown-z-index: 120;
+        }
         #moreActions gr-icon {
           color: var(--link-color);
         }
