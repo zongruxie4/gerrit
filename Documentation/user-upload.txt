@@ -25,10 +25,12 @@ The user is authenticated using standard BasicAuth. Depending on the
 value of link:#auth.gitBasicAuthPolicy[auth.gitBasicAuthPolicy],
 credentials are validated using:
 
-* The randomly generated HTTP password on the `HTTP Password` tab
-  in the user settings page if `gitBasicAuthPolicy` is `HTTP`.
+* Randomly generated HTTP authentication tokens on the `HTTP Credentials` tab
+  in the user settings page if `gitBasicAuthPolicy` is `HTTP`. Administrators
+  can limit the maximum lifetime of HTTP authentication tokens by setting
+  the option link:config-gerrit.html#auth.maxAuthTokenLifetime[auth.maxAuthTokenLifetime].
 * The LDAP password if `gitBasicAuthPolicy` is `LDAP`
-* Both, the HTTP and the LDAP passwords (in this order) if `gitBasicAuthPolicy`
+* Both, the HTTP and the LDAP credentials (in this order) if `gitBasicAuthPolicy`
   is `HTTP_LDAP`.
 
 When gitBasicAuthPolicy is set to `LDAP` or `HTTP_LDAP` and the user
