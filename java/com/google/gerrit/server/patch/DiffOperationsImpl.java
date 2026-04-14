@@ -255,7 +255,7 @@ public class DiffOperationsImpl implements DiffOperations {
               experimentFeatures.isFeatureEnabled(
                   ExperimentFeaturesConstants.TIMEOUT_FILE_DIFF_COMPUTATION, project),
               whitespace);
-      return getModifiedFileForKey(key);
+      return getModifiedFileForKey(key, DiffOptions.DEFAULTS);
     } catch (IOException e) {
       throw new DiffNotAvailableException(
           "Failed to evaluate the parent/base commit for commit " + newCommit, e);
@@ -270,6 +270,19 @@ public class DiffOperationsImpl implements DiffOperations {
       String fileName,
       @Nullable DiffPreferencesInfo.Whitespace whitespace)
       throws DiffNotAvailableException {
+    return getModifiedFile(
+        project, oldCommit, newCommit, fileName, whitespace, DiffOptions.DEFAULTS);
+  }
+
+  @Override
+  public FileDiffOutput getModifiedFile(
+      Project.NameKey project,
+      ObjectId oldCommit,
+      ObjectId newCommit,
+      String fileName,
+      @Nullable DiffPreferencesInfo.Whitespace whitespace,
+      DiffOptions diffOptions)
+      throws DiffNotAvailableException {
     FileDiffCacheKey key =
         createFileDiffCacheKey(
             project,
@@ -280,7 +293,7 @@ public class DiffOperationsImpl implements DiffOperations {
             experimentFeatures.isFeatureEnabled(
                 ExperimentFeaturesConstants.TIMEOUT_FILE_DIFF_COMPUTATION, project),
             whitespace);
-    return getModifiedFileForKey(key);
+    return getModifiedFileForKey(key, diffOptions);
   }
 
   private ImmutableMap<String, FileDiffOutput> getModifiedFiles(
@@ -344,10 +357,10 @@ public class DiffOperationsImpl implements DiffOperations {
     }
   }
 
-  private FileDiffOutput getModifiedFileForKey(FileDiffCacheKey key)
+  private FileDiffOutput getModifiedFileForKey(FileDiffCacheKey key, DiffOptions diffOptions)
       throws DiffNotAvailableException {
     ImmutableMap<String, FileDiffOutput> diffList =
-        getModifiedFilesForKeys(ImmutableList.of(key), DiffOptions.DEFAULTS);
+        getModifiedFilesForKeys(ImmutableList.of(key), diffOptions);
     return diffList.containsKey(key.newFilePath())
         ? diffList.get(key.newFilePath())
         : FileDiffOutput.empty(key.newFilePath(), key.oldCommit(), key.newCommit());
