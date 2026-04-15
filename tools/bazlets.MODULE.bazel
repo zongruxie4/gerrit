@@ -6,7 +6,7 @@ GERRIT_VERSION = "3.14.0-SNAPSHOT"
 bazel_dep(name = "com_googlesource_gerrit_bazlets")
 git_override(
     module_name = "com_googlesource_gerrit_bazlets",
-    commit = "01ec9c2481186396dde1bc6f5166f7d95bdae134",
+    commit = "31e8579d49bc4b7f2cdc3bed3367449c606586c4",
     remote = "https://gerrit.googlesource.com/bazlets",
 )
 
