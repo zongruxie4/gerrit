@@ -53,7 +53,8 @@ public class ListExperimentsIT extends AbstractDaemonTest {
             ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_ATTACH_NONCE_TO_DOCUMENTATION,
             ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_CHECK_IMPLICIT_MERGES_ON_MERGE,
             ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_REJECT_IMPLICIT_MERGES_ON_MERGE,
-            ExperimentFeaturesConstants.ASYNC_SUBMIT_REQUIREMENTS)
+            ExperimentFeaturesConstants.ASYNC_SUBMIT_REQUIREMENTS,
+            ExperimentFeaturesConstants.UI_FEATURE_GET_AI_PROMPT)
         .inOrder();
 
     // "GerritBackendFeature__check_implicit_merges_on_merge",
@@ -82,6 +83,8 @@ public class ListExperimentsIT extends AbstractDaemonTest {
     assertThat(
             experiments.get(ExperimentFeaturesConstants.ALLOW_FIX_SUGGESTIONS_IN_COMMENTS).enabled)
         .isFalse();
+    assertThat(experiments.get(ExperimentFeaturesConstants.UI_FEATURE_GET_AI_PROMPT).enabled)
+        .isTrue();
     assertThat(
             experiments.get(
                     ExperimentFeaturesConstants
@@ -107,7 +110,8 @@ public class ListExperimentsIT extends AbstractDaemonTest {
                 .GERRIT_BACKEND_FEATURE_ALWAYS_REJECT_IMPLICIT_MERGES_ON_MERGE,
             ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_ATTACH_NONCE_TO_DOCUMENTATION,
             ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_CHECK_IMPLICIT_MERGES_ON_MERGE,
-            ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_REJECT_IMPLICIT_MERGES_ON_MERGE)
+            ExperimentFeaturesConstants.GERRIT_BACKEND_FEATURE_REJECT_IMPLICIT_MERGES_ON_MERGE,
+            ExperimentFeaturesConstants.UI_FEATURE_GET_AI_PROMPT)
         .inOrder();
     for (ExperimentInfo experimentInfo : experiments.values()) {
       assertThat(experimentInfo.enabled).isTrue();
