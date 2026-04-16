@@ -2372,6 +2372,7 @@ export class GrRestApiServiceImpl implements RestApiService, Finalizable {
         }),
         url,
         errFn,
+        isHighPriority: true,
       })
     ) as unknown as Promise<ReviewResult | undefined>;
   }
