@@ -2219,7 +2219,8 @@ export class GrChangeActions
     const query = `topic: "${this.change.topic}"`;
     const options = listChangesOptionsToHex(
       ListChangesOption.MESSAGES,
-      ListChangesOption.ALL_REVISIONS
+      ListChangesOption.ALL_REVISIONS,
+      ListChangesOption.SKIP_DIFFSTAT
     );
     return this.restApiService
       .getChanges(0, query, undefined, options)
