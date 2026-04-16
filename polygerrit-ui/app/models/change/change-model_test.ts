@@ -711,7 +711,7 @@ suite('change model tests', () => {
     assert.deepEqual(getChangeStub.lastCall.args, [
       42 as NumericChangeId,
       undefined,
-      '80204',
+      '880204',
     ]);
     assert.deepEqual(result.newMessages, {
       ...createChangeMessageInfo(),
