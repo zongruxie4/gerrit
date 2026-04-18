@@ -53,6 +53,8 @@ EXPORTS = [
     "//java/com/google/gerrit/metrics",
     "//java/com/google/gerrit/metrics/dropwizard",
     "//java/com/google/gerrit/entities",
+    "//java/com/google/gerrit/entities/converter:converters",
+    "//java/com/google/gerrit/entities/converter:proto_converter",
     "//java/com/google/gerrit/server/api",
     "//java/com/google/gerrit/server/audit",
     "//java/com/google/gerrit/server/cache/mem",
