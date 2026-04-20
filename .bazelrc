@@ -38,14 +38,14 @@ build:build_java21_shared --tool_java_runtime_version=remotejdk_21
 build:java21 --config=build_java21_shared
 
 # Builds and executes on RBE using remotejdk_21
-build:remote21 --config=config_gcp
+build:remote21 --config=remote
 build:remote21 --config=build_java21_shared
 
 # Define remote21 configuration alias
 build:remote21_gcp --config=remote21
 
 # Builds and executes on BuildBuddy RBE using remotejdk_21
-build:remote21_bb --config=config_bb
+build:remote21_bb --config=remote_bb
 build:remote21_bb --config=build_java21_shared
 
 # Builds using remotejdk_25, executes using remotejdk_25 or local_jdk
@@ -57,14 +57,14 @@ build:build_java25_shared --tool_java_runtime_version=remotejdk_25
 build:java25 --config=build_java25_shared
 
 # Builds and executes on RBE using remotejdk_25
-build:remote25 --config=config_gcp
+build:remote25 --config=remote
 build:remote25 --config=build_java25_shared
 
 # Define remote25 configuration alias
 build:remote25_gcp --config=remote25
 
 # Builds and executes on BuildBuddy RBE using remotejdk_25
-build:remote25_bb --config=config_bb
+build:remote25_bb --config=remote_bb
 build:remote25_bb --config=build_java25_shared
 
 # Enable strict_action_env flag to. For more information on this feature see
