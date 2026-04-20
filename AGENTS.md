@@ -1,4 +1,4 @@
-# Gemini Project Profile: gerrit
+# AI Agent Project Profile: gerrit
 
 ## Project Overview
 
@@ -6,7 +6,7 @@ Gerrit is a web-based code review system for Git. Backend is Java 21, frontend i
 
 ## Sub-projects
 
-- **`polygerrit-ui`**: The frontend web application. See `polygerrit-ui/GEMINI.md` for details on the frontend development environment.
+- **`polygerrit-ui`**: The frontend web application. See `polygerrit-ui/AGENTS.md` for details on the frontend development environment.
 
 ## Build Commands
 

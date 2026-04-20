@@ -1,4 +1,4 @@
-# Gemini Project Profile: gerrit/polygerrit-ui
+# AI Agent Project Profile: gerrit/polygerrit-ui
 
 This document provides a summary of the front-end development environment for the `polygerrit-ui` part of the gerrit project.
 
