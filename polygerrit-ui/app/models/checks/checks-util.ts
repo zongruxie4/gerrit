@@ -614,14 +614,14 @@ function getAiAgentEventDetails(
     ) {
       return;
     }
-    /* eslint-disable quote-props, object-shorthand */
+    /* eslint-disable object-shorthand */
     // prettier-ignore
     return {
       'agentId': agentId,
       'conversationId': conversationId,
       'turnIndex': Number(turnIndex),
     };
-    /* eslint-enable quote-props, object-shorthand */
+    /* eslint-enable object-shorthand */
   } catch (e) {
     return undefined;
   }
