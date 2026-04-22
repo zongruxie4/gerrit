@@ -1324,6 +1324,7 @@ export enum SubmitRequirementExpressionInfoStatus {
   FAIL = 'FAIL',
   ERROR = 'ERROR',
   NOT_EVALUATED = 'NOT_EVALUATED',
+  TIMEOUT = 'TIMEOUT',
 }
 
 /**
@@ -1337,6 +1338,7 @@ export enum SubmitRequirementStatus {
   NOT_APPLICABLE = 'NOT_APPLICABLE',
   ERROR = 'ERROR',
   FORCED = 'FORCED',
+  TIMEOUT = 'TIMEOUT',
 }
 
 export type UrlEncodedRepoName = BrandType<string, '_urlEncodedRepoName'>;

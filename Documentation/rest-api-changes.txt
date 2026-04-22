@@ -9790,7 +9790,8 @@ of the following: +
   * `PASS` - expression was evaluated and result is true. +
   * `FAIL` - expression was evaluated and result is false. +
   * `ERROR` - an error occurred while evaluating the expression. +
-  * `NOT_EVALUATED` - expression was not evaluated.
+  * `NOT_EVALUATED` - expression was not evaluated. +
+  * `TIMEOUT` - expression was TIMEOUT while evaluating.
 |`passing_atoms`|optional|
 A list of passing atoms as strings. For the above expression,
 `passing_atoms` can contain ["branch:refs/heads/foo"] if the branch predicate is
@@ -9847,7 +9848,7 @@ Description of the submit requirement.
 |`status`||
 Status describing the result of evaluating the submit requirement. The status
 is one of (`SATISFIED`, `UNSATISFIED`, `OVERRIDDEN`, `NOT_APPLICABLE`, `ERROR`,
-`FORCED`).
+`FORCED`, `TIMEOUT`).
 |`is_legacy`||
 If true, this submit requirement result was created from a legacy
 link:#submit-record[SubmitRecord]. Otherwise, it was created by evaluating a
