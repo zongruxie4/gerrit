@@ -15,7 +15,7 @@
     "@web/test-runner-visual-regression": "^0.10.0",
     "accessibility-developer-tools": "^2.12.0",
     "mocha": "^10.2.0",
-    "sinon": "^20.0.0",
+    "sinon": "^21.0.1",
     "source-map-support": "^0.5.21"
   },
   "scripts": {
