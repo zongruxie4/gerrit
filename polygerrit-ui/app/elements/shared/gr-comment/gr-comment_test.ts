@@ -976,6 +976,39 @@ suite('gr-comment tests', () => {
       assert.include(label.textContent, '(1)');
     });
 
+    test('does not show spinner when loading but unchecked', async () => {
+      const comment: DraftInfo = {
+        ...createDraft(),
+        author: {
+          name: 'Mr. Peanutbutter',
+          email: 'tenn1sballchaser@aol.com' as EmailAddress,
+        },
+        line: 5,
+        path: 'test',
+        savingState: SavingState.OK,
+        message: 'hello world',
+      };
+      element = await fixture(
+        html`<gr-comment
+          .account=${account}
+          .showPatchset=${true}
+          .comment=${comment}
+          .initiallyCollapsed=${false}
+        ></gr-comment>`
+      );
+      element.editing = true;
+      sinon.stub(element, 'showGeneratedSuggestion').returns(true);
+      element.generateSuggestion = false;
+      element.suggestionLoading = true;
+      await element.updateComplete;
+
+      const label = queryAndAssert<HTMLLabelElement>(
+        element,
+        'label.suggestEdit'
+      );
+      assert.isFalse(!!query(label, '.loadingSpin'));
+    });
+
     test('renders suggestions in comment', async () => {
       const comment = {
         ...createComment(),
@@ -1267,6 +1300,25 @@ suite('gr-comment tests', () => {
         replacements: [],
       });
       await p1;
+    });
+
+    test('calls service even when generateSuggestion is false', async () => {
+      const suggestionsService = testResolver(suggestionsServiceToken);
+      const stub = sinon.stub(
+        suggestionsService,
+        'generateSuggestedFixForComment'
+      );
+
+      element.generateSuggestion = false;
+      stubFlags('isEnabled')
+        .withArgs(KnownExperimentId.ML_SUGGESTED_EDIT_V2)
+        .returns(true);
+      sinon.stub(element, 'showGeneratedSuggestion').returns(true);
+      element.messageText = 'test message';
+      await element.updateComplete;
+
+      await element.generateSuggestEdit();
+      assert.isTrue(stub.called);
     });
   });
 });

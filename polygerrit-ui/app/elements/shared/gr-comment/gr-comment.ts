@@ -1219,7 +1219,7 @@ export class GrComment extends LitElement {
           ></md-checkbox>
           Attach AI-suggested fix
           ${when(
-            this.suggestionLoading,
+            this.generateSuggestion && this.suggestionLoading,
             () => html`<span class="loadingSpin"></span>`,
             () => html`${this.getNumberOfSuggestions()}`
           )}
