@@ -1840,6 +1840,29 @@ export const checkRun5: CheckRun = {
   attemptDetails: [],
 };
 
+export const checkRun6: CheckRun = {
+  pluginName: 'f6',
+  internalRunId: 'f6',
+  checkName: 'FAKE Run with no link URL',
+  status: RunStatus.SCHEDULED,
+  isSingleAttempt: true,
+  isLatestAttempt: true,
+  attemptDetails: [],
+  results: [
+    {
+      internalResultId: 'f0r0',
+      category: Category.ERROR,
+      summary: 'I would like to point out this error: 1 is not equal to 2!',
+      links: [
+        {primary: true, url: '', icon: LinkIcon.EXTERNAL},
+        {primary: false, url: '  ', icon: LinkIcon.EXTERNAL},
+        {primary: true, url: 'https://google.com', icon: LinkIcon.DOWNLOAD},
+      ],
+      tags: [{name: 'OBSOLETE'}, {name: 'E2E'}],
+    },
+  ],
+};
+
 export function setAllcheckRuns(model: ChecksModel) {
   model.updateStateSetProvider('f0', ChecksPatchset.LATEST);
   model.updateStateSetProvider('f1', ChecksPatchset.LATEST);

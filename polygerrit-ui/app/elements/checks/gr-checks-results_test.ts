@@ -16,6 +16,7 @@ import {checksModelToken, RunResult} from '../../models/checks/checks-model';
 import {
   checkRun0,
   checkRun1,
+  checkRun6,
   setAllcheckRuns,
 } from '../../test/test-data-generators';
 import {resolve} from '../../models/dependency';
@@ -28,6 +29,7 @@ import {GrDropdownList} from '../shared/gr-dropdown-list/gr-dropdown-list';
 import {getAppContext} from '../../services/app-context';
 import {suggestionsServiceToken} from '../../services/suggestions/suggestions-service';
 import {testResolver} from '../../test/common-test-setup';
+import {Link} from '../../api/checks';
 
 suite('gr-result-row test', () => {
   let element: GrResultRow;
@@ -233,6 +235,12 @@ suite('gr-result-row test', () => {
       )
     );
   });
+
+  test('renderLink returns undefined when url is empty, whitespace, or missing', () => {
+    assert.isUndefined(element.renderLink({url: ''} as Link));
+    assert.isUndefined(element.renderLink({url: '   '} as Link));
+    assert.isUndefined(element.renderLink(undefined));
+  });
 });
 
 suite('gr-result-expanded test', () => {
@@ -375,6 +383,36 @@ suite('gr-result-expanded test', () => {
           <gr-checks-action icon="thumb_up"> </gr-checks-action>
           <gr-checks-action icon="thumb_down"> </gr-checks-action>
         </div>
+      `
+    );
+  });
+
+  test('renderLink returns undefined when url is empty, whitespace, or missing', async () => {
+    element.result = {...checkRun6, ...checkRun6.results![0]} as RunResult;
+    await element.updateComplete;
+
+    assert.shadowDom.equal(
+      element,
+      /* HTML */ `
+        <div class="header-content">
+          <div class="links"></div>
+          <div class="links">
+            <a
+              href="https://google.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <gr-icon class="link" icon="download"> </gr-icon>
+              <span> Download </span>
+            </a>
+          </div>
+          <div class="links"></div>
+        </div>
+        <gr-endpoint-decorator name="check-result-expanded">
+          <gr-endpoint-param name="run"> </gr-endpoint-param>
+          <gr-endpoint-param name="result"> </gr-endpoint-param>
+          <gr-formatted-text class="message"> </gr-formatted-text>
+        </gr-endpoint-decorator>
       `
     );
   });
