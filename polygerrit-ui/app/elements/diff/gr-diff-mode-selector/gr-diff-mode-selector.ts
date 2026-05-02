@@ -8,7 +8,7 @@ import '../../shared/gr-icon/gr-icon';
 import '../../shared/gr-tooltip-content/gr-tooltip-content';
 import {DiffViewMode} from '../../../constants/constants';
 import {customElement, property, state} from 'lit/decorators.js';
-import {fireIronAnnounce} from '../../../utils/event-util';
+import {fireAlert} from '../../../utils/event-util';
 import {browserModelToken} from '../../../models/browser/browser-model';
 import {resolve} from '../../../models/dependency';
 import {css, html, LitElement} from 'lit';
@@ -120,7 +120,7 @@ export class GrDiffModeSelector extends LitElement {
       announcement = 'Changed diff view to side by side';
     }
     if (announcement) {
-      fireIronAnnounce(this, announcement);
+      fireAlert(this, announcement);
     }
   }
 
